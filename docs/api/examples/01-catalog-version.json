@@ -1,0 +1,17 @@
+{
+  "title": "Version du catalogue et des règles",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/catalog/version"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "catalog_version": "2026.10.12",
+        "rules_version": "2026.10.12-r1",
+        "updated_at": "2026-10-12T08:00:00.000Z"
+      }
+    }
+  }
+}

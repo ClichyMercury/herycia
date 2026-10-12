@@ -1,0 +1,254 @@
+{
+  "title": "Mode A avec élargissement progressif",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/recommendations/from-item",
+    "body": {
+      "clothing_type_id": 1,
+      "color_id": 19,
+      "occasion_slug": "ceremony",
+      "style_slug": "elegant"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "request_id": "rec_000002",
+        "catalog_version": "2026.10.12",
+        "rules_version": "2026.10.12-r1",
+        "computed_offline": false,
+        "broadened": [
+          {
+            "criterion": "style",
+            "message": "En élargissant à tous les styles"
+          },
+          {
+            "criterion": "occasion",
+            "message": "En élargissant à toutes les occasions"
+          }
+        ],
+        "results": [
+          {
+            "outfit_id": 1,
+            "title": "Inspiré de « Chemise bleu ciel et chino beige »",
+            "score": 82,
+            "breakdown": {
+              "color": 35,
+              "structure": 25,
+              "occasion": 6,
+              "style": 6,
+              "completeness": 10
+            },
+            "explanation": "Beige et fuchsia : le neutre pose une base calme et valorise la couleur.",
+            "items": [
+              {
+                "clothing_type_id": 1,
+                "color_id": 19,
+                "role": "top",
+                "is_anchor": true
+              },
+              {
+                "clothing_type_id": 10,
+                "color_id": 6,
+                "role": "bottom",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 16,
+                "color_id": 8,
+                "role": "shoes",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 20,
+                "color_id": 8,
+                "role": "accessory",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 22,
+                "color_id": 1,
+                "role": "accessory",
+                "is_anchor": false
+              }
+            ],
+            "image": null
+          },
+          {
+            "outfit_id": 14,
+            "title": "Inspiré de « Violet et anthracite »",
+            "score": 82,
+            "breakdown": {
+              "color": 35,
+              "structure": 25,
+              "occasion": 6,
+              "style": 6,
+              "completeness": 10
+            },
+            "explanation": "Noir et fuchsia : le neutre pose une base calme et valorise la couleur.",
+            "items": [
+              {
+                "clothing_type_id": 1,
+                "color_id": 19,
+                "role": "top",
+                "is_anchor": true
+              },
+              {
+                "clothing_type_id": 8,
+                "color_id": 5,
+                "role": "bottom",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 17,
+                "color_id": 1,
+                "role": "shoes",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 23,
+                "color_id": 4,
+                "role": "accessory",
+                "is_anchor": false
+              }
+            ],
+            "image": null
+          },
+          {
+            "outfit_id": 13,
+            "title": "Inspiré de « Terracotta et blanc cassé »",
+            "score": 81,
+            "breakdown": {
+              "color": 34,
+              "structure": 25,
+              "occasion": 6,
+              "style": 6,
+              "completeness": 10
+            },
+            "explanation": "Blanc cassé et fuchsia : le neutre pose une base calme et valorise la couleur.",
+            "items": [
+              {
+                "clothing_type_id": 1,
+                "color_id": 19,
+                "role": "top",
+                "is_anchor": true
+              },
+              {
+                "clothing_type_id": 8,
+                "color_id": 3,
+                "role": "bottom",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 18,
+                "color_id": 9,
+                "role": "shoes",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 21,
+                "color_id": 9,
+                "role": "accessory",
+                "is_anchor": false
+              }
+            ],
+            "image": null
+          },
+          {
+            "outfit_id": 18,
+            "title": "Inspiré de « Bleu roi et beige au bureau »",
+            "score": 81,
+            "breakdown": {
+              "color": 34,
+              "structure": 25,
+              "occasion": 6,
+              "style": 6,
+              "completeness": 10
+            },
+            "explanation": "Beige et fuchsia : le neutre pose une base calme et valorise la couleur.",
+            "items": [
+              {
+                "clothing_type_id": 1,
+                "color_id": 19,
+                "role": "top",
+                "is_anchor": true
+              },
+              {
+                "clothing_type_id": 10,
+                "color_id": 6,
+                "role": "bottom",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 16,
+                "color_id": 9,
+                "role": "shoes",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 20,
+                "color_id": 9,
+                "role": "accessory",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 22,
+                "color_id": 8,
+                "role": "accessory",
+                "is_anchor": false
+              }
+            ],
+            "image": null
+          },
+          {
+            "outfit_id": 2,
+            "title": "Inspiré de « Marine et blanc, version bureau »",
+            "score": 80,
+            "breakdown": {
+              "color": 33,
+              "structure": 25,
+              "occasion": 6,
+              "style": 6,
+              "completeness": 10
+            },
+            "explanation": "Noir et fuchsia : le neutre pose une base calme et valorise la couleur.",
+            "items": [
+              {
+                "clothing_type_id": 1,
+                "color_id": 19,
+                "role": "top",
+                "is_anchor": true
+              },
+              {
+                "clothing_type_id": 8,
+                "color_id": 10,
+                "role": "bottom",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 17,
+                "color_id": 1,
+                "role": "shoes",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 20,
+                "color_id": 1,
+                "role": "accessory",
+                "is_anchor": false
+              },
+              {
+                "clothing_type_id": 26,
+                "color_id": 17,
+                "role": "accessory",
+                "is_anchor": false
+              }
+            ],
+            "image": null
+          }
+        ]
+      }
+    }
+  }
+}

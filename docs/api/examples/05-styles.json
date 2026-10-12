@@ -1,0 +1,63 @@
+{
+  "title": "Styles",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/styles"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "id": 1,
+          "name": "Classique",
+          "slug": "classic",
+          "description": null,
+          "sort_order": 1
+        },
+        {
+          "id": 2,
+          "name": "Casual",
+          "slug": "casual",
+          "description": null,
+          "sort_order": 2
+        },
+        {
+          "id": 3,
+          "name": "Casual chic",
+          "slug": "smart-casual",
+          "description": null,
+          "sort_order": 3
+        },
+        {
+          "id": 4,
+          "name": "Élégant",
+          "slug": "elegant",
+          "description": null,
+          "sort_order": 4
+        },
+        {
+          "id": 5,
+          "name": "Minimaliste",
+          "slug": "minimalist",
+          "description": null,
+          "sort_order": 5
+        },
+        {
+          "id": 6,
+          "name": "Audacieux",
+          "slug": "bold",
+          "description": null,
+          "sort_order": 6
+        },
+        {
+          "id": 7,
+          "name": "Streetwear",
+          "slug": "streetwear",
+          "description": null,
+          "sort_order": 7
+        }
+      ]
+    }
+  }
+}

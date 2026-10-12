@@ -1,0 +1,29 @@
+{
+  "title": "Lire les préférences",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/me/preferences",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "language": "fr",
+        "style_slugs": [
+          "smart-casual",
+          "minimalist"
+        ],
+        "occasion_slugs": [
+          "work",
+          "everyday"
+        ],
+        "theme": "system",
+        "silhouette": "hourglass",
+        "updated_at": "2026-10-09T10:00:00.000Z"
+      }
+    }
+  }
+}

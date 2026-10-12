@@ -1,0 +1,56 @@
+{
+  "title": "Même client_uuid : idempotent (200)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/me/favorites",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    },
+    "body": {
+      "client_uuid": "3f2c1b4a-5d6e-4f70-8a9b-0c1d2e3f4a5b",
+      "outfit_id": 7
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "id": 2,
+        "client_uuid": "3f2c1b4a-5d6e-4f70-8a9b-0c1d2e3f4a5b",
+        "outfit_id": 7,
+        "snapshot": {
+          "title": "Blazer marine et jean clair",
+          "items": [
+            {
+              "clothing_type_id": 7,
+              "color_id": 10,
+              "role": "top"
+            },
+            {
+              "clothing_type_id": 9,
+              "color_id": 11,
+              "role": "bottom"
+            },
+            {
+              "clothing_type_id": 16,
+              "color_id": 8,
+              "role": "shoes"
+            },
+            {
+              "clothing_type_id": 20,
+              "color_id": 8,
+              "role": "accessory"
+            }
+          ],
+          "occasion_slug": "night-out",
+          "style_slug": "smart-casual",
+          "score": null,
+          "image_url": "https://images.herycia.example/looks/thumbs/blazer-marine-et-jean-clair.jpg",
+          "explanation": null
+        },
+        "created_at": "2026-10-12T10:00:00.000Z",
+        "updated_at": "2026-10-12T10:00:00.000Z"
+      }
+    }
+  }
+}

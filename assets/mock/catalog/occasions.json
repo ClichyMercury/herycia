@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Quotidien",
+      "slug": "everyday",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "name": "Travail / entretien",
+      "slug": "work",
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "name": "Sortie",
+      "slug": "night-out",
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "name": "Cérémonie",
+      "slug": "ceremony",
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "name": "Soirée",
+      "slug": "evening",
+      "sort_order": 5
+    },
+    {
+      "id": 6,
+      "name": "Événement décontracté",
+      "slug": "casual-event",
+      "sort_order": 6
+    }
+  ]
+}

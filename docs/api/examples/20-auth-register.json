@@ -1,0 +1,35 @@
+{
+  "title": "Inscription",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/auth/register",
+    "body": {
+      "name": "Kofi",
+      "email": "kofi@example.com",
+      "password": "unmotdepasse",
+      "password_confirmation": "unmotdepasse",
+      "accepts_privacy_policy": true,
+      "device_name": "iPhone de Kofi"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "data": {
+        "token": "mock_0001_2",
+        "token_type": "Bearer",
+        "expires_at": "2026-11-11T10:00:00.000Z",
+        "user": {
+          "id": 2,
+          "name": "Kofi",
+          "email": "kofi@example.com",
+          "roles": [
+            "user"
+          ],
+          "email_verified_at": null,
+          "created_at": "2026-10-12T10:00:00.000Z"
+        }
+      }
+    }
+  }
+}

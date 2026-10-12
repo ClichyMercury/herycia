@@ -1,0 +1,62 @@
+name: herycia
+description: "Application mobile d'aide à la composition de tenues."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^3.4.3
+  go_router: ^18.0.2
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+  drift: ^2.35.2
+  drift_flutter: ^0.3.1
+  path_provider: ^2.1.6
+  dio: ^5.11.1
+  flutter_secure_storage: ^11.2.0
+  lucide_icons_flutter: ^3.1.25
+  uuid: ^4.6.0
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  share_plus: ^13.3.1
+  flutter_native_splash: ^2.4.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+  build_runner: ^2.15.1
+  freezed: ^4.0.0-dev.3
+  json_serializable: ^6.14.1
+  drift_dev: ^2.35.1
+  mocktail: ^1.0.5
+  flutter_launcher_icons: ^0.14.4
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/mock/catalog/
+    - assets/mock/looks/
+    - assets/mock/rules/
+    - assets/branding/logo.png
+    - assets/branding/logo_dark.png
+
+  fonts:
+    - family: DMSans
+      fonts:
+        - asset: assets/fonts/DMSans-400.ttf
+          weight: 400
+        - asset: assets/fonts/DMSans-500.ttf
+          weight: 500
+        - asset: assets/fonts/DMSans-700.ttf
+          weight: 700

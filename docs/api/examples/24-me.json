@@ -1,0 +1,25 @@
+{
+  "title": "Profil connecté",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/me",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "id": 1,
+        "name": "Awa",
+        "email": "demo@herycia.app",
+        "roles": [
+          "user"
+        ],
+        "email_verified_at": "2026-09-30T10:00:00.000Z",
+        "created_at": "2026-09-30T10:00:00.000Z"
+      }
+    }
+  }
+}

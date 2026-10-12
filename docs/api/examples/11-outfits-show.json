@@ -1,0 +1,89 @@
+{
+  "title": "Détail d’un look",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/outfits/1"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "id": 1,
+        "title": "Chemise bleu ciel et chino beige",
+        "slug": "chemise-bleu-ciel-et-chino-beige",
+        "description": "Un classique de bureau, frais et facile à porter.",
+        "style_id": 3,
+        "occasion_id": 2,
+        "status": "published",
+        "published_at": "2026-10-02T09:00:00.000Z",
+        "origin": "editorial",
+        "items": [
+          {
+            "id": 1,
+            "clothing_type_id": 2,
+            "color_id": 11,
+            "role": "top",
+            "is_required": true,
+            "sort_order": 1
+          },
+          {
+            "id": 2,
+            "clothing_type_id": 10,
+            "color_id": 6,
+            "role": "bottom",
+            "is_required": true,
+            "sort_order": 2
+          },
+          {
+            "id": 3,
+            "clothing_type_id": 16,
+            "color_id": 8,
+            "role": "shoes",
+            "is_required": true,
+            "sort_order": 3
+          },
+          {
+            "id": 4,
+            "clothing_type_id": 20,
+            "color_id": 8,
+            "role": "accessory",
+            "is_required": false,
+            "sort_order": 4
+          },
+          {
+            "id": 5,
+            "clothing_type_id": 22,
+            "color_id": 1,
+            "role": "accessory",
+            "is_required": false,
+            "sort_order": 5
+          }
+        ],
+        "primary_image": {
+          "id": 1,
+          "url": "https://images.herycia.example/looks/chemise-bleu-ciel-et-chino-beige.jpg",
+          "thumbnail_url": "https://images.herycia.example/looks/thumbs/chemise-bleu-ciel-et-chino-beige.jpg",
+          "source_name": "Unsplash",
+          "source_url": "https://source.example/chemise-bleu-ciel-et-chino-beige",
+          "license_type": "unsplash",
+          "attribution": "Photo : Auteur 1 / Unsplash",
+          "usage_approved": true,
+          "alt_text": "Chemise bleu ciel et chino beige : chemise bleu ciel, chino beige, mocassins marron, ceinture marron, montre noir."
+        },
+        "images": [
+          {
+            "id": 1,
+            "url": "https://images.herycia.example/looks/chemise-bleu-ciel-et-chino-beige.jpg",
+            "thumbnail_url": "https://images.herycia.example/looks/thumbs/chemise-bleu-ciel-et-chino-beige.jpg",
+            "source_name": "Unsplash",
+            "source_url": "https://source.example/chemise-bleu-ciel-et-chino-beige",
+            "license_type": "unsplash",
+            "attribution": "Photo : Auteur 1 / Unsplash",
+            "usage_approved": true,
+            "alt_text": "Chemise bleu ciel et chino beige : chemise bleu ciel, chino beige, mocassins marron, ceinture marron, montre noir."
+          }
+        ]
+      }
+    }
+  }
+}

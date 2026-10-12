@@ -1,0 +1,421 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Herycia",
+  "navCompose": "Composer",
+  "navFavorites": "Favoris",
+  "navProfile": "Profil",
+  "commonRetry": "Réessayer",
+  "commonCancel": "Annuler",
+  "commonLater": "Plus tard",
+  "commonOptional": "facultatif",
+  "commonEdit": "Modifier",
+  "commonRemove": "Retirer",
+  "commonSlowLoading": "Ça prend plus de temps que prévu",
+  "commonComingSoon": "Bientôt disponible",
+  "commonErrorTitle": "Un problème est survenu",
+  "commonErrorMessage": "Vérifiez votre connexion puis réessayez.",
+  "offlineBanner": "Hors ligne · suggestions calculées sur l'appareil",
+  "requiresConnection": "nécessite une connexion",
+  "swatchSemantics": "Couleur {name}, {state}",
+  "@swatchSemantics": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "swatchSelected": "sélectionnée",
+  "swatchNotSelected": "non sélectionnée",
+  "swatchMore": "+{count}",
+  "@swatchMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreSemantics": "{score} sur 100, {label}",
+  "@scoreSemantics": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "scoreOutOf": "sur 100",
+  "scoreLabelHigh": "Belle harmonie",
+  "scoreLabelMedium": "Bonne base",
+  "scoreLabelLow": "À ajuster",
+  "scoreHowComputed": "Comment c'est calculé ?",
+  "pieceSlotAdd": "Ajouter {role}",
+  "@pieceSlotAdd": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "pieceSlotReplacedBy": "remplacé par : {piece}",
+  "@pieceSlotReplacedBy": {
+    "placeholders": {
+      "piece": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordShow": "Afficher le mot de passe",
+  "passwordHide": "Masquer le mot de passe",
+  "homeTitle": "Composer",
+  "homeGreeting": "Qu'est-ce qu'on porte aujourd'hui ?",
+  "homeFromItemTitle": "Partir d'une pièce",
+  "homeFromItemSubtitle": "Choisissez un vêtement, on complète la tenue.",
+  "homeFullOutfitTitle": "Composer une tenue",
+  "homeFullOutfitSubtitle": "Assemblez vos pièces, on vous dit ce qui marche.",
+  "homePaletteTitle": "Palette du catalogue",
+  "homeColorGuide": "Guide des couleurs",
+  "homeColorGuideSubtitle": "Neutres, contrastes et harmonies",
+  "favoritesTitle": "Favoris",
+  "favoritesEmptyTitle": "Aucun favori pour l'instant",
+  "favoritesEmptyMessage": "Touchez le cœur d'un look pour le retrouver ici, même hors ligne.",
+  "favoritesEmptyAction": "Composer une tenue",
+  "profileTitle": "Profil",
+  "profileSignInPitch": "Connectez-vous pour retrouver vos favoris sur tous vos appareils.",
+  "profileSignIn": "Se connecter",
+  "profilePreferences": "Préférences",
+  "profilePrivacy": "Confidentialité",
+  "profileAbout": "À propos et crédits",
+  "profileDesignSystem": "Galerie du design system",
+  "galleryTitle": "Design system",
+  "pieceSlotFilledSemantics": "{role} : {piece}. Modifier",
+  "@pieceSlotFilledSemantics": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      },
+      "piece": {
+        "type": "String"
+      }
+    }
+  },
+  "silhouetteStraight": "Droite",
+  "silhouetteHourglass": "Sablier",
+  "silhouetteBroad": "Ample",
+  "mannequinEmpty": "Aperçu de la tenue : aucune pièce choisie",
+  "mannequinSemantics": "Aperçu de la tenue : {pieces}",
+  "@mannequinSemantics": {
+    "placeholders": {
+      "pieces": {
+        "type": "String"
+      }
+    }
+  },
+  "composeTitle": "Composer une tenue",
+  "composeRoleTop": "Haut",
+  "composeRoleBottom": "Bas",
+  "composeRoleOnePiece": "Robe ou combinaison",
+  "composeRoleShoes": "Chaussures",
+  "composeRoleAccessories": "Accessoires",
+  "composeAddAccessory": "Ajouter un accessoire",
+  "composeAccessoriesLimit": "{max} accessoires maximum",
+  "@composeAccessoriesLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "composeEvaluate": "Évaluer",
+  "composeMissing": "Il manque : {pieces}",
+  "@composeMissing": {
+    "placeholders": {
+      "pieces": {
+        "type": "String"
+      }
+    }
+  },
+  "composeReady": "Tenue prête à évaluer",
+  "composeReset": "Tout effacer",
+  "composeRemovePiece": "Retirer",
+  "composePieceRemoved": "Pièce retirée",
+  "pickerChooseType": "Quel type ?",
+  "pickerChooseColor": "Quelle couleur ?",
+  "pickerConfirm": "Valider",
+  "pickerBack": "Retour",
+  "pieceLabel": "{type} {color}",
+  "@pieceLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+  "colorFamily": "{family, select, black{Noirs} white{Blancs} grey{Gris} beige{Beiges} cream{Crèmes} brown{Marrons} camel{Camels} blue{Bleus} green{Verts} red{Rouges} burgundy{Bordeaux} pink{Roses} purple{Violets} yellow{Jaunes} orange{Oranges} other{Autres}}",
+  "@colorFamily": {
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  },
+  "errorOffline": "Vous êtes hors ligne. Vérifiez votre connexion.",
+  "errorSessionExpired": "Votre session a expiré. Reconnectez-vous.",
+  "filtersTitle": "Occasion et style",
+  "filtersOptional": "Facultatif : sans filtre, on vous propose de tout.",
+  "filtersOccasion": "Occasion",
+  "filtersStyle": "Style",
+  "evaluationTitle": "Évaluation",
+  "evaluationStrengths": "Points forts",
+  "evaluationStructural": "À compléter",
+  "evaluationStyleRemarks": "À considérer",
+  "evaluationSuggestions": "Pour aller plus loin",
+  "evaluationTry": "Essayer",
+  "evaluationBeforeAfter": "Avant {before} · Après {after}",
+  "@evaluationBeforeAfter": {
+    "placeholders": {
+      "before": {
+        "type": "int"
+      },
+      "after": {
+        "type": "int"
+      }
+    }
+  },
+  "evaluationGain": "{gain, plural, =1{+1 point} other{+{gain} points}}",
+  "@evaluationGain": {
+    "placeholders": {
+      "gain": {
+        "type": "int"
+      }
+    }
+  },
+  "evaluationEditOutfit": "Modifier la tenue",
+  "evaluationSave": "Enregistrer la composition",
+  "evaluationNoSuggestion": "Rien d'évident à changer : c'est une tenue équilibrée.",
+  "breakdownTitle": "Comment c'est calculé",
+  "breakdownIntro": "Le score est indicatif : il additionne cinq critères. Il ne remplace pas vos goûts.",
+  "breakdownColor": "Harmonie des couleurs",
+  "breakdownStructure": "Cohérence de la tenue",
+  "breakdownOccasion": "Adéquation à l'occasion",
+  "breakdownStyle": "Style choisi",
+  "breakdownCompleteness": "Tenue complète",
+  "breakdownValue": "{value} / {max}",
+  "@breakdownValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackQuestion": "Cette proposition vous aide ?",
+  "feedbackHelpful": "Utile",
+  "feedbackNotHelpful": "Pas utile",
+  "feedbackCommentLabel": "Un commentaire ? (facultatif)",
+  "feedbackSend": "Envoyer",
+  "feedbackThanks": "Merci pour votre retour !",
+  "offlineComputed": "Calculé hors ligne",
+  "fromItemTitle": "Partir d'une pièce",
+  "fromItemStepCategory": "Quelle pièce voulez-vous porter ?",
+  "fromItemStepType": "Quel type exactement ?",
+  "fromItemStepColor": "De quelle couleur ?",
+  "fromItemStepFilters": "Pour quelle occasion ?",
+  "fromItemShowLooks": "Voir les tenues",
+  "fromItemNoFilter": "Sans filtre",
+  "fromItemSummary": "{piece}{context}",
+  "@fromItemSummary": {
+    "placeholders": {
+      "piece": {
+        "type": "String"
+      },
+      "context": {
+        "type": "String"
+      }
+    }
+  },
+  "fromItemYourPiece": "Votre pièce",
+  "fromItemChange": "Changer",
+  "resultsTitle": "Tenues proposées",
+  "resultsBroadened": "Peu de tenues correspondaient exactement. {steps}.",
+  "@resultsBroadened": {
+    "placeholders": {
+      "steps": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsEmptyTitle": "Aucune tenue avec ces filtres",
+  "resultsEmptyMessage": "Essayez sans filtrer l'occasion ou le style.",
+  "resultsEmptyAction": "Modifier la recherche",
+  "resultsCount": "{count, plural, =1{1 tenue} other{{count} tenues}}",
+  "@resultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lookTitle": "Détail du look",
+  "lookPieces": "Les pièces",
+  "lookWhy": "Pourquoi ça marche",
+  "lookOccasion": "Occasion",
+  "lookStyle": "Style",
+  "lookCredit": "Crédit : {credit}",
+  "@lookCredit": {
+    "placeholders": {
+      "credit": {
+        "type": "String"
+      }
+    }
+  },
+  "lookShare": "Partager",
+  "lookUseAsBase": "Composer à partir de ce look",
+  "lookVariants": "Voir des variantes",
+  "lookAnchorBadge": "Votre pièce",
+  "lookIllustration": "Illustration : la photo n'est pas disponible pour cette variante.",
+  "shareText": "{title} — {pieces}. Composé avec Herycia.",
+  "@shareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "pieces": {
+        "type": "String"
+      }
+    }
+  },
+  "lookNotFound": "Ce look n'est plus disponible.",
+  "favoriteAdd": "Ajouter aux favoris",
+  "favoriteRemove": "Retirer des favoris",
+  "homeInspiration": "Looks d'inspiration",
+  "homeRecentFavorites": "Favoris récents",
+  "homeSeeAll": "Tout voir",
+  "guideTitle": "Guide des couleurs",
+  "guideIntro": "Des repères pour associer les couleurs. Ce sont des indications, pas des règles : vos goûts passent avant.",
+  "guidePrinciples": "Principes d'harmonie",
+  "guidePrinciplesSubtitle": "Neutres, contrastes, camaïeu…",
+  "guideNeutralBadge": "Neutre",
+  "guidePairsWell": "S'accorde bien avec",
+  "guideSuggestedPairs": "Associations conseillées pour : {color}",
+  "@guideSuggestedPairs": {
+    "placeholders": {
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+  "guideComposeWith": "Composer avec cette couleur",
+  "guidePickColor": "Touchez une nuance pour voir ses associations.",
+  "authEmail": "Adresse e-mail",
+  "authPassword": "Mot de passe",
+  "authName": "Nom ou pseudonyme",
+  "authLoginTitle": "Connexion",
+  "authLoginAction": "Se connecter",
+  "authForgotLink": "Mot de passe oublié ?",
+  "authNoAccount": "Pas encore de compte ? Créer un compte",
+  "authRegisterTitle": "Créer un compte",
+  "authRegisterAction": "Créer mon compte",
+  "authPasswordRule": "Au moins 8 caractères.",
+  "authAcceptPrivacy": "J'accepte la politique de confidentialité",
+  "authHaveAccount": "Déjà un compte ? Se connecter",
+  "authWelcome": "Bienvenue, {name} !",
+  "@authWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotTitle": "Mot de passe oublié",
+  "authForgotIntro": "Entrez votre adresse : si un compte existe, vous recevrez un lien pour choisir un nouveau mot de passe.",
+  "authForgotAction": "Envoyer le lien",
+  "authForgotSent": "C'est envoyé. Pensez à vérifier vos courriers indésirables.",
+  "authHaveCode": "J'ai reçu un code",
+  "authDemoCode": "Mode démonstration : votre code est {code}",
+  "@authDemoCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "authResetTitle": "Nouveau mot de passe",
+  "authResetCode": "Code reçu par e-mail",
+  "authResetNewPassword": "Nouveau mot de passe",
+  "authResetAction": "Changer le mot de passe",
+  "authResetDone": "Mot de passe modifié. Vous pouvez vous connecter.",
+  "authEmailInvalid": "Entrez une adresse e-mail valide.",
+  "authRequired": "Ce champ est obligatoire.",
+  "profileSignedInAs": "Connecté en tant que {email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileLogout": "Se déconnecter",
+  "profileLoggedOut": "Vous êtes déconnecté.",
+  "profileDeleteAccount": "Supprimer mon compte",
+  "profileSavedOutfits": "Mes compositions",
+  "syncSynced": "Synchronisé",
+  "syncPending": "En attente de synchronisation",
+  "syncFailed": "Échec de synchronisation · réessayer",
+  "syncLocalOnly": "Enregistré sur cet appareil",
+  "deleteTitle": "Supprimer votre compte ?",
+  "deleteBody": "Vos favoris, compositions et préférences seront effacés de nos serveurs. Cette action est définitive.",
+  "deleteConfirmTitle": "Vraiment supprimer ?",
+  "deleteConfirmBody": "Dernière confirmation : votre compte sera supprimé immédiatement.",
+  "deleteAction": "Supprimer",
+  "deleteDone": "Votre compte a été supprimé.",
+  "prefsTitle": "Préférences",
+  "prefsStyles": "Styles que vous aimez",
+  "prefsOccasions": "Occasions fréquentes",
+  "prefsTheme": "Thème",
+  "prefsThemeSystem": "Système",
+  "prefsThemeLight": "Clair",
+  "prefsThemeDark": "Sombre",
+  "prefsSilhouette": "Silhouette du mannequin",
+  "prefsSaved": "Préférences enregistrées",
+  "prefsLocalHint": "Vos préférences sont gardées sur cet appareil. Connectez-vous pour les retrouver partout.",
+  "privacyTitle": "Confidentialité",
+  "privacyBody": "Herycia collecte le minimum : votre adresse e-mail si vous créez un compte, vos favoris, vos compositions et vos préférences. Aucune publicité ciblée. Vos retours sur les suggestions sont anonymisés si vous supprimez votre compte. Vous pouvez supprimer votre compte et vos données à tout moment depuis votre profil.",
+  "aboutTitle": "À propos et crédits",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutBody": "Les visuels des looks sont publiés avec l'accord de leurs auteurs ; leur crédit apparaît sous chaque image quand la licence l'exige. Police : DM Sans (SIL Open Font License). Icônes : Lucide (ISC).",
+  "signInPromptSave": "Connectez-vous pour enregistrer vos compositions et les retrouver sur tous vos appareils.",
+  "devSimulateOffline": "Simuler l'absence de réseau (dev)",
+  "savedOutfitsTitle": "Mes compositions",
+  "savedOutfitsEmpty": "Aucune composition enregistrée",
+  "savedOutfitsEmptyMessage": "Évaluez une tenue puis enregistrez-la pour la retrouver ici.",
+  "savedOutfitDeleted": "Composition supprimée",
+  "savedOutfitSaved": "Composition enregistrée",
+  "savedOutfitDefaultTitle": "Composition du {date}",
+  "@savedOutfitDefaultTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "favoriteRemoved": "Retiré des favoris",
+  "favoritesAll": "Tous",
+  "commonLoading": "Chargement en cours"
+}

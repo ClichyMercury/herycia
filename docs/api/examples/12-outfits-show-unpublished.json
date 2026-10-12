@@ -1,0 +1,15 @@
+{
+  "title": "Look non publié inaccessible",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/outfits/19"
+  },
+  "response": {
+    "status": 404,
+    "body": {
+      "message": "Ce look n'existe pas ou n'est plus publié.",
+      "errors": {},
+      "code": "NOT_FOUND"
+    }
+  }
+}

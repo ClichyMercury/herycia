@@ -1,0 +1,67 @@
+{
+  "title": "Améliorations proposées",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/recommendations/improve-outfit",
+    "body": {
+      "items": [
+        {
+          "clothing_type_id": 5,
+          "color_id": 19,
+          "role": "top"
+        },
+        {
+          "clothing_type_id": 9,
+          "color_id": 24,
+          "role": "bottom"
+        },
+        {
+          "clothing_type_id": 15,
+          "color_id": 20,
+          "role": "shoes"
+        }
+      ],
+      "occasion_slug": "everyday"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "request_id": "rec_000005",
+        "rules_version": "2026.10.12-r1",
+        "computed_offline": false,
+        "current_score": 82,
+        "improvements": [
+          {
+            "role": "bottom",
+            "clothing_type_id": 9,
+            "from_color_id": 24,
+            "to_color_id": 1,
+            "new_score": 91,
+            "gain": 9,
+            "explanation": "Jean en noir plutôt qu'en orange : +9 points."
+          },
+          {
+            "role": "shoes",
+            "clothing_type_id": 15,
+            "from_color_id": 20,
+            "to_color_id": 2,
+            "new_score": 91,
+            "gain": 9,
+            "explanation": "Baskets en blanc plutôt qu'en violet : +9 points."
+          },
+          {
+            "role": "top",
+            "clothing_type_id": 5,
+            "from_color_id": 19,
+            "to_color_id": 3,
+            "new_score": 89,
+            "gain": 7,
+            "explanation": "Pull en blanc cassé plutôt qu'en fuchsia : +7 points."
+          }
+        ]
+      }
+    }
+  }
+}

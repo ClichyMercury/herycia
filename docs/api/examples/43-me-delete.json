@@ -1,0 +1,13 @@
+{
+  "title": "Suppression du compte",
+  "request": {
+    "method": "DELETE",
+    "path": "/api/v1/me",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    }
+  },
+  "response": {
+    "status": 204
+  }
+}

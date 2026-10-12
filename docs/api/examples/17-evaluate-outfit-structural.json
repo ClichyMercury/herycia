@@ -1,0 +1,64 @@
+{
+  "title": "Évaluation avec erreurs structurelles",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/recommendations/evaluate-outfit",
+    "body": {
+      "items": [
+        {
+          "clothing_type_id": 13,
+          "color_id": 10,
+          "role": "one_piece"
+        },
+        {
+          "clothing_type_id": 9,
+          "color_id": 10,
+          "role": "bottom"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "request_id": "rec_000004",
+        "rules_version": "2026.10.12-r1",
+        "computed_offline": false,
+        "score": 49,
+        "breakdown": {
+          "color": 31,
+          "structure": 7,
+          "occasion": 4,
+          "style": 3,
+          "completeness": 4
+        },
+        "explanation": "Une robe ou une combinaison remplace déjà le haut et le bas.",
+        "strengths": [
+          "Une base entièrement neutre, facile à accessoiriser."
+        ],
+        "warnings": [
+          {
+            "kind": "structural",
+            "code": "one_piece_conflict",
+            "message": "Une robe ou une combinaison remplace déjà le haut et le bas.",
+            "roles": [
+              "one_piece",
+              "top",
+              "bottom"
+            ]
+          },
+          {
+            "kind": "structural",
+            "code": "missing_shoes",
+            "message": "Il manque des chaussures.",
+            "roles": [
+              "shoes"
+            ]
+          }
+        ],
+        "suggestions": []
+      }
+    }
+  }
+}

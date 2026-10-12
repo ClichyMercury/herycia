@@ -1,0 +1,129 @@
+{
+  "title": "Guide des couleurs",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/color-guide"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "families": [
+          {
+            "slug": "black",
+            "name": "Noirs",
+            "description": "La base la plus sûre : elle structure et affine.",
+            "is_neutral": true,
+            "color_ids": [
+              1
+            ],
+            "pairs_well_with_color_ids": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "slug": "white",
+            "name": "Blancs",
+            "description": "Lumineux et frais, ils éclairent n'importe quelle couleur.",
+            "is_neutral": true,
+            "color_ids": [
+              2,
+              3
+            ],
+            "pairs_well_with_color_ids": [
+              1,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "slug": "grey",
+            "name": "Gris",
+            "description": "Des neutres froids, du gris perle à l'anthracite.",
+            "is_neutral": true,
+            "color_ids": [
+              4,
+              5
+            ],
+            "pairs_well_with_color_ids": [
+              1,
+              2,
+              3,
+              6,
+              7,
+              8
+            ]
+          },
+          "… 12 éléments supplémentaires (15 au total)"
+        ],
+        "principles": [
+          {
+            "slug": "neutrals",
+            "title": "Partir des neutres",
+            "body": "Noir, blanc, gris, beige, marine et camel s'associent avec presque tout. Ils forment une base calme sur laquelle poser une couleur.",
+            "example_color_ids": [
+              10,
+              2,
+              9
+            ]
+          },
+          {
+            "slug": "dominant-secondary-accent",
+            "title": "Une dominante, une secondaire, une touche",
+            "body": "Une couleur principale, une seconde plus discrète et une petite touche d'accent : c'est un repère simple, pas une règle.",
+            "example_color_ids": [
+              10,
+              6,
+              17
+            ]
+          },
+          {
+            "slug": "light-dark",
+            "title": "Jouer le clair et le foncé",
+            "body": "Un contraste clair/foncé rend la tenue nette ; des valeurs proches donnent un rendu plus doux.",
+            "example_color_ids": [
+              1,
+              3
+            ]
+          },
+          {
+            "slug": "tone-on-tone",
+            "title": "Le camaïeu",
+            "body": "Plusieurs nuances d'une même famille créent un ensemble harmonieux et élégant.",
+            "example_color_ids": [
+              11,
+              12,
+              10
+            ]
+          },
+          {
+            "slug": "complementary",
+            "title": "Les complémentaires",
+            "body": "Des couleurs opposées sur le cercle chromatique se mettent en valeur. À tester avec un neutre pour équilibrer.",
+            "example_color_ids": [
+              10,
+              24
+            ]
+          },
+          {
+            "slug": "temperature",
+            "title": "Chaud ou froid",
+            "body": "Les tons chauds (camel, terracotta, moutarde) et froids (bleus, gris) peuvent se mélanger ; un neutre fait le lien.",
+            "example_color_ids": [
+              9,
+              4
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "title": "Mode B : évaluer une tenue",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/recommendations/evaluate-outfit",
+    "body": {
+      "items": [
+        {
+          "clothing_type_id": 8,
+          "color_id": 10,
+          "role": "bottom"
+        },
+        {
+          "clothing_type_id": 2,
+          "color_id": 2,
+          "role": "top"
+        },
+        {
+          "clothing_type_id": 17,
+          "color_id": 1,
+          "role": "shoes"
+        }
+      ],
+      "occasion_slug": "work",
+      "style_slug": "classic"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "request_id": "rec_000003",
+        "rules_version": "2026.10.12-r1",
+        "computed_offline": false,
+        "score": 95,
+        "breakdown": {
+          "color": 37,
+          "structure": 25,
+          "occasion": 15,
+          "style": 10,
+          "completeness": 8
+        },
+        "explanation": "Blanc et bleu marine : un contraste net et intemporel.",
+        "strengths": [
+          "Une base entièrement neutre, facile à accessoiriser.",
+          "Blanc et bleu marine : un contraste net et intemporel.",
+          "Une tenue cohérente pour : travail / entretien."
+        ],
+        "warnings": [],
+        "suggestions": []
+      }
+    }
+  }
+}

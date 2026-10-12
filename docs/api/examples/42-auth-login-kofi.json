@@ -1,0 +1,31 @@
+{
+  "title": "Connexion du compte créé",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "body": {
+      "email": "kofi@example.com",
+      "password": "unmotdepasse"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "token": "mock_0004_2",
+        "token_type": "Bearer",
+        "expires_at": "2026-11-11T10:00:00.000Z",
+        "user": {
+          "id": 2,
+          "name": "Kofi",
+          "email": "kofi@example.com",
+          "roles": [
+            "user"
+          ],
+          "email_verified_at": null,
+          "created_at": "2026-10-12T10:00:00.000Z"
+        }
+      }
+    }
+  }
+}

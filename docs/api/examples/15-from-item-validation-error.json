@@ -1,0 +1,23 @@
+{
+  "title": "Erreur de validation",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/recommendations/from-item",
+    "body": {
+      "clothing_type_id": 2,
+      "color_id": 999
+    }
+  },
+  "response": {
+    "status": 422,
+    "body": {
+      "message": "Certaines données sont invalides.",
+      "errors": {
+        "color_id": [
+          "La couleur sélectionnée n'est pas disponible."
+        ]
+      },
+      "code": "VALIDATION_ERROR"
+    }
+  }
+}

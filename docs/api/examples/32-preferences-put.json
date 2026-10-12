@@ -1,0 +1,40 @@
+{
+  "title": "Modifier les préférences",
+  "request": {
+    "method": "PUT",
+    "path": "/api/v1/me/preferences",
+    "headers": {
+      "Authorization": "Bearer <token>"
+    },
+    "body": {
+      "language": "fr",
+      "style_slugs": [
+        "classic",
+        "elegant"
+      ],
+      "occasion_slugs": [
+        "work"
+      ],
+      "theme": "dark",
+      "silhouette": "broad"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "language": "fr",
+        "style_slugs": [
+          "classic",
+          "elegant"
+        ],
+        "occasion_slugs": [
+          "work"
+        ],
+        "theme": "dark",
+        "silhouette": "broad",
+        "updated_at": "2026-10-12T10:00:00.000Z"
+      }
+    }
+  }
+}
