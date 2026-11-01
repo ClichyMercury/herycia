@@ -65,10 +65,10 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
       );
     }
 
-    final occasionSlugs = {for (final f in favorites) ?f.snapshot.occasionSlug};
-    final styleSlugs = {for (final f in favorites) ?f.snapshot.styleSlug};
+    final occasionSlugs = {for (final f in favorites) ?f.snapshot.occasion?.slug};
+    final styleSlugs = {for (final f in favorites) ?f.snapshot.style?.slug};
     final filtered = favorites
-        .where((f) => (_occasion == null || f.snapshot.occasionSlug == _occasion) && (_style == null || f.snapshot.styleSlug == _style))
+        .where((f) => (_occasion == null || f.snapshot.occasion?.slug == _occasion) && (_style == null || f.snapshot.style?.slug == _style))
         .toList();
 
     Widget filterRow(String keyPrefix, Set<String> slugs, String? selected, String Function(String) name, ValueChanged<String?> onChanged) =>

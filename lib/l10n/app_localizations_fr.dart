@@ -262,29 +262,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String colorFamily(String family) {
-    String _temp0 = intl.Intl.selectLogic(family, {
-      'black': 'Noirs',
-      'white': 'Blancs',
-      'grey': 'Gris',
-      'beige': 'Beiges',
-      'cream': 'Crèmes',
-      'brown': 'Marrons',
-      'camel': 'Camels',
-      'blue': 'Bleus',
-      'green': 'Verts',
-      'red': 'Rouges',
-      'burgundy': 'Bordeaux',
-      'pink': 'Roses',
-      'purple': 'Violets',
-      'yellow': 'Jaunes',
-      'orange': 'Oranges',
-      'other': 'Autres',
-    });
-    return '$_temp0';
-  }
-
-  @override
   String get errorOffline => 'Vous êtes hors ligne. Vérifiez votre connexion.';
 
   @override
@@ -393,9 +370,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedbackThanks => 'Merci pour votre retour !';
 
   @override
-  String get offlineComputed => 'Calculé hors ligne';
-
-  @override
   String get fromItemTitle => 'Partir d\'une pièce';
 
   @override
@@ -432,7 +406,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String resultsBroadened(String steps) {
-    return 'Peu de tenues correspondaient exactement. $steps.';
+    return 'Peu de tenues correspondaient exactement : nous avons ignoré $steps pour trouver plus de propositions.';
   }
 
   @override
@@ -532,9 +506,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guideNeutralBadge => 'Neutre';
 
   @override
-  String get guidePairsWell => 'S\'accorde bien avec';
-
-  @override
   String guideSuggestedPairs(String color) {
     return 'Associations conseillées pour : $color';
   }
@@ -591,10 +562,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authForgotIntro =>
-      'Entrez votre adresse : si un compte existe, vous recevrez un lien pour choisir un nouveau mot de passe.';
+      'Entrez votre adresse : si un compte existe, vous recevrez un code à 6 chiffres pour choisir un nouveau mot de passe.';
 
   @override
-  String get authForgotAction => 'Envoyer le lien';
+  String get authForgotAction => 'Envoyer le code';
 
   @override
   String get authForgotSent =>
@@ -670,10 +641,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteConfirmTitle => 'Vraiment supprimer ?';
 
   @override
-  String get deleteConfirmBody =>
-      'Dernière confirmation : votre compte sera supprimé immédiatement.';
-
-  @override
   String get deleteAction => 'Supprimer';
 
   @override
@@ -730,10 +697,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les visuels des looks sont publiés avec l\'accord de leurs auteurs ; leur crédit apparaît sous chaque image quand la licence l\'exige. Police : DM Sans (SIL Open Font License). Icônes : Lucide (ISC).';
 
   @override
-  String get signInPromptSave =>
-      'Connectez-vous pour enregistrer vos compositions et les retrouver sur tous vos appareils.';
-
-  @override
   String get devSimulateOffline => 'Simuler l\'absence de réseau (dev)';
 
   @override
@@ -765,4 +728,168 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonLoading => 'Chargement en cours';
+
+  @override
+  String get commonSave => 'Enregistrer';
+
+  @override
+  String get composeRoleOuterwear => 'Veste';
+
+  @override
+  String get sessionExpiredBanner =>
+      'Session expirée, reconnectez-vous pour synchroniser.';
+
+  @override
+  String get syncInProgress => 'Synchronisation…';
+
+  @override
+  String get authResend => 'Renvoyer un code';
+
+  @override
+  String authResendIn(int seconds) {
+    return 'Renvoyer un code dans $seconds s';
+  }
+
+  @override
+  String get authOtpInvalid => 'Entrez le code à 6 chiffres reçu par e-mail.';
+
+  @override
+  String get authOtpHint => '6 chiffres, valable 15 minutes.';
+
+  @override
+  String get deletePasswordPrompt =>
+      'Pour confirmer, saisissez votre mot de passe. Votre compte sera supprimé immédiatement.';
+
+  @override
+  String get profileEditName => 'Modifier mon nom';
+
+  @override
+  String get profileNameSaved => 'Nom mis à jour.';
+
+  @override
+  String get profileChangePassword => 'Changer mon mot de passe';
+
+  @override
+  String get profileCurrentPassword => 'Mot de passe actuel';
+
+  @override
+  String get profilePasswordChanged =>
+      'Mot de passe modifié. Vos autres appareils ont été déconnectés.';
+
+  @override
+  String cachedResult(String date) {
+    return 'Résultat du $date, hors ligne';
+  }
+
+  @override
+  String get evaluationComplete => 'Votre tenue est complète.';
+
+  @override
+  String get evaluationIncomplete =>
+      'Il manque encore des pièces pour compléter la tenue.';
+
+  @override
+  String get evaluationIndicative =>
+      'Ce score est indicatif : vos goûts passent avant.';
+
+  @override
+  String get warningStructure => 'Structure';
+
+  @override
+  String get warningPreference => 'Préférence';
+
+  @override
+  String get broadenedStyle => 'le style';
+
+  @override
+  String get broadenedOccasion => 'l\'occasion';
+
+  @override
+  String get broadenedShades => 'les nuances proches';
+
+  @override
+  String get broadenedNeutral => 'les conseils de couleurs neutres';
+
+  @override
+  String get resultsAdviceTitle => 'Quelques conseils de couleurs';
+
+  @override
+  String get resultsAdviceIntro =>
+      'Aucun look ne correspond assez bien à cette pièce pour l\'instant. Voici des couleurs faciles à associer.';
+
+  @override
+  String get offlineGuideBadge => 'Hors ligne : guide des couleurs';
+
+  @override
+  String offlineGuideTitle(String color) {
+    return 'Avec du $color';
+  }
+
+  @override
+  String get offlineGuideIntro =>
+      'Les propositions de looks reviendront avec la connexion. En attendant, voici les associations du guide des couleurs.';
+
+  @override
+  String guideFamilyCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nuances',
+      one: '1 nuance',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guideHarmonious => 'S\'harmonise avec';
+
+  @override
+  String get guideContrast => 'En contraste';
+
+  @override
+  String get guideNeutralPairing => 'Neutres qui l\'accompagnent';
+
+  @override
+  String get guideCaution => 'À manier avec prudence';
+
+  @override
+  String get guideNoPairs =>
+      'Pas encore d\'association conseillée pour cette nuance.';
+
+  @override
+  String get principleNeutralTitle => 'Partir d\'une base neutre';
+
+  @override
+  String get principleNeutralBody =>
+      'Noir, blanc, gris, beige ou bleu marine s\'associent à presque tout. Une base neutre laisse une seule pièce de couleur prendre la vedette.';
+
+  @override
+  String get principleHarmonyTitle => 'Jouer l\'harmonie';
+
+  @override
+  String get principleHarmonyBody =>
+      'Des couleurs voisines ou un camaïeu d\'une même teinte donnent une tenue douce et cohérente.';
+
+  @override
+  String get principleContrastTitle => 'Oser le contraste';
+
+  @override
+  String get principleContrastBody =>
+      'Des couleurs opposées réveillent une tenue. Gardez-en une dominante et utilisez l\'autre en touche.';
+
+  @override
+  String get principleCautionTitle => 'Savoir doser';
+
+  @override
+  String get principleCautionBody =>
+      'Certaines associations sont plus délicates : elles demandent une pièce neutre pour faire le lien. Ce sont des repères, pas des interdits.';
+
+  @override
+  String get authInvalidCredentials =>
+      'Identifiants invalides. Vérifiez votre e-mail et votre mot de passe.';
+
+  @override
+  String profileVersion(String version) {
+    return 'Herycia $version';
+  }
 }

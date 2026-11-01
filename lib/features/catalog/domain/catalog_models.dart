@@ -14,10 +14,33 @@ enum CategoryGroup {
   bottom,
   @JsonValue('one_piece')
   onePiece,
-  @JsonValue('shoes')
-  shoes,
+  @JsonValue('footwear')
+  footwear,
   @JsonValue('accessory')
   accessory,
+}
+
+@freezed
+abstract class CatalogRef with _$CatalogRef {
+  const factory CatalogRef({
+    @IdConverter() required String id,
+    required String slug,
+    required String name,
+  }) = _CatalogRef;
+
+  factory CatalogRef.fromJson(Map<String, dynamic> json) => _$CatalogRefFromJson(json);
+}
+
+@freezed
+abstract class ColorRef with _$ColorRef {
+  const factory ColorRef({
+    @IdConverter() required String id,
+    required String slug,
+    required String name,
+    required String hexCode,
+  }) = _ColorRef;
+
+  factory ColorRef.fromJson(Map<String, dynamic> json) => _$ColorRefFromJson(json);
 }
 
 @freezed
@@ -37,6 +60,8 @@ abstract class ClothingCategory with _$ClothingCategory {
 
 @freezed
 abstract class ClothingType with _$ClothingType {
+  const ClothingType._();
+
   const factory ClothingType({
     @IdConverter() required String id,
     @IdConverter() required String categoryId,
@@ -47,6 +72,13 @@ abstract class ClothingType with _$ClothingType {
   }) = _ClothingType;
 
   factory ClothingType.fromJson(Map<String, dynamic> json) => _$ClothingTypeFromJson(json);
+
+  factory ClothingType.fromRef(CatalogRef ref) =>
+      ClothingType(id: ref.id, categoryId: '', name: ref.name, slug: ref.slug);
+
+  static const outerwearSlugs = {'veste', 'blazer'};
+
+  bool get canBeOuterwear => outerwearSlugs.contains(slug);
 }
 
 @freezed
@@ -60,12 +92,16 @@ abstract class CatalogColor with _$CatalogColor {
     required String hexCode,
     required String colorFamily,
     String? temperature,
-    double? brightness,
-    double? saturation,
+    String? brightness,
+    String? saturation,
     @Default(false) bool isNeutral,
+    @Default([]) List<String> aliases,
   }) = _CatalogColor;
 
   factory CatalogColor.fromJson(Map<String, dynamic> json) => _$CatalogColorFromJson(json);
+
+  factory CatalogColor.fromRef(ColorRef ref) =>
+      CatalogColor(id: ref.id, name: ref.name, slug: ref.slug, hexCode: ref.hexCode, colorFamily: '');
 
   Color get color => parseHexColor(hexCode);
 }
@@ -99,9 +135,8 @@ abstract class Occasion with _$Occasion {
 @freezed
 abstract class CatalogVersion with _$CatalogVersion {
   const factory CatalogVersion({
-    required String catalogVersion,
-    required String rulesVersion,
-    @UtcDateTimeConverter() required DateTime updatedAt,
+    required int catalogVersion,
+    required int rulesVersion,
   }) = _CatalogVersion;
 
   factory CatalogVersion.fromJson(Map<String, dynamic> json) => _$CatalogVersionFromJson(json);
@@ -112,88 +147,75 @@ abstract class ColorFamilyGuide with _$ColorFamilyGuide {
   const factory ColorFamilyGuide({
     required String slug,
     required String name,
-    required String description,
-    @Default(false) bool isNeutral,
     @IdListConverter() required List<String> colorIds,
-    @IdListConverter() @Default([]) List<String> pairsWellWithColorIds,
   }) = _ColorFamilyGuide;
 
   factory ColorFamilyGuide.fromJson(Map<String, dynamic> json) => _$ColorFamilyGuideFromJson(json);
 }
 
 @freezed
-abstract class GuidePrinciple with _$GuidePrinciple {
-  const factory GuidePrinciple({
-    required String slug,
-    required String title,
-    required String body,
-    @IdListConverter() @Default([]) List<String> exampleColorIds,
-  }) = _GuidePrinciple;
+abstract class ColorPartner with _$ColorPartner {
+  const factory ColorPartner({
+    @IdConverter() required String colorId,
+    required int score,
+    required String explanation,
+  }) = _ColorPartner;
 
-  factory GuidePrinciple.fromJson(Map<String, dynamic> json) => _$GuidePrincipleFromJson(json);
+  factory ColorPartner.fromJson(Map<String, dynamic> json) => _$ColorPartnerFromJson(json);
+}
+
+enum HarmonyKind { harmonious, contrast, neutralPairing, caution }
+
+@freezed
+abstract class ColorHarmony with _$ColorHarmony {
+  const ColorHarmony._();
+
+  const factory ColorHarmony({
+    @IdConverter() required String colorId,
+    @Default([]) List<ColorPartner> harmonious,
+    @Default([]) List<ColorPartner> contrast,
+    @Default([]) List<ColorPartner> neutralPairing,
+    @Default([]) List<ColorPartner> caution,
+  }) = _ColorHarmony;
+
+  factory ColorHarmony.fromJson(Map<String, dynamic> json) => _$ColorHarmonyFromJson(json);
+
+  List<ColorPartner> of(HarmonyKind kind) => switch (kind) {
+        HarmonyKind.harmonious => harmonious,
+        HarmonyKind.contrast => contrast,
+        HarmonyKind.neutralPairing => neutralPairing,
+        HarmonyKind.caution => caution,
+      };
 }
 
 @freezed
 abstract class ColorGuide with _$ColorGuide {
+  const ColorGuide._();
+
   const factory ColorGuide({
+    @Default(1) int catalogVersion,
+    @Default(1) int rulesVersion,
     required List<ColorFamilyGuide> families,
-    required List<GuidePrinciple> principles,
+    @IdListConverter() @Default([]) List<String> neutralColorIds,
+    @Default([]) List<ColorHarmony> harmonies,
   }) = _ColorGuide;
 
   factory ColorGuide.fromJson(Map<String, dynamic> json) => _$ColorGuideFromJson(json);
-}
 
-enum PairingRuleType {
-  @JsonValue('neutral_base')
-  neutralBase,
-  @JsonValue('tone_on_tone')
-  toneOnTone,
-  @JsonValue('analogous')
-  analogous,
-  @JsonValue('complementary')
-  complementary,
-  @JsonValue('contrast')
-  contrast,
-  @JsonValue('bold')
-  bold,
-}
+  ColorHarmony? harmonyFor(String colorId) => harmonies.where((h) => h.colorId == colorId).firstOrNull;
 
-@freezed
-abstract class ColorPairingRule with _$ColorPairingRule {
-  const factory ColorPairingRule({
-    @IdConverter() required String id,
-    @IdConverter() required String colorAId,
-    @IdConverter() required String colorBId,
-    required PairingRuleType ruleType,
-    required double compatibilityScore,
-    required String explanation,
-    required String ruleVersion,
-  }) = _ColorPairingRule;
+  bool isNeutralFamily(ColorFamilyGuide family) =>
+      family.colorIds.isNotEmpty && family.colorIds.every(neutralColorIds.contains);
 
-  factory ColorPairingRule.fromJson(Map<String, dynamic> json) => _$ColorPairingRuleFromJson(json);
-}
-
-enum RecommendationRuleType {
-  @JsonValue('type_occasion')
-  typeOccasion,
-  @JsonValue('type_style')
-  typeStyle,
-}
-
-@freezed
-abstract class RecommendationRule with _$RecommendationRule {
-  const factory RecommendationRule({
-    @IdConverter() required String id,
-    required String name,
-    required RecommendationRuleType ruleType,
-    required Map<String, String> conditionsJson,
-    required double weight,
-    required String explanation,
-    required String version,
-  }) = _RecommendationRule;
-
-  factory RecommendationRule.fromJson(Map<String, dynamic> json) =>
-      _$RecommendationRuleFromJson(json);
+  List<ColorPartner> partnersOf(String colorId, {Set<HarmonyKind> kinds = const {
+    HarmonyKind.harmonious,
+    HarmonyKind.neutralPairing,
+    HarmonyKind.contrast,
+  }}) {
+    final harmony = harmonyFor(colorId);
+    if (harmony == null) return const [];
+    return [for (final kind in kinds) ...harmony.of(kind)]..sort((a, b) => b.score.compareTo(a.score));
+  }
 }
 
 Color parseHexColor(String hex) {

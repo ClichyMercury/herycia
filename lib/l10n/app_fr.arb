@@ -158,14 +158,6 @@
       }
     }
   },
-  "colorFamily": "{family, select, black{Noirs} white{Blancs} grey{Gris} beige{Beiges} cream{Crèmes} brown{Marrons} camel{Camels} blue{Bleus} green{Verts} red{Rouges} burgundy{Bordeaux} pink{Roses} purple{Violets} yellow{Jaunes} orange{Oranges} other{Autres}}",
-  "@colorFamily": {
-    "placeholders": {
-      "family": {
-        "type": "String"
-      }
-    }
-  },
   "errorOffline": "Vous êtes hors ligne. Vérifiez votre connexion.",
   "errorSessionExpired": "Votre session a expiré. Reconnectez-vous.",
   "filtersTitle": "Occasion et style",
@@ -224,7 +216,6 @@
   "feedbackCommentLabel": "Un commentaire ? (facultatif)",
   "feedbackSend": "Envoyer",
   "feedbackThanks": "Merci pour votre retour !",
-  "offlineComputed": "Calculé hors ligne",
   "fromItemTitle": "Partir d'une pièce",
   "fromItemStepCategory": "Quelle pièce voulez-vous porter ?",
   "fromItemStepType": "Quel type exactement ?",
@@ -246,7 +237,7 @@
   "fromItemYourPiece": "Votre pièce",
   "fromItemChange": "Changer",
   "resultsTitle": "Tenues proposées",
-  "resultsBroadened": "Peu de tenues correspondaient exactement. {steps}.",
+  "resultsBroadened": "Peu de tenues correspondaient exactement : nous avons ignoré {steps} pour trouver plus de propositions.",
   "@resultsBroadened": {
     "placeholders": {
       "steps": {
@@ -305,7 +296,6 @@
   "guidePrinciples": "Principes d'harmonie",
   "guidePrinciplesSubtitle": "Neutres, contrastes, camaïeu…",
   "guideNeutralBadge": "Neutre",
-  "guidePairsWell": "S'accorde bien avec",
   "guideSuggestedPairs": "Associations conseillées pour : {color}",
   "@guideSuggestedPairs": {
     "placeholders": {
@@ -337,8 +327,8 @@
     }
   },
   "authForgotTitle": "Mot de passe oublié",
-  "authForgotIntro": "Entrez votre adresse : si un compte existe, vous recevrez un lien pour choisir un nouveau mot de passe.",
-  "authForgotAction": "Envoyer le lien",
+  "authForgotIntro": "Entrez votre adresse : si un compte existe, vous recevrez un code à 6 chiffres pour choisir un nouveau mot de passe.",
+  "authForgotAction": "Envoyer le code",
   "authForgotSent": "C'est envoyé. Pensez à vérifier vos courriers indésirables.",
   "authHaveCode": "J'ai reçu un code",
   "authDemoCode": "Mode démonstration : votre code est {code}",
@@ -375,7 +365,6 @@
   "deleteTitle": "Supprimer votre compte ?",
   "deleteBody": "Vos favoris, compositions et préférences seront effacés de nos serveurs. Cette action est définitive.",
   "deleteConfirmTitle": "Vraiment supprimer ?",
-  "deleteConfirmBody": "Dernière confirmation : votre compte sera supprimé immédiatement.",
   "deleteAction": "Supprimer",
   "deleteDone": "Votre compte a été supprimé.",
   "prefsTitle": "Préférences",
@@ -400,7 +389,6 @@
     }
   },
   "aboutBody": "Les visuels des looks sont publiés avec l'accord de leurs auteurs ; leur crédit apparaît sous chaque image quand la licence l'exige. Police : DM Sans (SIL Open Font License). Icônes : Lucide (ISC).",
-  "signInPromptSave": "Connectez-vous pour enregistrer vos compositions et les retrouver sur tous vos appareils.",
   "devSimulateOffline": "Simuler l'absence de réseau (dev)",
   "savedOutfitsTitle": "Mes compositions",
   "savedOutfitsEmpty": "Aucune composition enregistrée",
@@ -417,5 +405,85 @@
   },
   "favoriteRemoved": "Retiré des favoris",
   "favoritesAll": "Tous",
-  "commonLoading": "Chargement en cours"
+  "commonLoading": "Chargement en cours",
+  "commonSave": "Enregistrer",
+  "composeRoleOuterwear": "Veste",
+  "sessionExpiredBanner": "Session expirée, reconnectez-vous pour synchroniser.",
+  "syncInProgress": "Synchronisation…",
+  "authResend": "Renvoyer un code",
+  "authResendIn": "Renvoyer un code dans {seconds} s",
+  "@authResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "authOtpInvalid": "Entrez le code à 6 chiffres reçu par e-mail.",
+  "authOtpHint": "6 chiffres, valable 15 minutes.",
+  "deletePasswordPrompt": "Pour confirmer, saisissez votre mot de passe. Votre compte sera supprimé immédiatement.",
+  "profileEditName": "Modifier mon nom",
+  "profileNameSaved": "Nom mis à jour.",
+  "profileChangePassword": "Changer mon mot de passe",
+  "profileCurrentPassword": "Mot de passe actuel",
+  "profilePasswordChanged": "Mot de passe modifié. Vos autres appareils ont été déconnectés.",
+  "cachedResult": "Résultat du {date}, hors ligne",
+  "@cachedResult": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "evaluationComplete": "Votre tenue est complète.",
+  "evaluationIncomplete": "Il manque encore des pièces pour compléter la tenue.",
+  "evaluationIndicative": "Ce score est indicatif : vos goûts passent avant.",
+  "warningStructure": "Structure",
+  "warningPreference": "Préférence",
+  "broadenedStyle": "le style",
+  "broadenedOccasion": "l'occasion",
+  "broadenedShades": "les nuances proches",
+  "broadenedNeutral": "les conseils de couleurs neutres",
+  "resultsAdviceTitle": "Quelques conseils de couleurs",
+  "resultsAdviceIntro": "Aucun look ne correspond assez bien à cette pièce pour l'instant. Voici des couleurs faciles à associer.",
+  "offlineGuideBadge": "Hors ligne : guide des couleurs",
+  "offlineGuideTitle": "Avec du {color}",
+  "@offlineGuideTitle": {
+    "placeholders": {
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineGuideIntro": "Les propositions de looks reviendront avec la connexion. En attendant, voici les associations du guide des couleurs.",
+  "guideFamilyCount": "{count, plural, =1{1 nuance} other{{count} nuances}}",
+  "@guideFamilyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guideHarmonious": "S'harmonise avec",
+  "guideContrast": "En contraste",
+  "guideNeutralPairing": "Neutres qui l'accompagnent",
+  "guideCaution": "À manier avec prudence",
+  "guideNoPairs": "Pas encore d'association conseillée pour cette nuance.",
+  "principleNeutralTitle": "Partir d'une base neutre",
+  "principleNeutralBody": "Noir, blanc, gris, beige ou bleu marine s'associent à presque tout. Une base neutre laisse une seule pièce de couleur prendre la vedette.",
+  "principleHarmonyTitle": "Jouer l'harmonie",
+  "principleHarmonyBody": "Des couleurs voisines ou un camaïeu d'une même teinte donnent une tenue douce et cohérente.",
+  "principleContrastTitle": "Oser le contraste",
+  "principleContrastBody": "Des couleurs opposées réveillent une tenue. Gardez-en une dominante et utilisez l'autre en touche.",
+  "principleCautionTitle": "Savoir doser",
+  "principleCautionBody": "Certaines associations sont plus délicates : elles demandent une pièce neutre pour faire le lien. Ce sont des repères, pas des interdits.",
+  "authInvalidCredentials": "Identifiants invalides. Vérifiez votre e-mail et votre mot de passe.",
+  "profileVersion": "Herycia {version}",
+  "@profileVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  }
 }

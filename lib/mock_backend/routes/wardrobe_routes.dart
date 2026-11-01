@@ -1,245 +1,279 @@
 part of '../mock_backend.dart';
 
 extension _WardrobeRoutes on MockBackend {
-  static const silhouettes = {'straight', 'hourglass', 'broad'};
-  static const languages = {'fr'};
-
-  List<RequestItem> _snapshotItems(Validator v, Object? raw, String field) => [
-        for (final piece in parseItems(v, raw, field))
-          RequestItem(clothingTypeId: piece.type.id, colorId: piece.color.id, role: piece.role),
-      ];
-
-  String? _clientUuid(Validator v, Map<String, dynamic> body) {
-    final value = body['client_uuid'];
-    if (value is! String || !uuidPattern.hasMatch(value)) {
-      v.add('client_uuid', 'client_uuid doit être un UUID généré par l\'application.');
-      return null;
-    }
-    return value.toLowerCase();
-  }
-
-  DateTime? _optionalDate(Validator v, Map<String, dynamic> body, String field) {
-    final value = body[field];
-    if (value == null) return null;
-    final parsed = value is String ? DateTime.tryParse(value) : null;
-    if (parsed == null) v.add(field, 'Date invalide (format ISO 8601 attendu).');
-    return parsed?.toUtc();
-  }
-
-  int _indexOf<T>(List<T> list, String key, String Function(T) id, String Function(T) uuid) =>
-      list.indexWhere((e) => id(e) == key || uuid(e) == key.toLowerCase());
-
   List<MockRoute> get _wardrobeRoutes => [
-        MockRoute('GET', '/me/favorites', (r, p) {
-          final user = requireUser(r);
-          final v = Validator();
-          final since = r.query.containsKey('updated_since')
-              ? _optionalDate(v, {'updated_since': r.query['updated_since']}, 'updated_since')
-              : null;
-          v.throwIfInvalid();
-          final list = (favorites[user.id] ?? const <Favorite>[])
-              .where((f) => since == null || f.updatedAt.isAfter(since));
-          return MockResponse.ok({'data': sortedById(list, (f) => f.id, (f) => f.toJson())});
+        MockRoute('GET', '/me/favorites', (request, _) {
+          final user = requireUser(request);
+          final items = favoritesOf(user).values.where((r) => r.isActive).toList()
+            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return MockResponse.ok(paginate([for (final r in items) _favoriteJson(r)], request, '/me/favorites'));
         }),
-        MockRoute('POST', '/me/favorites', (r, p) {
-          final user = requireUser(r);
-          final body = r.bodyMap;
-          final v = Validator();
-          final uuid = _clientUuid(v, body);
-          final outfitId = v.id(body, 'outfit_id', 'look', required: false);
-          if (outfitId != null && publishedLook(outfitId) == null) {
-            v.add('outfit_id', "Ce look n'existe pas ou n'est plus publié.");
-          }
-          final rawSnapshot = body['snapshot'];
-          LookSnapshot? snapshot;
-          if (rawSnapshot is! Map<String, dynamic>) {
-            if (outfitId == null) v.add('snapshot', 'Un favori doit référencer un look ou contenir un instantané.');
-          } else {
-            final title = v.requiredString(rawSnapshot, 'title', 'titre', max: 120);
-            final items = _snapshotItems(v, rawSnapshot['items'], 'snapshot.items');
-            final occasion = occasionFromSlug(v, rawSnapshot['occasion_slug'], 'snapshot.occasion_slug');
-            final style = styleFromSlug(v, rawSnapshot['style_slug'], 'snapshot.style_slug');
-            final score = rawSnapshot['score'];
-            if (score != null && (score is! int || score < 0 || score > 100)) {
-              v.add('snapshot.score', 'Le score doit être un entier entre 0 et 100.');
-            }
-            final imageUrl = v.optionalString(rawSnapshot, 'image_url', 'image', max: 2048);
-            final explanation = v.optionalString(rawSnapshot, 'explanation', 'explication', max: 300);
-            if (title != null && !v.hasErrors) {
-              snapshot = LookSnapshot(
-                title: title,
-                items: items,
-                occasionSlug: occasion?.slug,
-                styleSlug: style?.slug,
-                score: score as int?,
-                imageUrl: imageUrl,
-                explanation: explanation,
-              );
-            }
-          }
-          v.throwIfInvalid();
-
-          final list = favorites.putIfAbsent(user.id, () => []);
-          final existing = list.where((f) => f.clientUuid == uuid).firstOrNull;
-          if (existing != null) return MockResponse.ok({'data': existing.toJson()});
-
-          final now = clock();
-          final favorite = Favorite(
-            id: nextId('favorite'),
-            clientUuid: uuid!,
-            outfitId: outfitId,
-            snapshot: snapshot ?? snapshotOf(publishedLook(outfitId!)!),
-            createdAt: now,
-            updatedAt: now,
-          );
-          list.add(favorite);
-          return MockResponse.created({'data': favorite.toJson()});
-        }),
-        MockRoute('DELETE', '/me/favorites/{id}', (r, p) {
-          final user = requireUser(r);
-          final list = favorites[user.id] ?? [];
-          final i = _indexOf(list, p['id']!, (f) => f.id, (f) => f.clientUuid);
-          if (i < 0) throw HttpError.notFound('Favori introuvable.');
-          list.removeAt(i);
+        MockRoute('POST', '/me/favorites', _saveFavorite),
+        MockRoute('DELETE', '/me/favorites/{id}', (request, params) {
+          _tombstone(favoritesOf(requireUser(request)), params['id']!);
           return const MockResponse.noContent();
         }),
-        MockRoute('GET', '/me/preferences', (r, p) {
-          final user = requireUser(r);
-          return MockResponse.ok({'data': (preferences[user.id] ?? const UserPreferences()).toJson()});
+        MockRoute('GET', '/me/preferences', (request, _) {
+          final user = requireUser(request);
+          return MockResponse.ok({'data': _preferencesOf(user)});
         }),
-        MockRoute('PUT', '/me/preferences', (r, p) {
-          final user = requireUser(r);
-          final body = r.bodyMap;
-          final v = Validator();
-          List<String> slugs(String field, Set<String> allowed, String label) {
-            final raw = body[field] ?? const [];
-            if (raw is! List) {
-              v.add(field, '$field doit être une liste.');
-              return const [];
-            }
-            for (var i = 0; i < raw.length; i++) {
-              if (!allowed.contains(raw[i])) v.add('$field.$i', "Ce $label n'existe pas.");
-            }
-            return [for (final s in raw) '$s'];
-          }
-
-          final styles = slugs('style_slugs', index.stylesBySlug.keys.toSet(), 'style');
-          final occasions = slugs('occasion_slugs', index.occasionsBySlug.keys.toSet(), 'occasion');
-          final language = body['language'] ?? 'fr';
-          if (!languages.contains(language)) v.add('language', 'Langue non prise en charge.');
-          final theme = ThemePreference.values
-              .where((t) => t.name == (body['theme'] ?? 'system'))
-              .firstOrNull;
-          if (theme == null) v.add('theme', 'Le thème doit valoir system, light ou dark.');
-          final silhouette = body['silhouette'] ?? 'straight';
-          if (!silhouettes.contains(silhouette)) {
-            v.add('silhouette', 'La silhouette doit valoir straight, hourglass ou broad.');
-          }
-          v.throwIfInvalid();
-          final updated = UserPreferences(
-            language: language as String,
-            styleSlugs: styles,
-            occasionSlugs: occasions,
-            theme: theme!,
-            silhouette: silhouette as String,
-            updatedAt: clock(),
-          );
-          preferences[user.id] = updated;
-          return MockResponse.ok({'data': updated.toJson()});
+        MockRoute('PUT', '/me/preferences', _putPreferences),
+        MockRoute('GET', '/me/saved-outfits', (request, _) {
+          final user = requireUser(request);
+          final items = savedOutfitsOf(user).values.where((r) => r.isActive).toList()
+            ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+          return MockResponse.ok(paginate([for (final r in items) _savedJson(r)], request, '/me/saved-outfits'));
         }),
-        MockRoute('GET', '/me/saved-outfits', (r, p) {
-          final user = requireUser(r);
-          return MockResponse.ok({
-            'data': sortedById(savedOutfits[user.id] ?? const <SavedOutfit>[], (s) => s.id, (s) => s.toJson()),
-          });
-        }),
-        MockRoute('POST', '/me/saved-outfits', (r, p) {
-          final user = requireUser(r);
-          final input = _savedOutfitInput(r.bodyMap);
-          final list = savedOutfits.putIfAbsent(user.id, () => []);
-          final existing = list.where((s) => s.clientUuid == input.uuid).firstOrNull;
-          if (existing != null) return MockResponse.ok({'data': existing.toJson()});
-          final now = clock();
-          final saved = SavedOutfit(
-            id: nextId('saved_outfit'),
-            clientUuid: input.uuid,
-            title: input.title,
-            composition: input.composition,
-            score: input.score,
-            ruleVersion: index.rulesVersion,
-            createdAt: now,
-            updatedAt: now,
-          );
-          list.add(saved);
-          return MockResponse.created({'data': saved.toJson()});
-        }),
-        MockRoute('PUT', '/me/saved-outfits/{id}', (r, p) {
-          final user = requireUser(r);
-          final list = savedOutfits[user.id] ?? [];
-          final i = _indexOf(list, p['id']!, (s) => s.id, (s) => s.clientUuid);
-          if (i < 0) throw HttpError.notFound('Composition introuvable.');
-          final input = _savedOutfitInput(r.bodyMap, requireUuid: false);
-          final current = list[i];
-          if (input.baseUpdatedAt != null && current.updatedAt.isAfter(input.baseUpdatedAt!)) {
-            throw HttpError(
-              409,
-              ApiErrorCode.conflict,
-              'Cette composition a été modifiée sur un autre appareil.',
-              const {},
-              {'current': current.toJson()},
-            );
-          }
-          final updated = current.copyWith(
-            title: input.title,
-            composition: input.composition,
-            score: input.score,
-            ruleVersion: index.rulesVersion,
-            updatedAt: clock(),
-          );
-          list[i] = updated;
-          return MockResponse.ok({'data': updated.toJson()});
-        }),
-        MockRoute('DELETE', '/me/saved-outfits/{id}', (r, p) {
-          final user = requireUser(r);
-          final list = savedOutfits[user.id] ?? [];
-          final i = _indexOf(list, p['id']!, (s) => s.id, (s) => s.clientUuid);
-          if (i < 0) throw HttpError.notFound('Composition introuvable.');
-          list.removeAt(i);
+        MockRoute('POST', '/me/saved-outfits', (request, _) => _writeSaved(request, null)),
+        MockRoute('PUT', '/me/saved-outfits/{id}', (request, params) => _writeSaved(request, params['id'])),
+        MockRoute('DELETE', '/me/saved-outfits/{id}', (request, params) {
+          _tombstone(savedOutfitsOf(requireUser(request)), params['id']!);
           return const MockResponse.noContent();
         }),
+        MockRoute('GET', '/me/sync', _sync),
       ];
 
-  ({String uuid, String? title, CompositionPayload composition, int score, DateTime? baseUpdatedAt})
-      _savedOutfitInput(Map<String, dynamic> body, {bool requireUuid = true}) {
-    final v = Validator();
-    final uuid = requireUuid ? _clientUuid(v, body) : '';
-    final title = v.optionalString(body, 'title', 'titre', max: 120);
-    final raw = body['composition'];
-    var pieces = const <EnginePiece>[];
-    Occasion? occasion;
-    OutfitStyle? style;
-    if (raw is! Map<String, dynamic>) {
-      v.add('composition', 'La composition est obligatoire.');
-    } else {
-      pieces = parseItems(v, raw['items'], 'composition.items');
-      occasion = occasionFromSlug(v, raw['occasion_slug'], 'composition.occasion_slug');
-      style = styleFromSlug(v, raw['style_slug'], 'composition.style_slug');
+  Json _favoriteJson(MockRecord r) => {
+        'id': r.id,
+        ...r.data,
+        'created_at': isoMicros(r.createdAt),
+        'updated_at': isoMicros(r.updatedAt),
+      };
+
+  Json _savedJson(MockRecord r) => {
+        'id': r.id,
+        ...r.data,
+        'created_at': isoMicros(r.createdAt),
+        'updated_at': isoMicros(r.updatedAt),
+      };
+
+  void _tombstone(Map<String, MockRecord> records, String id) {
+    final record = records[id.toLowerCase()];
+    if (record == null || !uuidPattern.hasMatch(id)) throw HttpError.notFound();
+    if (record.isActive) {
+      final now = tick();
+      record
+        ..deletedAt = now
+        ..updatedAt = now;
     }
-    final baseUpdatedAt = _optionalDate(v, body, 'base_updated_at');
-    v.throwIfInvalid();
-    return (
-      uuid: uuid!,
-      title: title,
-      composition: CompositionPayload(
-        items: [
-          for (final piece in pieces)
-            RequestItem(clothingTypeId: piece.type.id, colorId: piece.color.id, role: piece.role),
+  }
+
+  Json _snapshotFromOutfit(Json outfit) => {
+        'schema_version': 1,
+        'title': outfit['title'],
+        if (outfit['style'] case final Json s) 'style': {'slug': s['slug'], 'name': s['name']},
+        if (outfit['occasion'] case final Json o) 'occasion': {'slug': o['slug'], 'name': o['name']},
+        'items': [
+          for (final i in outfit['items'] as List<dynamic>)
+            {
+              'clothing_type': {'slug': (i as Json)['clothing_type']['slug'], 'name': i['clothing_type']['name']},
+              'color': {'slug': i['color']['slug'], 'name': i['color']['name'], 'hex_code': i['color']['hex_code']},
+              'role': i['role'],
+              'is_required': i['is_required'],
+            },
         ],
-        occasionSlug: occasion?.slug,
-        styleSlug: style?.slug,
-      ),
-      score: evaluator.evaluate(pieces, occasion: occasion, style: style).score,
-      baseUpdatedAt: baseUpdatedAt,
+        if (outfit['image'] case final Json img)
+          'image': {
+            'url': img['url'],
+            'thumbnail_url': img['thumbnail_url'],
+            'alt_text': img['alt_text'],
+            'credit': img['credit'],
+            'license_type': img['license_type'],
+          },
+        'catalog_version': fixtures.version['catalog_version'],
+      };
+
+  MockResponse _saveFavorite(MockRequest request, Map<String, String> _) {
+    final user = requireUser(request);
+    final body = request.bodyMap;
+    final v = Validator();
+    final clientUuid = v.uuid(body, 'client_uuid');
+    final outfitId = v.uuid(body, 'outfit_id', required: false);
+    final snapshot = body['snapshot'];
+    Json? outfit;
+    if (outfitId != null) {
+      outfit = fixtures.outfits.where((o) => o['id'] == outfitId).firstOrNull;
+      if (outfit == null) v.add('outfit_id', "Ce look n'est plus disponible.");
+    } else if (snapshot is! Json) {
+      v.add('snapshot', "L'instantané est obligatoire pour une composition personnalisée.");
+    } else {
+      final items = snapshot['items'];
+      if (snapshot['title'] is! String || items is! List || items.isEmpty || items.length > 12) {
+        v.add('snapshot', "L'instantané est invalide.");
+      }
+    }
+    v.throwIfInvalid();
+    final records = favoritesOf(user);
+    if (outfitId != null) {
+      final active = records.values.where((r) => r.isActive && r.data['outfit_id'] == outfitId).firstOrNull;
+      if (active != null) return MockResponse.ok({'data': _favoriteJson(active)});
+    }
+    final data = {
+      'outfit_id': outfitId,
+      'snapshot': outfit != null ? _snapshotFromOutfit(outfit) : snapshot,
+    };
+    final existing = records[clientUuid];
+    if (existing != null && existing.isActive) return MockResponse.ok({'data': _favoriteJson(existing)});
+    if (records.values.where((r) => r.isActive).length >= MockBackend.maxActivePerResource) {
+      throw HttpError.field('client_uuid', 'Vous avez atteint le nombre maximal de favoris.');
+    }
+    final now = tick();
+    if (existing != null) {
+      existing
+        ..data = data
+        ..deletedAt = null
+        ..updatedAt = now;
+      return MockResponse.ok({'data': _favoriteJson(existing)});
+    }
+    final record = MockRecord(id: clientUuid!, data: data, createdAt: now, updatedAt: now);
+    records[clientUuid] = record;
+    return MockResponse.created({'data': _favoriteJson(record)});
+  }
+
+  Json _preferencesOf(MockUser user) =>
+      preferences[user.id] ?? {'language': 'fr', 'style_ids': <String>[], 'occasion_ids': <String>[], 'updated_at': null};
+
+  MockResponse _putPreferences(MockRequest request, Map<String, String> _) {
+    final user = requireUser(request);
+    final body = request.bodyMap;
+    final v = Validator();
+    List<String> ids(String field, List<Json> source, String label) {
+      final value = body[field];
+      if (value is! List) {
+        v.add(field, 'Le champ $field est obligatoire.');
+        return const [];
+      }
+      final known = {for (final s in source) s['id']};
+      for (final (i, id) in value.indexed) {
+        if (!known.contains(id)) v.add('$field.$i', "$label sélectionné n'est pas disponible.");
+      }
+      if (value.toSet().length != value.length) v.add(field, 'Les doublons ne sont pas autorisés.');
+      return [for (final id in value) id as String];
+    }
+
+    final styleIds = ids('style_ids', fixtures.styles, 'Le style');
+    final occasionIds = ids('occasion_ids', fixtures.occasions, "L'occasion");
+    final language = body['language'] ?? 'fr';
+    if (language != 'fr') v.add('language', "Cette langue n'est pas prise en charge.");
+    v.throwIfInvalid();
+    final prefs = {
+      'language': language,
+      'style_ids': styleIds,
+      'occasion_ids': occasionIds,
+      'updated_at': isoSeconds(tick()),
+    };
+    preferences[user.id] = prefs;
+    return MockResponse.ok({'data': prefs});
+  }
+
+  Json _validComposition(Validator v, Object? composition) {
+    if (composition is! Json || composition['items'] is! List) {
+      v.add('composition', 'La composition est obligatoire.');
+      return const {};
+    }
+    final items = composition['items'] as List<dynamic>;
+    if (items.isEmpty || items.length > 10) v.add('composition.items', 'La composition doit contenir de 1 à 10 pièces.');
+    for (final key in ['occasion_slug', 'style_slug']) {
+      final slug = composition[key];
+      if (slug != null && (slug is! String || !slugPattern.hasMatch(slug))) v.add('composition.$key', 'Slug invalide.');
+    }
+    return {
+      'items': items,
+      'occasion_slug': composition['occasion_slug'],
+      'style_slug': composition['style_slug'],
+    };
+  }
+
+  MockResponse _writeSaved(MockRequest request, String? pathId) {
+    final user = requireUser(request);
+    final body = request.bodyMap;
+    final v = Validator();
+    final clientUuid = pathId?.toLowerCase() ?? v.uuid(body, 'client_uuid');
+    final composition = _validComposition(v, body['composition']);
+    final ruleVersion = body['rule_version'];
+    if (ruleVersion is! int || ruleVersion < 1) v.add('rule_version', 'La version de règles est obligatoire.');
+    final title = v.string(body, 'title', required: false, max: 150);
+    v.throwIfInvalid();
+    final records = savedOutfitsOf(user);
+    final existing = records[clientUuid];
+    final data = {'title': title, 'composition': composition, 'score': body['score'], 'rule_version': ruleVersion};
+    final now = tick();
+    if (pathId != null) {
+      if (existing == null || !existing.isActive) throw HttpError.notFound();
+      existing
+        ..data = data
+        ..updatedAt = now;
+      return MockResponse.ok({'data': _savedJson(existing)});
+    }
+    if (existing != null && existing.isActive) return MockResponse.ok({'data': _savedJson(existing)});
+    if (existing != null) {
+      existing
+        ..data = data
+        ..deletedAt = null
+        ..updatedAt = now;
+      return MockResponse.ok({'data': _savedJson(existing)});
+    }
+    final record = MockRecord(id: clientUuid!, data: data, createdAt: now, updatedAt: now);
+    records[clientUuid] = record;
+    return MockResponse.created({'data': _savedJson(record)});
+  }
+
+  MockResponse _sync(MockRequest request, Map<String, String> _) {
+    final user = requireUser(request);
+    final limit = int.tryParse(request.query['limit'] ?? '100') ?? 0;
+    if (limit < 1 || limit > 200) throw HttpError.field('limit', 'La limite doit être comprise entre 1 et 200.');
+    final cursor = request.query['cursor'];
+    DateTime? after;
+    String? afterId;
+    if (cursor != null) {
+      try {
+        final parts = utf8.decode(base64Url.decode(cursor)).split('|');
+        after = DateTime.fromMicrosecondsSinceEpoch(int.parse(parts[0]), isUtc: true);
+        afterId = parts[1];
+        final issued = DateTime.fromMicrosecondsSinceEpoch(int.parse(parts[2]), isUtc: true);
+        if (clock().difference(issued) > MockBackend.tombstoneRetention) throw HttpError.cursorExpired();
+      } on FormatException {
+        throw HttpError.field('cursor', 'Le curseur est illisible.');
+      }
+    }
+    final all = [
+      for (final r in favoritesOf(user).values) ('favorite', r),
+      for (final r in savedOutfitsOf(user).values) ('saved_outfit', r),
+    ]..sort((a, b) {
+        final byDate = a.$2.updatedAt.compareTo(b.$2.updatedAt);
+        return byDate != 0 ? byDate : a.$2.id.compareTo(b.$2.id);
+      });
+    final pending = [
+      for (final entry in all)
+        if (cursor == null
+            ? entry.$2.isActive
+            : (entry.$2.updatedAt.isAfter(after!) ||
+                (entry.$2.updatedAt == after && entry.$2.id.compareTo(afterId!) > 0)))
+          entry,
+    ];
+    final page = pending.take(limit).toList();
+    final last = page.isEmpty ? null : page.last.$2;
+    final position = last == null ? (after ?? DateTime.utc(2000)) : last.updatedAt;
+    final positionId = last?.id ?? afterId ?? '';
+    final nextCursor = base64Url.encode(
+      utf8.encode('${position.microsecondsSinceEpoch}|$positionId|${clock().microsecondsSinceEpoch}'),
     );
+    return MockResponse.ok({
+      'data': {
+        'changes': [
+          for (final (resource, r) in page)
+            {
+              'resource': resource,
+              'op': r.isActive ? 'upsert' : 'delete',
+              'id': r.id,
+              'updated_at': isoMicros(r.updatedAt),
+              if (!r.isActive) 'deleted_at': isoMicros(r.deletedAt!),
+              if (r.isActive) 'data': resource == 'favorite' ? _favoriteJson(r) : _savedJson(r),
+            },
+        ],
+        'cursor': nextCursor,
+        'has_more': pending.length > page.length,
+      },
+    });
   }
 }

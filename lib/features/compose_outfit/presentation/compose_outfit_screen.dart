@@ -129,6 +129,7 @@ class ComposeOutfitScreen extends ConsumerWidget {
           slot(CompositionRole.top),
           slot(CompositionRole.bottom),
           slot(CompositionRole.onePiece, optional: true),
+          slot(CompositionRole.outerwear, optional: true),
           slot(CompositionRole.shoes),
           const SizedBox(height: AppSpacing.s3),
           Text(

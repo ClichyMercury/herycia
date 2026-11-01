@@ -2,7 +2,7 @@ name: herycia
 description: "Application mobile d'aide à la composition de tenues."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.12.2
@@ -28,6 +28,8 @@ dependencies:
   intl: ^0.20.2
   share_plus: ^13.3.1
   flutter_native_splash: ^2.4.8
+  connectivity_plus: ^7.3.2
+  package_info_plus: ^10.2.2
 
 dev_dependencies:
   flutter_test:
@@ -40,16 +42,18 @@ dev_dependencies:
   drift_dev: ^2.35.1
   mocktail: ^1.0.5
   flutter_launcher_icons: ^0.14.4
+  integration_test:
+    sdk: flutter
 flutter:
   uses-material-design: true
   generate: true
 
   assets:
-    - assets/mock/catalog/
-    - assets/mock/looks/
-    - assets/mock/rules/
+    - assets/mock/
     - assets/branding/logo.png
     - assets/branding/logo_dark.png
+    - assets/branding/mark.png
+    - assets/branding/mark_dark.png
 
   fonts:
     - family: DMSans

@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_providers.dart';
+import '../../../core/storage/storage_providers.dart';
 import '../data/api_catalog_repository.dart';
 import '../domain/catalog_models.dart';
 import '../domain/catalog_repository.dart';
 
 final catalogRepositoryProvider = Provider<CatalogRepository>(
-  (ref) => ApiCatalogRepository(ref.watch(apiClientProvider)),
+  (ref) => ApiCatalogRepository(ref.watch(apiClientProvider), ref.watch(responseCacheProvider)),
 );
 
 final catalogVersionProvider = FutureProvider<CatalogVersion>(

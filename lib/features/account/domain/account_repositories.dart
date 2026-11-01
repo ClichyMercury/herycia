@@ -13,11 +13,15 @@ abstract interface class AuthRepository {
 
   Future<AppUser> me();
 
-  Future<void> deleteAccount();
+  Future<AppUser> updateName(String name);
+
+  Future<void> changePassword(ChangePasswordRequest request);
+
+  Future<void> deleteAccount(String password);
 }
 
 abstract interface class PreferencesRepository {
-  Future<UserPreferences> get();
+  Future<RemotePreferences> get();
 
-  Future<UserPreferences> update(UserPreferences preferences);
+  Future<RemotePreferences> update(RemotePreferences preferences);
 }

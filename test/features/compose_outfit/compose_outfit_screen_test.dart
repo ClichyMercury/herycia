@@ -65,7 +65,7 @@ void main() {
 
   testWidgets('choisir une pièce habille le mannequin', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-top', 'Chemise', 'navy');
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
 
     await reveal(tester, find.text('Chemise · Bleu marine'));
     expect(find.text('Chemise · Bleu marine'), findsOneWidget);
@@ -76,6 +76,7 @@ void main() {
 
   testWidgets('aperçu en direct dans la feuille avant validation', (tester) async {
     await pumpCompose(tester);
+    await reveal(tester, find.byKey(const ValueKey('slot-shoes')));
     await tester.tap(find.byKey(const ValueKey('slot-shoes')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Baskets').last);
@@ -85,13 +86,16 @@ void main() {
 
     final sheetPreview = tester.widget<MannequinView>(find.byType(MannequinView).last);
     expect(sheetPreview.outfit.shoes!.color, FakeCatalogRepository.camel.color);
+    Navigator.of(tester.element(find.byType(MannequinView).last)).pop();
+    await tester.pumpAndSettle();
+    await backToTop(tester);
     expect(mainMannequin(tester).outfit.shoes, isNull);
   });
 
   testWidgets('tenue complète : bouton Évaluer actif', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-top', 'Chemise', 'navy');
-    await pick(tester, 'slot-bottom', 'Jean', 'navy');
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
+    await pick(tester, 'slot-bottom', 'Jean', 'bleu-marine');
     await pick(tester, 'slot-shoes', 'Baskets', 'camel');
 
     expect(find.text('Tenue prête à évaluer'), findsOneWidget);
@@ -100,7 +104,7 @@ void main() {
 
   testWidgets('une robe remplace haut et bas', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-top', 'Chemise', 'navy');
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
     await pick(tester, 'slot-onePiece', 'Robe', 'camel');
 
     expect(find.text('remplacé par : robe'), findsNWidgets(2));
@@ -112,7 +116,7 @@ void main() {
 
   testWidgets('retirer une pièce puis annuler la restaure', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-top', 'Chemise', 'navy');
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
 
     await reveal(tester, find.byKey(const ValueKey('slot-top')));
     await tester.tap(find.byKey(const ValueKey('slot-top')));
@@ -130,12 +134,12 @@ void main() {
 
   testWidgets('ajouter et modifier un accessoire', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-accessory-add', 'Montre', 'navy');
+    await pick(tester, 'slot-accessory-add', 'Montre', 'bleu-marine');
     await reveal(tester, find.text('Montre · Bleu marine'));
     expect(find.text('Montre · Bleu marine'), findsOneWidget);
 
-    await reveal(tester, find.byKey(const ValueKey('accessory-51')));
-    await tester.tap(find.byKey(const ValueKey('accessory-51')));
+    await reveal(tester, find.byKey(const ValueKey('accessory-t-watch')));
+    await tester.tap(find.byKey(const ValueKey('accessory-t-watch')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('swatch-camel')));
     await tester.pumpAndSettle();
@@ -163,7 +167,7 @@ void main() {
 
   testWidgets('tout effacer puis annuler', (tester) async {
     await pumpCompose(tester);
-    await pick(tester, 'slot-top', 'Chemise', 'navy');
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
     await reveal(tester, find.byType(MannequinView).first);
     await tester.tap(find.byKey(const ValueKey('compose-reset')));
     await tester.pumpAndSettle();
@@ -171,5 +175,26 @@ void main() {
     await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
     expect(mainMannequin(tester).outfit.top, isNotNull);
+  });
+
+  testWidgets('veste facultative : seuls veste et blazer, portée par-dessus le haut', (tester) async {
+    await pumpCompose(tester);
+    await pick(tester, 'slot-top', 'Chemise', 'bleu-marine');
+    final slot = find.byKey(const ValueKey('slot-outerwear'));
+    await reveal(tester, slot);
+    await tester.tap(slot);
+    await tester.pumpAndSettle();
+    expect(find.text('Chemise'), findsNothing);
+    await tester.tap(find.text('Blazer').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('swatch-camel')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('picker-confirm')));
+    await tester.pumpAndSettle();
+
+    final outfit = mainMannequin(tester).outfit;
+    expect(outfit.top!.shape, GarmentShape.collaredLongSleeve);
+    expect(outfit.outerwear!.shape, GarmentShape.outerwear);
+    expect(outfit.outerwear!.color, FakeCatalogRepository.camel.color);
   });
 }

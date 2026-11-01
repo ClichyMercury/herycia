@@ -14,11 +14,11 @@ class BreakdownSheet extends StatelessWidget {
     final l10n = context.l10n;
     final colors = context.colors;
     final rows = [
-      (l10n.breakdownColor, breakdown.color, ScoreBreakdown.maxColor),
-      (l10n.breakdownStructure, breakdown.structure, ScoreBreakdown.maxStructure),
-      (l10n.breakdownOccasion, breakdown.occasion, ScoreBreakdown.maxOccasion),
-      (l10n.breakdownStyle, breakdown.style, ScoreBreakdown.maxStyle),
-      (l10n.breakdownCompleteness, breakdown.completeness, ScoreBreakdown.maxCompleteness),
+      (l10n.breakdownColor, breakdown.color.points, breakdown.color.max),
+      (l10n.breakdownStructure, breakdown.structure.points, breakdown.structure.max),
+      (l10n.breakdownOccasion, breakdown.occasion.points, breakdown.occasion.max),
+      (l10n.breakdownStyle, breakdown.style.points, breakdown.style.max),
+      (l10n.breakdownCompleteness, breakdown.completeness.points, breakdown.completeness.max),
     ];
     return Padding(
       padding: const EdgeInsets.fromLTRB(AppSpacing.screenHorizontal, 0, AppSpacing.screenHorizontal, AppSpacing.s8),

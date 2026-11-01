@@ -550,12 +550,6 @@ abstract class AppLocalizations {
   /// **'{type} {color}'**
   String pieceLabel(String type, String color);
 
-  /// No description provided for @colorFamily.
-  ///
-  /// In fr, this message translates to:
-  /// **'{family, select, black{Noirs} white{Blancs} grey{Gris} beige{Beiges} cream{Crèmes} brown{Marrons} camel{Camels} blue{Bleus} green{Verts} red{Rouges} burgundy{Bordeaux} pink{Roses} purple{Violets} yellow{Jaunes} orange{Oranges} other{Autres}}'**
-  String colorFamily(String family);
-
   /// No description provided for @errorOffline.
   ///
   /// In fr, this message translates to:
@@ -742,12 +736,6 @@ abstract class AppLocalizations {
   /// **'Merci pour votre retour !'**
   String get feedbackThanks;
 
-  /// No description provided for @offlineComputed.
-  ///
-  /// In fr, this message translates to:
-  /// **'Calculé hors ligne'**
-  String get offlineComputed;
-
   /// No description provided for @fromItemTitle.
   ///
   /// In fr, this message translates to:
@@ -817,7 +805,7 @@ abstract class AppLocalizations {
   /// No description provided for @resultsBroadened.
   ///
   /// In fr, this message translates to:
-  /// **'Peu de tenues correspondaient exactement. {steps}.'**
+  /// **'Peu de tenues correspondaient exactement : nous avons ignoré {steps} pour trouver plus de propositions.'**
   String resultsBroadened(String steps);
 
   /// No description provided for @resultsEmptyTitle.
@@ -982,12 +970,6 @@ abstract class AppLocalizations {
   /// **'Neutre'**
   String get guideNeutralBadge;
 
-  /// No description provided for @guidePairsWell.
-  ///
-  /// In fr, this message translates to:
-  /// **'S\'accorde bien avec'**
-  String get guidePairsWell;
-
   /// No description provided for @guideSuggestedPairs.
   ///
   /// In fr, this message translates to:
@@ -1093,13 +1075,13 @@ abstract class AppLocalizations {
   /// No description provided for @authForgotIntro.
   ///
   /// In fr, this message translates to:
-  /// **'Entrez votre adresse : si un compte existe, vous recevrez un lien pour choisir un nouveau mot de passe.'**
+  /// **'Entrez votre adresse : si un compte existe, vous recevrez un code à 6 chiffres pour choisir un nouveau mot de passe.'**
   String get authForgotIntro;
 
   /// No description provided for @authForgotAction.
   ///
   /// In fr, this message translates to:
-  /// **'Envoyer le lien'**
+  /// **'Envoyer le code'**
   String get authForgotAction;
 
   /// No description provided for @authForgotSent.
@@ -1234,12 +1216,6 @@ abstract class AppLocalizations {
   /// **'Vraiment supprimer ?'**
   String get deleteConfirmTitle;
 
-  /// No description provided for @deleteConfirmBody.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dernière confirmation : votre compte sera supprimé immédiatement.'**
-  String get deleteConfirmBody;
-
   /// No description provided for @deleteAction.
   ///
   /// In fr, this message translates to:
@@ -1342,12 +1318,6 @@ abstract class AppLocalizations {
   /// **'Les visuels des looks sont publiés avec l\'accord de leurs auteurs ; leur crédit apparaît sous chaque image quand la licence l\'exige. Police : DM Sans (SIL Open Font License). Icônes : Lucide (ISC).'**
   String get aboutBody;
 
-  /// No description provided for @signInPromptSave.
-  ///
-  /// In fr, this message translates to:
-  /// **'Connectez-vous pour enregistrer vos compositions et les retrouver sur tous vos appareils.'**
-  String get signInPromptSave;
-
   /// No description provided for @devSimulateOffline.
   ///
   /// In fr, this message translates to:
@@ -1407,6 +1377,276 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Chargement en cours'**
   String get commonLoading;
+
+  /// No description provided for @commonSave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get commonSave;
+
+  /// No description provided for @composeRoleOuterwear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veste'**
+  String get composeRoleOuterwear;
+
+  /// No description provided for @sessionExpiredBanner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session expirée, reconnectez-vous pour synchroniser.'**
+  String get sessionExpiredBanner;
+
+  /// No description provided for @syncInProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synchronisation…'**
+  String get syncInProgress;
+
+  /// No description provided for @authResend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renvoyer un code'**
+  String get authResend;
+
+  /// No description provided for @authResendIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renvoyer un code dans {seconds} s'**
+  String authResendIn(int seconds);
+
+  /// No description provided for @authOtpInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrez le code à 6 chiffres reçu par e-mail.'**
+  String get authOtpInvalid;
+
+  /// No description provided for @authOtpHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 chiffres, valable 15 minutes.'**
+  String get authOtpHint;
+
+  /// No description provided for @deletePasswordPrompt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour confirmer, saisissez votre mot de passe. Votre compte sera supprimé immédiatement.'**
+  String get deletePasswordPrompt;
+
+  /// No description provided for @profileEditName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier mon nom'**
+  String get profileEditName;
+
+  /// No description provided for @profileNameSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom mis à jour.'**
+  String get profileNameSaved;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer mon mot de passe'**
+  String get profileChangePassword;
+
+  /// No description provided for @profileCurrentPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe actuel'**
+  String get profileCurrentPassword;
+
+  /// No description provided for @profilePasswordChanged.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe modifié. Vos autres appareils ont été déconnectés.'**
+  String get profilePasswordChanged;
+
+  /// No description provided for @cachedResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résultat du {date}, hors ligne'**
+  String cachedResult(String date);
+
+  /// No description provided for @evaluationComplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre tenue est complète.'**
+  String get evaluationComplete;
+
+  /// No description provided for @evaluationIncomplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il manque encore des pièces pour compléter la tenue.'**
+  String get evaluationIncomplete;
+
+  /// No description provided for @evaluationIndicative.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce score est indicatif : vos goûts passent avant.'**
+  String get evaluationIndicative;
+
+  /// No description provided for @warningStructure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Structure'**
+  String get warningStructure;
+
+  /// No description provided for @warningPreference.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préférence'**
+  String get warningPreference;
+
+  /// No description provided for @broadenedStyle.
+  ///
+  /// In fr, this message translates to:
+  /// **'le style'**
+  String get broadenedStyle;
+
+  /// No description provided for @broadenedOccasion.
+  ///
+  /// In fr, this message translates to:
+  /// **'l\'occasion'**
+  String get broadenedOccasion;
+
+  /// No description provided for @broadenedShades.
+  ///
+  /// In fr, this message translates to:
+  /// **'les nuances proches'**
+  String get broadenedShades;
+
+  /// No description provided for @broadenedNeutral.
+  ///
+  /// In fr, this message translates to:
+  /// **'les conseils de couleurs neutres'**
+  String get broadenedNeutral;
+
+  /// No description provided for @resultsAdviceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quelques conseils de couleurs'**
+  String get resultsAdviceTitle;
+
+  /// No description provided for @resultsAdviceIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun look ne correspond assez bien à cette pièce pour l\'instant. Voici des couleurs faciles à associer.'**
+  String get resultsAdviceIntro;
+
+  /// No description provided for @offlineGuideBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors ligne : guide des couleurs'**
+  String get offlineGuideBadge;
+
+  /// No description provided for @offlineGuideTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avec du {color}'**
+  String offlineGuideTitle(String color);
+
+  /// No description provided for @offlineGuideIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les propositions de looks reviendront avec la connexion. En attendant, voici les associations du guide des couleurs.'**
+  String get offlineGuideIntro;
+
+  /// No description provided for @guideFamilyCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 nuance} other{{count} nuances}}'**
+  String guideFamilyCount(int count);
+
+  /// No description provided for @guideHarmonious.
+  ///
+  /// In fr, this message translates to:
+  /// **'S\'harmonise avec'**
+  String get guideHarmonious;
+
+  /// No description provided for @guideContrast.
+  ///
+  /// In fr, this message translates to:
+  /// **'En contraste'**
+  String get guideContrast;
+
+  /// No description provided for @guideNeutralPairing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Neutres qui l\'accompagnent'**
+  String get guideNeutralPairing;
+
+  /// No description provided for @guideCaution.
+  ///
+  /// In fr, this message translates to:
+  /// **'À manier avec prudence'**
+  String get guideCaution;
+
+  /// No description provided for @guideNoPairs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d\'association conseillée pour cette nuance.'**
+  String get guideNoPairs;
+
+  /// No description provided for @principleNeutralTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partir d\'une base neutre'**
+  String get principleNeutralTitle;
+
+  /// No description provided for @principleNeutralBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noir, blanc, gris, beige ou bleu marine s\'associent à presque tout. Une base neutre laisse une seule pièce de couleur prendre la vedette.'**
+  String get principleNeutralBody;
+
+  /// No description provided for @principleHarmonyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jouer l\'harmonie'**
+  String get principleHarmonyTitle;
+
+  /// No description provided for @principleHarmonyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des couleurs voisines ou un camaïeu d\'une même teinte donnent une tenue douce et cohérente.'**
+  String get principleHarmonyBody;
+
+  /// No description provided for @principleContrastTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oser le contraste'**
+  String get principleContrastTitle;
+
+  /// No description provided for @principleContrastBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des couleurs opposées réveillent une tenue. Gardez-en une dominante et utilisez l\'autre en touche.'**
+  String get principleContrastBody;
+
+  /// No description provided for @principleCautionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Savoir doser'**
+  String get principleCautionTitle;
+
+  /// No description provided for @principleCautionBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Certaines associations sont plus délicates : elles demandent une pièce neutre pour faire le lien. Ce sont des repères, pas des interdits.'**
+  String get principleCautionBody;
+
+  /// No description provided for @authInvalidCredentials.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiants invalides. Vérifiez votre e-mail et votre mot de passe.'**
+  String get authInvalidCredentials;
+
+  /// No description provided for @profileVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Herycia {version}'**
+  String profileVersion(String version);
 }
 
 class _AppLocalizationsDelegate

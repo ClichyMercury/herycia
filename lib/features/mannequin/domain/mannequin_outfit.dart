@@ -32,6 +32,7 @@ class MannequinOutfit {
     this.top,
     this.bottom,
     this.onePiece,
+    this.outerwear,
     this.shoes,
     this.accessories = const [],
   });
@@ -41,11 +42,12 @@ class MannequinOutfit {
   final MannequinLayer? top;
   final MannequinLayer? bottom;
   final MannequinLayer? onePiece;
+  final MannequinLayer? outerwear;
   final MannequinLayer? shoes;
   final List<MannequinLayer> accessories;
 
   bool get isEmpty =>
-      top == null && bottom == null && onePiece == null && shoes == null && accessories.isEmpty;
+      top == null && bottom == null && onePiece == null && outerwear == null && shoes == null && accessories.isEmpty;
 
   MannequinLayer? accessory(GarmentShape shape) {
     for (final a in accessories) {
@@ -60,6 +62,7 @@ class MannequinOutfit {
       top: MannequinLayer.lerp(a.top, b.top, t),
       bottom: MannequinLayer.lerp(a.bottom, b.bottom, t),
       onePiece: MannequinLayer.lerp(a.onePiece, b.onePiece, t),
+      outerwear: MannequinLayer.lerp(a.outerwear, b.outerwear, t),
       shoes: MannequinLayer.lerp(a.shoes, b.shoes, t),
       accessories: [
         for (final shape in shapes)
@@ -74,9 +77,10 @@ class MannequinOutfit {
       other.top == top &&
       other.bottom == bottom &&
       other.onePiece == onePiece &&
+      other.outerwear == outerwear &&
       other.shoes == shoes &&
       listEquals(other.accessories, accessories);
 
   @override
-  int get hashCode => Object.hash(top, bottom, onePiece, shoes, Object.hashAll(accessories));
+  int get hashCode => Object.hash(top, bottom, onePiece, outerwear, shoes, Object.hashAll(accessories));
 }

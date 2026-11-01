@@ -11,7 +11,7 @@ class ApiAuthRepository implements AuthRepository {
 
   Future<AuthSession> _session(Future<Object?> call) async {
     final session = AuthSession.fromJson((await call).dataMap);
-    await tokenStore.write(session.token);
+    await tokenStore.write(session.accessToken);
     return session;
   }
 
@@ -20,33 +20,45 @@ class ApiAuthRepository implements AuthRepository {
       _session(client.post('/auth/register', body: request.toJson()));
 
   @override
-  Future<AuthSession> login(LoginRequest request) =>
-      _session(client.post('/auth/login', body: request.toJson()));
+  Future<AuthSession> login(LoginRequest request) => _session(client.post('/auth/login', body: request.toJson()));
 
   @override
   Future<void> logout() async {
     try {
       await client.post('/auth/logout');
-    } on ApiException catch (e) {
-      if (e.code != ApiErrorCode.unauthenticated) rethrow;
+    } on ApiException {
+      return;
+    } on NetworkUnavailableException {
+      return;
     } finally {
       await tokenStore.write(null);
     }
   }
 
   @override
-  Future<void> forgotPassword(String email) => client.post('/auth/forgot-password', body: {'email': email});
+  Future<void> forgotPassword(String email) => client.post('/auth/password/forgot', body: {'email': email});
 
   @override
   Future<void> resetPassword(ResetPasswordRequest request) =>
-      client.post('/auth/reset-password', body: request.toJson());
+      client.post('/auth/password/reset', body: request.toJson());
 
   @override
   Future<AppUser> me() async => AppUser.fromJson((await client.get('/me')).dataMap);
 
   @override
-  Future<void> deleteAccount() async {
-    await client.delete('/me');
+  Future<AppUser> updateName(String name) async =>
+      AppUser.fromJson((await client.patch('/me', body: {'name': name})).dataMap);
+
+  @override
+  Future<void> changePassword(ChangePasswordRequest request) async {
+    final body = await client.put('/me/password', body: request.toJson());
+    final data = body is Map<String, dynamic> ? body['data'] : null;
+    await tokenStore.write(data is Map<String, dynamic> ? data['access_token'] as String? : null);
+  }
+
+  @override
+  Future<void> deleteAccount(String password) async {
+    await client.delete('/me', body: {'password': password});
     await tokenStore.write(null);
   }
 }
@@ -57,10 +69,10 @@ class ApiPreferencesRepository implements PreferencesRepository {
   final ApiClient client;
 
   @override
-  Future<UserPreferences> get() async => UserPreferences.fromJson((await client.get('/me/preferences')).dataMap);
+  Future<RemotePreferences> get() async => RemotePreferences.fromJson((await client.get('/me/preferences')).dataMap);
 
   @override
-  Future<UserPreferences> update(UserPreferences preferences) async => UserPreferences.fromJson(
+  Future<RemotePreferences> update(RemotePreferences preferences) async => RemotePreferences.fromJson(
         (await client.put('/me/preferences', body: preferences.toJson()..remove('updated_at'))).dataMap,
       );
 }

@@ -25,7 +25,21 @@ class HomeScreen extends ConsumerWidget {
     final colors = context.colors;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.homeTitle)),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              context.brightness == Brightness.dark ? 'assets/branding/mark_dark.png' : 'assets/branding/mark.png',
+              key: const ValueKey('home-logo'),
+              height: 28,
+              excludeFromSemantics: true,
+            ),
+            const SizedBox(width: AppSpacing.s2),
+            Flexible(child: Text(l10n.homeTitle, overflow: TextOverflow.ellipsis)),
+          ],
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: AppSpacing.s6),
         children: [

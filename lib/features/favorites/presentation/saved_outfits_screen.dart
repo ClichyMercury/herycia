@@ -12,10 +12,8 @@ import '../../compose_outfit/domain/outfit_composition.dart';
 import '../../looks/presentation/look_view.dart';
 import '../../looks/presentation/look_visual.dart';
 import '../application/saved_outfits_providers.dart';
-import '../application/wardrobe_providers.dart';
-import '../domain/wardrobe_models.dart';
 
-LookView savedOutfitToLook(SavedOutfit outfit, CatalogLookup lookup, String fallbackTitle) => LookView(
+LookView savedOutfitToLook(LocalSavedOutfit outfit, CatalogLookup lookup, String fallbackTitle) => LookView(
       title: outfit.title ?? fallbackTitle,
       score: outfit.score,
       occasion: lookup.occasionBySlug(outfit.composition.occasionSlug),
@@ -45,23 +43,15 @@ class SavedOutfitsScreen extends ConsumerWidget {
       context.go(AppRoutes.composeOutfit);
     }
 
-    Future<void> delete(SavedOutfit outfit) async {
-      final repo = ref.read(savedOutfitsRepositoryProvider);
-      await repo.delete(outfit.clientUuid);
-      ref.invalidate(savedOutfitsProvider);
+    Future<void> delete(LocalSavedOutfit outfit) async {
+      final controller = ref.read(savedOutfitsProvider.notifier);
+      await controller.remove(outfit.clientUuid);
       if (!context.mounted) return;
       showAppToast(
         context,
         message: l10n.savedOutfitDeleted,
         actionLabel: l10n.commonCancel,
-        onAction: () async {
-          await repo.create(SavedOutfitInput(
-            clientUuid: outfit.clientUuid,
-            title: outfit.title,
-            composition: outfit.composition,
-          ));
-          ref.invalidate(savedOutfitsProvider);
-        },
+        onAction: () => controller.restore(outfit),
       );
     }
 

@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/api_providers.dart';
+import '../../../core/storage/storage_providers.dart';
 import '../data/api_looks_repository.dart';
 import '../domain/look_models.dart';
 import '../domain/looks_repository.dart';
 
 final looksRepositoryProvider = Provider<LooksRepository>(
-  (ref) => ApiLooksRepository(ref.watch(apiClientProvider)),
+  (ref) => ApiLooksRepository(ref.watch(apiClientProvider), ref.watch(responseCacheProvider)),
 );
 
 final looksProvider = FutureProvider.family<Paginated<Look>, LookQuery>(

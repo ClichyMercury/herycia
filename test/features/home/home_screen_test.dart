@@ -23,6 +23,8 @@ void main() {
       overrides: [...MockApiHarness(fixtures).overrides, catalogRepositoryProvider.overrideWithValue(repo)],
     );
 
+    final logo = tester.widget<Image>(find.byKey(const ValueKey('home-logo')));
+    expect((logo.image as AssetImage).assetName, 'assets/branding/mark.png');
     expect(find.text('Partir d\'une pièce'), findsOneWidget);
     expect(find.text('Composer une tenue'), findsOneWidget);
 

@@ -148,6 +148,7 @@ class _PiecePickerSheetState extends ConsumerState<PiecePickerSheet> {
                 : _TypeList(
                     key: const ValueKey('type-step'),
                     group: widget.role.group,
+                    outerwearOnly: widget.role == CompositionRole.outerwear,
                     onSelected: (t) => setState(() {
                       _type = t;
                       if (widget.initial?.type.id != t.id) _color = null;
@@ -182,9 +183,10 @@ class _PiecePickerSheetState extends ConsumerState<PiecePickerSheet> {
 }
 
 class _TypeList extends ConsumerWidget {
-  const _TypeList({super.key, required this.group, required this.onSelected});
+  const _TypeList({super.key, required this.group, required this.onSelected, this.outerwearOnly = false});
 
   final CategoryGroup group;
+  final bool outerwearOnly;
   final ValueChanged<ClothingType> onSelected;
 
   @override
@@ -206,9 +208,19 @@ class _TypeList extends ConsumerWidget {
       return ErrorState(onRetry: () => ref.invalidate(categoriesProvider));
     }
     final types = ref.watch(typesByCategoryProvider(category.id));
-    final colors = context.colors;
     return switch (types) {
-      AsyncValue(:final value?, hasValue: true) => ListView.separated(
+      AsyncValue(value: final all?, hasValue: true) => _list(context, [
+          for (final t in all)
+            if (!outerwearOnly || t.canBeOuterwear) t,
+        ]),
+      AsyncValue(error: _?) => ErrorState(onRetry: () => ref.invalidate(typesByCategoryProvider(category.id))),
+      _ => const _ListSkeleton(),
+    };
+  }
+
+  Widget _list(BuildContext context, List<ClothingType> value) {
+    final colors = context.colors;
+    return ListView.separated(
           padding: AppSpacing.screenPadding,
           itemCount: value.length,
           separatorBuilder: (_, _) => Divider(color: colors.border),
@@ -236,11 +248,7 @@ class _TypeList extends ConsumerWidget {
               ),
             );
           },
-        ),
-      AsyncValue(error: _?) =>
-        ErrorState(onRetry: () => ref.invalidate(typesByCategoryProvider(category.id))),
-      _ => const _ListSkeleton(),
-    };
+        );
   }
 }
 

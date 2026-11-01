@@ -14,6 +14,547 @@ part of 'catalog_models.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
+mixin _$CatalogRef {
+
+@IdConverter() String get id; String get slug; String get name;
+/// Create a copy of CatalogRef
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CatalogRefCopyWith<CatalogRef> get copyWith => _$CatalogRefCopyWithImpl<CatalogRef>(this as CatalogRef, _$identity);
+
+  /// Serializes this CatalogRef to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogRef&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,slug,name);
+
+@override
+String toString() {
+  return 'CatalogRef(id: $id, slug: $slug, name: $name)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CatalogRefCopyWith<$Res>  {
+  factory $CatalogRefCopyWith(CatalogRef value, $Res Function(CatalogRef) _then) = _$CatalogRefCopyWithImpl;
+@useResult
+$Res call({
+@IdConverter() String id, String slug, String name
+});
+
+
+
+
+}
+/// @nodoc
+class _$CatalogRefCopyWithImpl<$Res>
+    implements $CatalogRefCopyWith<$Res> {
+  _$CatalogRefCopyWithImpl(this._self, this._then);
+
+  final CatalogRef _self;
+  final $Res Function(CatalogRef) _then;
+
+/// Create a copy of CatalogRef
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slug = null,Object? name = null,}) {
+  return _then(CatalogRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [CatalogRef].
+extension CatalogRefPatterns on CatalogRef {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CatalogRef value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _CatalogRef() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CatalogRef value)  $default,){
+final _that = this;
+switch (_that) {
+case _CatalogRef():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CatalogRef value)?  $default,){
+final _that = this;
+switch (_that) {
+case _CatalogRef() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String slug,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _CatalogRef() when $default != null:
+return $default(_that.id,_that.slug,_that.name);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String slug,  String name)  $default,) {final _that = this;
+switch (_that) {
+case _CatalogRef():
+return $default(_that.id,_that.slug,_that.name);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String slug,  String name)?  $default,) {final _that = this;
+switch (_that) {
+case _CatalogRef() when $default != null:
+return $default(_that.id,_that.slug,_that.name);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _CatalogRef implements CatalogRef {
+  const _CatalogRef({@IdConverter() required this.id, required this.slug, required this.name});
+  factory _CatalogRef.fromJson(Map<String, dynamic> json) => _$CatalogRefFromJson(json);
+
+@override@IdConverter() final  String id;
+@override final  String slug;
+@override final  String name;
+
+/// Create a copy of CatalogRef
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CatalogRefCopyWith<_CatalogRef> get copyWith => __$CatalogRefCopyWithImpl<_CatalogRef>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$CatalogRefToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogRef&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,slug,name);
+
+@override
+String toString() {
+  return 'CatalogRef(id: $id, slug: $slug, name: $name)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CatalogRefCopyWith<$Res> implements $CatalogRefCopyWith<$Res> {
+  factory _$CatalogRefCopyWith(_CatalogRef value, $Res Function(_CatalogRef) _then) = __$CatalogRefCopyWithImpl;
+@override @useResult
+$Res call({
+@IdConverter() String id, String slug, String name
+});
+
+
+
+
+}
+/// @nodoc
+class __$CatalogRefCopyWithImpl<$Res>
+    implements _$CatalogRefCopyWith<$Res> {
+  __$CatalogRefCopyWithImpl(this._self, this._then);
+
+  final _CatalogRef _self;
+  final $Res Function(_CatalogRef) _then;
+
+/// Create a copy of CatalogRef
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slug = null,Object? name = null,}) {
+  return _then(_CatalogRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$ColorRef {
+
+@IdConverter() String get id; String get slug; String get name; String get hexCode;
+/// Create a copy of ColorRef
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ColorRefCopyWith<ColorRef> get copyWith => _$ColorRefCopyWithImpl<ColorRef>(this as ColorRef, _$identity);
+
+  /// Serializes this ColorRef to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorRef&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,slug,name,hexCode);
+
+@override
+String toString() {
+  return 'ColorRef(id: $id, slug: $slug, name: $name, hexCode: $hexCode)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ColorRefCopyWith<$Res>  {
+  factory $ColorRefCopyWith(ColorRef value, $Res Function(ColorRef) _then) = _$ColorRefCopyWithImpl;
+@useResult
+$Res call({
+@IdConverter() String id, String slug, String name, String hexCode
+});
+
+
+
+
+}
+/// @nodoc
+class _$ColorRefCopyWithImpl<$Res>
+    implements $ColorRefCopyWith<$Res> {
+  _$ColorRefCopyWithImpl(this._self, this._then);
+
+  final ColorRef _self;
+  final $Res Function(ColorRef) _then;
+
+/// Create a copy of ColorRef
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slug = null,Object? name = null,Object? hexCode = null,}) {
+  return _then(ColorRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,hexCode: null == hexCode ? _self.hexCode : hexCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ColorRef].
+extension ColorRefPatterns on ColorRef {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ColorRef value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ColorRef() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ColorRef value)  $default,){
+final _that = this;
+switch (_that) {
+case _ColorRef():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ColorRef value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ColorRef() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String slug,  String name,  String hexCode)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ColorRef() when $default != null:
+return $default(_that.id,_that.slug,_that.name,_that.hexCode);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String slug,  String name,  String hexCode)  $default,) {final _that = this;
+switch (_that) {
+case _ColorRef():
+return $default(_that.id,_that.slug,_that.name,_that.hexCode);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String slug,  String name,  String hexCode)?  $default,) {final _that = this;
+switch (_that) {
+case _ColorRef() when $default != null:
+return $default(_that.id,_that.slug,_that.name,_that.hexCode);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ColorRef implements ColorRef {
+  const _ColorRef({@IdConverter() required this.id, required this.slug, required this.name, required this.hexCode});
+  factory _ColorRef.fromJson(Map<String, dynamic> json) => _$ColorRefFromJson(json);
+
+@override@IdConverter() final  String id;
+@override final  String slug;
+@override final  String name;
+@override final  String hexCode;
+
+/// Create a copy of ColorRef
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ColorRefCopyWith<_ColorRef> get copyWith => __$ColorRefCopyWithImpl<_ColorRef>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ColorRefToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorRef&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,slug,name,hexCode);
+
+@override
+String toString() {
+  return 'ColorRef(id: $id, slug: $slug, name: $name, hexCode: $hexCode)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ColorRefCopyWith<$Res> implements $ColorRefCopyWith<$Res> {
+  factory _$ColorRefCopyWith(_ColorRef value, $Res Function(_ColorRef) _then) = __$ColorRefCopyWithImpl;
+@override @useResult
+$Res call({
+@IdConverter() String id, String slug, String name, String hexCode
+});
+
+
+
+
+}
+/// @nodoc
+class __$ColorRefCopyWithImpl<$Res>
+    implements _$ColorRefCopyWith<$Res> {
+  __$ColorRefCopyWithImpl(this._self, this._then);
+
+  final _ColorRef _self;
+  final $Res Function(_ColorRef) _then;
+
+/// Create a copy of ColorRef
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slug = null,Object? name = null,Object? hexCode = null,}) {
+  return _then(_ColorRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,hexCode: null == hexCode ? _self.hexCode : hexCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$ClothingCategory {
 
 @IdConverter() String get id; String get name; String get slug; CategoryGroup get groupType; bool get isOptional; int get sortOrder;
@@ -492,8 +1033,8 @@ return $default(_that.id,_that.categoryId,_that.name,_that.slug,_that.isOnePiece
 /// @nodoc
 @JsonSerializable()
 
-class _ClothingType implements ClothingType {
-  const _ClothingType({@IdConverter() required this.id, @IdConverter() required this.categoryId, required this.name, required this.slug, this.isOnePiece = false, this.sortOrder = 0});
+class _ClothingType extends ClothingType {
+  const _ClothingType({@IdConverter() required this.id, @IdConverter() required this.categoryId, required this.name, required this.slug, this.isOnePiece = false, this.sortOrder = 0}): super._();
   factory _ClothingType.fromJson(Map<String, dynamic> json) => _$ClothingTypeFromJson(json);
 
 @override@IdConverter() final  String id;
@@ -572,7 +1113,7 @@ as int,
 /// @nodoc
 mixin _$CatalogColor {
 
-@IdConverter() String get id; String get name; String get slug; String get hexCode; String get colorFamily; String? get temperature; double? get brightness; double? get saturation; bool get isNeutral;
+@IdConverter() String get id; String get name; String get slug; String get hexCode; String get colorFamily; String? get temperature; String? get brightness; String? get saturation; bool get isNeutral; List<String> get aliases;
 /// Create a copy of CatalogColor
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -585,16 +1126,16 @@ $CatalogColorCopyWith<CatalogColor> get copyWith => _$CatalogColorCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogColor&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode)&&(identical(other.colorFamily, colorFamily) || other.colorFamily == colorFamily)&&(identical(other.temperature, temperature) || other.temperature == temperature)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.saturation, saturation) || other.saturation == saturation)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogColor&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode)&&(identical(other.colorFamily, colorFamily) || other.colorFamily == colorFamily)&&(identical(other.temperature, temperature) || other.temperature == temperature)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.saturation, saturation) || other.saturation == saturation)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral)&&const DeepCollectionEquality().equals(other.aliases, aliases));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,slug,hexCode,colorFamily,temperature,brightness,saturation,isNeutral);
+int get hashCode => Object.hash(runtimeType,id,name,slug,hexCode,colorFamily,temperature,brightness,saturation,isNeutral,const DeepCollectionEquality().hash(aliases));
 
 @override
 String toString() {
-  return 'CatalogColor(id: $id, name: $name, slug: $slug, hexCode: $hexCode, colorFamily: $colorFamily, temperature: $temperature, brightness: $brightness, saturation: $saturation, isNeutral: $isNeutral)';
+  return 'CatalogColor(id: $id, name: $name, slug: $slug, hexCode: $hexCode, colorFamily: $colorFamily, temperature: $temperature, brightness: $brightness, saturation: $saturation, isNeutral: $isNeutral, aliases: $aliases)';
 }
 
 
@@ -605,7 +1146,7 @@ abstract mixin class $CatalogColorCopyWith<$Res>  {
   factory $CatalogColorCopyWith(CatalogColor value, $Res Function(CatalogColor) _then) = _$CatalogColorCopyWithImpl;
 @useResult
 $Res call({
-@IdConverter() String id, String name, String slug, String hexCode, String colorFamily, String? temperature, double? brightness, double? saturation, bool isNeutral
+@IdConverter() String id, String name, String slug, String hexCode, String colorFamily, String? temperature, String? brightness, String? saturation, bool isNeutral, List<String> aliases
 });
 
 
@@ -622,7 +1163,7 @@ class _$CatalogColorCopyWithImpl<$Res>
 
 /// Create a copy of CatalogColor
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? slug = null,Object? hexCode = null,Object? colorFamily = null,Object? temperature = freezed,Object? brightness = freezed,Object? saturation = freezed,Object? isNeutral = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? slug = null,Object? hexCode = null,Object? colorFamily = null,Object? temperature = freezed,Object? brightness = freezed,Object? saturation = freezed,Object? isNeutral = null,Object? aliases = null,}) {
   return _then(CatalogColor(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -631,9 +1172,10 @@ as String,hexCode: null == hexCode ? _self.hexCode : hexCode // ignore: cast_nul
 as String,colorFamily: null == colorFamily ? _self.colorFamily : colorFamily // ignore: cast_nullable_to_non_nullable
 as String,temperature: freezed == temperature ? _self.temperature : temperature // ignore: cast_nullable_to_non_nullable
 as String?,brightness: freezed == brightness ? _self.brightness : brightness // ignore: cast_nullable_to_non_nullable
-as double?,saturation: freezed == saturation ? _self.saturation : saturation // ignore: cast_nullable_to_non_nullable
-as double?,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
-as bool,
+as String?,saturation: freezed == saturation ? _self.saturation : saturation // ignore: cast_nullable_to_non_nullable
+as String?,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
+as bool,aliases: null == aliases ? _self.aliases : aliases // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -718,10 +1260,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  double? brightness,  double? saturation,  bool isNeutral)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  String? brightness,  String? saturation,  bool isNeutral,  List<String> aliases)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CatalogColor() when $default != null:
-return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral);case _:
+return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral,_that.aliases);case _:
   return orElse();
 
 }
@@ -739,10 +1281,10 @@ return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  double? brightness,  double? saturation,  bool isNeutral)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  String? brightness,  String? saturation,  bool isNeutral,  List<String> aliases)  $default,) {final _that = this;
 switch (_that) {
 case _CatalogColor():
-return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral);case _:
+return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral,_that.aliases);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -759,10 +1301,10 @@ return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  double? brightness,  double? saturation,  bool isNeutral)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String name,  String slug,  String hexCode,  String colorFamily,  String? temperature,  String? brightness,  String? saturation,  bool isNeutral,  List<String> aliases)?  $default,) {final _that = this;
 switch (_that) {
 case _CatalogColor() when $default != null:
-return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral);case _:
+return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_that.temperature,_that.brightness,_that.saturation,_that.isNeutral,_that.aliases);case _:
   return null;
 
 }
@@ -774,7 +1316,7 @@ return $default(_that.id,_that.name,_that.slug,_that.hexCode,_that.colorFamily,_
 @JsonSerializable()
 
 class _CatalogColor extends CatalogColor {
-  const _CatalogColor({@IdConverter() required this.id, required this.name, required this.slug, required this.hexCode, required this.colorFamily, this.temperature, this.brightness, this.saturation, this.isNeutral = false}): super._();
+  const _CatalogColor({@IdConverter() required this.id, required this.name, required this.slug, required this.hexCode, required this.colorFamily, this.temperature, this.brightness, this.saturation, this.isNeutral = false,  List<String> aliases = const []}): _aliases = aliases,super._();
   factory _CatalogColor.fromJson(Map<String, dynamic> json) => _$CatalogColorFromJson(json);
 
 @override@IdConverter() final  String id;
@@ -783,9 +1325,16 @@ class _CatalogColor extends CatalogColor {
 @override final  String hexCode;
 @override final  String colorFamily;
 @override final  String? temperature;
-@override final  double? brightness;
-@override final  double? saturation;
+@override final  String? brightness;
+@override final  String? saturation;
 @override@JsonKey() final  bool isNeutral;
+ final  List<String> _aliases;
+@override@JsonKey() List<String> get aliases {
+  if (_aliases is EqualUnmodifiableListView) return _aliases;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_aliases);
+}
+
 
 /// Create a copy of CatalogColor
 /// with the given fields replaced by the non-null parameter values.
@@ -800,16 +1349,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogColor&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode)&&(identical(other.colorFamily, colorFamily) || other.colorFamily == colorFamily)&&(identical(other.temperature, temperature) || other.temperature == temperature)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.saturation, saturation) || other.saturation == saturation)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogColor&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.hexCode, hexCode) || other.hexCode == hexCode)&&(identical(other.colorFamily, colorFamily) || other.colorFamily == colorFamily)&&(identical(other.temperature, temperature) || other.temperature == temperature)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.saturation, saturation) || other.saturation == saturation)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral)&&const DeepCollectionEquality().equals(other._aliases, _aliases));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,slug,hexCode,colorFamily,temperature,brightness,saturation,isNeutral);
+int get hashCode => Object.hash(runtimeType,id,name,slug,hexCode,colorFamily,temperature,brightness,saturation,isNeutral,const DeepCollectionEquality().hash(_aliases));
 
 @override
 String toString() {
-  return 'CatalogColor(id: $id, name: $name, slug: $slug, hexCode: $hexCode, colorFamily: $colorFamily, temperature: $temperature, brightness: $brightness, saturation: $saturation, isNeutral: $isNeutral)';
+  return 'CatalogColor(id: $id, name: $name, slug: $slug, hexCode: $hexCode, colorFamily: $colorFamily, temperature: $temperature, brightness: $brightness, saturation: $saturation, isNeutral: $isNeutral, aliases: $aliases)';
 }
 
 
@@ -820,7 +1369,7 @@ abstract mixin class _$CatalogColorCopyWith<$Res> implements $CatalogColorCopyWi
   factory _$CatalogColorCopyWith(_CatalogColor value, $Res Function(_CatalogColor) _then) = __$CatalogColorCopyWithImpl;
 @override @useResult
 $Res call({
-@IdConverter() String id, String name, String slug, String hexCode, String colorFamily, String? temperature, double? brightness, double? saturation, bool isNeutral
+@IdConverter() String id, String name, String slug, String hexCode, String colorFamily, String? temperature, String? brightness, String? saturation, bool isNeutral, List<String> aliases
 });
 
 
@@ -837,7 +1386,7 @@ class __$CatalogColorCopyWithImpl<$Res>
 
 /// Create a copy of CatalogColor
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? slug = null,Object? hexCode = null,Object? colorFamily = null,Object? temperature = freezed,Object? brightness = freezed,Object? saturation = freezed,Object? isNeutral = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? slug = null,Object? hexCode = null,Object? colorFamily = null,Object? temperature = freezed,Object? brightness = freezed,Object? saturation = freezed,Object? isNeutral = null,Object? aliases = null,}) {
   return _then(_CatalogColor(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -846,9 +1395,10 @@ as String,hexCode: null == hexCode ? _self.hexCode : hexCode // ignore: cast_nul
 as String,colorFamily: null == colorFamily ? _self.colorFamily : colorFamily // ignore: cast_nullable_to_non_nullable
 as String,temperature: freezed == temperature ? _self.temperature : temperature // ignore: cast_nullable_to_non_nullable
 as String?,brightness: freezed == brightness ? _self.brightness : brightness // ignore: cast_nullable_to_non_nullable
-as double?,saturation: freezed == saturation ? _self.saturation : saturation // ignore: cast_nullable_to_non_nullable
-as double?,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
-as bool,
+as String?,saturation: freezed == saturation ? _self.saturation : saturation // ignore: cast_nullable_to_non_nullable
+as String?,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
+as bool,aliases: null == aliases ? _self._aliases : aliases // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -1409,7 +1959,7 @@ as int,
 /// @nodoc
 mixin _$CatalogVersion {
 
- String get catalogVersion; String get rulesVersion;@UtcDateTimeConverter() DateTime get updatedAt;
+ int get catalogVersion; int get rulesVersion;
 /// Create a copy of CatalogVersion
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1422,16 +1972,16 @@ $CatalogVersionCopyWith<CatalogVersion> get copyWith => _$CatalogVersionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogVersion&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CatalogVersion&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion,updatedAt);
+int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion);
 
 @override
 String toString() {
-  return 'CatalogVersion(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion, updatedAt: $updatedAt)';
+  return 'CatalogVersion(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion)';
 }
 
 
@@ -1442,7 +1992,7 @@ abstract mixin class $CatalogVersionCopyWith<$Res>  {
   factory $CatalogVersionCopyWith(CatalogVersion value, $Res Function(CatalogVersion) _then) = _$CatalogVersionCopyWithImpl;
 @useResult
 $Res call({
- String catalogVersion, String rulesVersion,@UtcDateTimeConverter() DateTime updatedAt
+ int catalogVersion, int rulesVersion
 });
 
 
@@ -1459,12 +2009,11 @@ class _$CatalogVersionCopyWithImpl<$Res>
 
 /// Create a copy of CatalogVersion
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? catalogVersion = null,Object? rulesVersion = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? catalogVersion = null,Object? rulesVersion = null,}) {
   return _then(CatalogVersion(
 catalogVersion: null == catalogVersion ? _self.catalogVersion : catalogVersion // ignore: cast_nullable_to_non_nullable
-as String,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
-as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as int,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -1549,10 +2098,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String catalogVersion,  String rulesVersion, @UtcDateTimeConverter()  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int catalogVersion,  int rulesVersion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CatalogVersion() when $default != null:
-return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
+return $default(_that.catalogVersion,_that.rulesVersion);case _:
   return orElse();
 
 }
@@ -1570,10 +2119,10 @@ return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String catalogVersion,  String rulesVersion, @UtcDateTimeConverter()  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int catalogVersion,  int rulesVersion)  $default,) {final _that = this;
 switch (_that) {
 case _CatalogVersion():
-return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
+return $default(_that.catalogVersion,_that.rulesVersion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1590,10 +2139,10 @@ return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String catalogVersion,  String rulesVersion, @UtcDateTimeConverter()  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int catalogVersion,  int rulesVersion)?  $default,) {final _that = this;
 switch (_that) {
 case _CatalogVersion() when $default != null:
-return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
+return $default(_that.catalogVersion,_that.rulesVersion);case _:
   return null;
 
 }
@@ -1605,12 +2154,11 @@ return $default(_that.catalogVersion,_that.rulesVersion,_that.updatedAt);case _:
 @JsonSerializable()
 
 class _CatalogVersion implements CatalogVersion {
-  const _CatalogVersion({required this.catalogVersion, required this.rulesVersion, @UtcDateTimeConverter() required this.updatedAt});
+  const _CatalogVersion({required this.catalogVersion, required this.rulesVersion});
   factory _CatalogVersion.fromJson(Map<String, dynamic> json) => _$CatalogVersionFromJson(json);
 
-@override final  String catalogVersion;
-@override final  String rulesVersion;
-@override@UtcDateTimeConverter() final  DateTime updatedAt;
+@override final  int catalogVersion;
+@override final  int rulesVersion;
 
 /// Create a copy of CatalogVersion
 /// with the given fields replaced by the non-null parameter values.
@@ -1625,16 +2173,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogVersion&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CatalogVersion&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion,updatedAt);
+int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion);
 
 @override
 String toString() {
-  return 'CatalogVersion(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion, updatedAt: $updatedAt)';
+  return 'CatalogVersion(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion)';
 }
 
 
@@ -1645,7 +2193,7 @@ abstract mixin class _$CatalogVersionCopyWith<$Res> implements $CatalogVersionCo
   factory _$CatalogVersionCopyWith(_CatalogVersion value, $Res Function(_CatalogVersion) _then) = __$CatalogVersionCopyWithImpl;
 @override @useResult
 $Res call({
- String catalogVersion, String rulesVersion,@UtcDateTimeConverter() DateTime updatedAt
+ int catalogVersion, int rulesVersion
 });
 
 
@@ -1662,12 +2210,11 @@ class __$CatalogVersionCopyWithImpl<$Res>
 
 /// Create a copy of CatalogVersion
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? catalogVersion = null,Object? rulesVersion = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? catalogVersion = null,Object? rulesVersion = null,}) {
   return _then(_CatalogVersion(
 catalogVersion: null == catalogVersion ? _self.catalogVersion : catalogVersion // ignore: cast_nullable_to_non_nullable
-as String,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
-as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as int,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -1678,7 +2225,7 @@ as DateTime,
 /// @nodoc
 mixin _$ColorFamilyGuide {
 
- String get slug; String get name; String get description; bool get isNeutral;@IdListConverter() List<String> get colorIds;@IdListConverter() List<String> get pairsWellWithColorIds;
+ String get slug; String get name;@IdListConverter() List<String> get colorIds;
 /// Create a copy of ColorFamilyGuide
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1691,16 +2238,16 @@ $ColorFamilyGuideCopyWith<ColorFamilyGuide> get copyWith => _$ColorFamilyGuideCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorFamilyGuide&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral)&&const DeepCollectionEquality().equals(other.colorIds, colorIds)&&const DeepCollectionEquality().equals(other.pairsWellWithColorIds, pairsWellWithColorIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorFamilyGuide&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.colorIds, colorIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,slug,name,description,isNeutral,const DeepCollectionEquality().hash(colorIds),const DeepCollectionEquality().hash(pairsWellWithColorIds));
+int get hashCode => Object.hash(runtimeType,slug,name,const DeepCollectionEquality().hash(colorIds));
 
 @override
 String toString() {
-  return 'ColorFamilyGuide(slug: $slug, name: $name, description: $description, isNeutral: $isNeutral, colorIds: $colorIds, pairsWellWithColorIds: $pairsWellWithColorIds)';
+  return 'ColorFamilyGuide(slug: $slug, name: $name, colorIds: $colorIds)';
 }
 
 
@@ -1711,7 +2258,7 @@ abstract mixin class $ColorFamilyGuideCopyWith<$Res>  {
   factory $ColorFamilyGuideCopyWith(ColorFamilyGuide value, $Res Function(ColorFamilyGuide) _then) = _$ColorFamilyGuideCopyWithImpl;
 @useResult
 $Res call({
- String slug, String name, String description, bool isNeutral,@IdListConverter() List<String> colorIds,@IdListConverter() List<String> pairsWellWithColorIds
+ String slug, String name,@IdListConverter() List<String> colorIds
 });
 
 
@@ -1728,14 +2275,11 @@ class _$ColorFamilyGuideCopyWithImpl<$Res>
 
 /// Create a copy of ColorFamilyGuide
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? slug = null,Object? name = null,Object? description = null,Object? isNeutral = null,Object? colorIds = null,Object? pairsWellWithColorIds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? slug = null,Object? name = null,Object? colorIds = null,}) {
   return _then(ColorFamilyGuide(
 slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
-as bool,colorIds: null == colorIds ? _self.colorIds : colorIds // ignore: cast_nullable_to_non_nullable
-as List<String>,pairsWellWithColorIds: null == pairsWellWithColorIds ? _self.pairsWellWithColorIds : pairsWellWithColorIds // ignore: cast_nullable_to_non_nullable
+as String,colorIds: null == colorIds ? _self.colorIds : colorIds // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }
@@ -1821,10 +2365,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String slug,  String name,  String description,  bool isNeutral, @IdListConverter()  List<String> colorIds, @IdListConverter()  List<String> pairsWellWithColorIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String slug,  String name, @IdListConverter()  List<String> colorIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ColorFamilyGuide() when $default != null:
-return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.colorIds,_that.pairsWellWithColorIds);case _:
+return $default(_that.slug,_that.name,_that.colorIds);case _:
   return orElse();
 
 }
@@ -1842,10 +2386,10 @@ return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.co
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String slug,  String name,  String description,  bool isNeutral, @IdListConverter()  List<String> colorIds, @IdListConverter()  List<String> pairsWellWithColorIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String slug,  String name, @IdListConverter()  List<String> colorIds)  $default,) {final _that = this;
 switch (_that) {
 case _ColorFamilyGuide():
-return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.colorIds,_that.pairsWellWithColorIds);case _:
+return $default(_that.slug,_that.name,_that.colorIds);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1862,10 +2406,10 @@ return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.co
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String slug,  String name,  String description,  bool isNeutral, @IdListConverter()  List<String> colorIds, @IdListConverter()  List<String> pairsWellWithColorIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String slug,  String name, @IdListConverter()  List<String> colorIds)?  $default,) {final _that = this;
 switch (_that) {
 case _ColorFamilyGuide() when $default != null:
-return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.colorIds,_that.pairsWellWithColorIds);case _:
+return $default(_that.slug,_that.name,_that.colorIds);case _:
   return null;
 
 }
@@ -1877,25 +2421,16 @@ return $default(_that.slug,_that.name,_that.description,_that.isNeutral,_that.co
 @JsonSerializable()
 
 class _ColorFamilyGuide implements ColorFamilyGuide {
-  const _ColorFamilyGuide({required this.slug, required this.name, required this.description, this.isNeutral = false, @IdListConverter() required  List<String> colorIds, @IdListConverter()  List<String> pairsWellWithColorIds = const []}): _colorIds = colorIds,_pairsWellWithColorIds = pairsWellWithColorIds;
+  const _ColorFamilyGuide({required this.slug, required this.name, @IdListConverter() required  List<String> colorIds}): _colorIds = colorIds;
   factory _ColorFamilyGuide.fromJson(Map<String, dynamic> json) => _$ColorFamilyGuideFromJson(json);
 
 @override final  String slug;
 @override final  String name;
-@override final  String description;
-@override@JsonKey() final  bool isNeutral;
  final  List<String> _colorIds;
 @override@IdListConverter() List<String> get colorIds {
   if (_colorIds is EqualUnmodifiableListView) return _colorIds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_colorIds);
-}
-
- final  List<String> _pairsWellWithColorIds;
-@override@JsonKey()@IdListConverter() List<String> get pairsWellWithColorIds {
-  if (_pairsWellWithColorIds is EqualUnmodifiableListView) return _pairsWellWithColorIds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_pairsWellWithColorIds);
 }
 
 
@@ -1912,16 +2447,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorFamilyGuide&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.isNeutral, isNeutral) || other.isNeutral == isNeutral)&&const DeepCollectionEquality().equals(other._colorIds, _colorIds)&&const DeepCollectionEquality().equals(other._pairsWellWithColorIds, _pairsWellWithColorIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorFamilyGuide&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._colorIds, _colorIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,slug,name,description,isNeutral,const DeepCollectionEquality().hash(_colorIds),const DeepCollectionEquality().hash(_pairsWellWithColorIds));
+int get hashCode => Object.hash(runtimeType,slug,name,const DeepCollectionEquality().hash(_colorIds));
 
 @override
 String toString() {
-  return 'ColorFamilyGuide(slug: $slug, name: $name, description: $description, isNeutral: $isNeutral, colorIds: $colorIds, pairsWellWithColorIds: $pairsWellWithColorIds)';
+  return 'ColorFamilyGuide(slug: $slug, name: $name, colorIds: $colorIds)';
 }
 
 
@@ -1932,7 +2467,7 @@ abstract mixin class _$ColorFamilyGuideCopyWith<$Res> implements $ColorFamilyGui
   factory _$ColorFamilyGuideCopyWith(_ColorFamilyGuide value, $Res Function(_ColorFamilyGuide) _then) = __$ColorFamilyGuideCopyWithImpl;
 @override @useResult
 $Res call({
- String slug, String name, String description, bool isNeutral,@IdListConverter() List<String> colorIds,@IdListConverter() List<String> pairsWellWithColorIds
+ String slug, String name,@IdListConverter() List<String> colorIds
 });
 
 
@@ -1949,14 +2484,11 @@ class __$ColorFamilyGuideCopyWithImpl<$Res>
 
 /// Create a copy of ColorFamilyGuide
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? slug = null,Object? name = null,Object? description = null,Object? isNeutral = null,Object? colorIds = null,Object? pairsWellWithColorIds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? slug = null,Object? name = null,Object? colorIds = null,}) {
   return _then(_ColorFamilyGuide(
 slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isNeutral: null == isNeutral ? _self.isNeutral : isNeutral // ignore: cast_nullable_to_non_nullable
-as bool,colorIds: null == colorIds ? _self._colorIds : colorIds // ignore: cast_nullable_to_non_nullable
-as List<String>,pairsWellWithColorIds: null == pairsWellWithColorIds ? _self._pairsWellWithColorIds : pairsWellWithColorIds // ignore: cast_nullable_to_non_nullable
+as String,colorIds: null == colorIds ? _self._colorIds : colorIds // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }
@@ -1966,42 +2498,42 @@ as List<String>,
 
 
 /// @nodoc
-mixin _$GuidePrinciple {
+mixin _$ColorPartner {
 
- String get slug; String get title; String get body;@IdListConverter() List<String> get exampleColorIds;
-/// Create a copy of GuidePrinciple
+@IdConverter() String get colorId; int get score; String get explanation;
+/// Create a copy of ColorPartner
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$GuidePrincipleCopyWith<GuidePrinciple> get copyWith => _$GuidePrincipleCopyWithImpl<GuidePrinciple>(this as GuidePrinciple, _$identity);
+$ColorPartnerCopyWith<ColorPartner> get copyWith => _$ColorPartnerCopyWithImpl<ColorPartner>(this as ColorPartner, _$identity);
 
-  /// Serializes this GuidePrinciple to a JSON map.
+  /// Serializes this ColorPartner to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GuidePrinciple&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.title, title) || other.title == title)&&(identical(other.body, body) || other.body == body)&&const DeepCollectionEquality().equals(other.exampleColorIds, exampleColorIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorPartner&&(identical(other.colorId, colorId) || other.colorId == colorId)&&(identical(other.score, score) || other.score == score)&&(identical(other.explanation, explanation) || other.explanation == explanation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,slug,title,body,const DeepCollectionEquality().hash(exampleColorIds));
+int get hashCode => Object.hash(runtimeType,colorId,score,explanation);
 
 @override
 String toString() {
-  return 'GuidePrinciple(slug: $slug, title: $title, body: $body, exampleColorIds: $exampleColorIds)';
+  return 'ColorPartner(colorId: $colorId, score: $score, explanation: $explanation)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $GuidePrincipleCopyWith<$Res>  {
-  factory $GuidePrincipleCopyWith(GuidePrinciple value, $Res Function(GuidePrinciple) _then) = _$GuidePrincipleCopyWithImpl;
+abstract mixin class $ColorPartnerCopyWith<$Res>  {
+  factory $ColorPartnerCopyWith(ColorPartner value, $Res Function(ColorPartner) _then) = _$ColorPartnerCopyWithImpl;
 @useResult
 $Res call({
- String slug, String title, String body,@IdListConverter() List<String> exampleColorIds
+@IdConverter() String colorId, int score, String explanation
 });
 
 
@@ -2009,30 +2541,29 @@ $Res call({
 
 }
 /// @nodoc
-class _$GuidePrincipleCopyWithImpl<$Res>
-    implements $GuidePrincipleCopyWith<$Res> {
-  _$GuidePrincipleCopyWithImpl(this._self, this._then);
+class _$ColorPartnerCopyWithImpl<$Res>
+    implements $ColorPartnerCopyWith<$Res> {
+  _$ColorPartnerCopyWithImpl(this._self, this._then);
 
-  final GuidePrinciple _self;
-  final $Res Function(GuidePrinciple) _then;
+  final ColorPartner _self;
+  final $Res Function(ColorPartner) _then;
 
-/// Create a copy of GuidePrinciple
+/// Create a copy of ColorPartner
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? slug = null,Object? title = null,Object? body = null,Object? exampleColorIds = null,}) {
-  return _then(GuidePrinciple(
-slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
-as String,exampleColorIds: null == exampleColorIds ? _self.exampleColorIds : exampleColorIds // ignore: cast_nullable_to_non_nullable
-as List<String>,
+@pragma('vm:prefer-inline') @override $Res call({Object? colorId = null,Object? score = null,Object? explanation = null,}) {
+  return _then(ColorPartner(
+colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
+as String,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
+as int,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [GuidePrinciple].
-extension GuidePrinciplePatterns on GuidePrinciple {
+/// Adds pattern-matching-related methods to [ColorPartner].
+extension ColorPartnerPatterns on ColorPartner {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -2045,10 +2576,10 @@ extension GuidePrinciplePatterns on GuidePrinciple {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GuidePrinciple value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ColorPartner value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _GuidePrinciple() when $default != null:
+case _ColorPartner() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -2067,10 +2598,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GuidePrinciple value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ColorPartner value)  $default,){
 final _that = this;
 switch (_that) {
-case _GuidePrinciple():
+case _ColorPartner():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -2088,10 +2619,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GuidePrinciple value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ColorPartner value)?  $default,){
 final _that = this;
 switch (_that) {
-case _GuidePrinciple() when $default != null:
+case _ColorPartner() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -2109,10 +2640,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String slug,  String title,  String body, @IdListConverter()  List<String> exampleColorIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String colorId,  int score,  String explanation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _GuidePrinciple() when $default != null:
-return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
+case _ColorPartner() when $default != null:
+return $default(_that.colorId,_that.score,_that.explanation);case _:
   return orElse();
 
 }
@@ -2130,10 +2661,10 @@ return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String slug,  String title,  String body, @IdListConverter()  List<String> exampleColorIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String colorId,  int score,  String explanation)  $default,) {final _that = this;
 switch (_that) {
-case _GuidePrinciple():
-return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
+case _ColorPartner():
+return $default(_that.colorId,_that.score,_that.explanation);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -2150,10 +2681,10 @@ return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String slug,  String title,  String body, @IdListConverter()  List<String> exampleColorIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String colorId,  int score,  String explanation)?  $default,) {final _that = this;
 switch (_that) {
-case _GuidePrinciple() when $default != null:
-return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
+case _ColorPartner() when $default != null:
+return $default(_that.colorId,_that.score,_that.explanation);case _:
   return null;
 
 }
@@ -2164,55 +2695,48 @@ return $default(_that.slug,_that.title,_that.body,_that.exampleColorIds);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _GuidePrinciple implements GuidePrinciple {
-  const _GuidePrinciple({required this.slug, required this.title, required this.body, @IdListConverter()  List<String> exampleColorIds = const []}): _exampleColorIds = exampleColorIds;
-  factory _GuidePrinciple.fromJson(Map<String, dynamic> json) => _$GuidePrincipleFromJson(json);
+class _ColorPartner implements ColorPartner {
+  const _ColorPartner({@IdConverter() required this.colorId, required this.score, required this.explanation});
+  factory _ColorPartner.fromJson(Map<String, dynamic> json) => _$ColorPartnerFromJson(json);
 
-@override final  String slug;
-@override final  String title;
-@override final  String body;
- final  List<String> _exampleColorIds;
-@override@JsonKey()@IdListConverter() List<String> get exampleColorIds {
-  if (_exampleColorIds is EqualUnmodifiableListView) return _exampleColorIds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_exampleColorIds);
-}
+@override@IdConverter() final  String colorId;
+@override final  int score;
+@override final  String explanation;
 
-
-/// Create a copy of GuidePrinciple
+/// Create a copy of ColorPartner
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$GuidePrincipleCopyWith<_GuidePrinciple> get copyWith => __$GuidePrincipleCopyWithImpl<_GuidePrinciple>(this, _$identity);
+_$ColorPartnerCopyWith<_ColorPartner> get copyWith => __$ColorPartnerCopyWithImpl<_ColorPartner>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$GuidePrincipleToJson(this, );
+  return _$ColorPartnerToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GuidePrinciple&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.title, title) || other.title == title)&&(identical(other.body, body) || other.body == body)&&const DeepCollectionEquality().equals(other._exampleColorIds, _exampleColorIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorPartner&&(identical(other.colorId, colorId) || other.colorId == colorId)&&(identical(other.score, score) || other.score == score)&&(identical(other.explanation, explanation) || other.explanation == explanation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,slug,title,body,const DeepCollectionEquality().hash(_exampleColorIds));
+int get hashCode => Object.hash(runtimeType,colorId,score,explanation);
 
 @override
 String toString() {
-  return 'GuidePrinciple(slug: $slug, title: $title, body: $body, exampleColorIds: $exampleColorIds)';
+  return 'ColorPartner(colorId: $colorId, score: $score, explanation: $explanation)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$GuidePrincipleCopyWith<$Res> implements $GuidePrincipleCopyWith<$Res> {
-  factory _$GuidePrincipleCopyWith(_GuidePrinciple value, $Res Function(_GuidePrinciple) _then) = __$GuidePrincipleCopyWithImpl;
+abstract mixin class _$ColorPartnerCopyWith<$Res> implements $ColorPartnerCopyWith<$Res> {
+  factory _$ColorPartnerCopyWith(_ColorPartner value, $Res Function(_ColorPartner) _then) = __$ColorPartnerCopyWithImpl;
 @override @useResult
 $Res call({
- String slug, String title, String body,@IdListConverter() List<String> exampleColorIds
+@IdConverter() String colorId, int score, String explanation
 });
 
 
@@ -2220,22 +2744,320 @@ $Res call({
 
 }
 /// @nodoc
-class __$GuidePrincipleCopyWithImpl<$Res>
-    implements _$GuidePrincipleCopyWith<$Res> {
-  __$GuidePrincipleCopyWithImpl(this._self, this._then);
+class __$ColorPartnerCopyWithImpl<$Res>
+    implements _$ColorPartnerCopyWith<$Res> {
+  __$ColorPartnerCopyWithImpl(this._self, this._then);
 
-  final _GuidePrinciple _self;
-  final $Res Function(_GuidePrinciple) _then;
+  final _ColorPartner _self;
+  final $Res Function(_ColorPartner) _then;
 
-/// Create a copy of GuidePrinciple
+/// Create a copy of ColorPartner
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? slug = null,Object? title = null,Object? body = null,Object? exampleColorIds = null,}) {
-  return _then(_GuidePrinciple(
-slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
-as String,exampleColorIds: null == exampleColorIds ? _self._exampleColorIds : exampleColorIds // ignore: cast_nullable_to_non_nullable
-as List<String>,
+@override @pragma('vm:prefer-inline') $Res call({Object? colorId = null,Object? score = null,Object? explanation = null,}) {
+  return _then(_ColorPartner(
+colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
+as String,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
+as int,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$ColorHarmony {
+
+@IdConverter() String get colorId; List<ColorPartner> get harmonious; List<ColorPartner> get contrast; List<ColorPartner> get neutralPairing; List<ColorPartner> get caution;
+/// Create a copy of ColorHarmony
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ColorHarmonyCopyWith<ColorHarmony> get copyWith => _$ColorHarmonyCopyWithImpl<ColorHarmony>(this as ColorHarmony, _$identity);
+
+  /// Serializes this ColorHarmony to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorHarmony&&(identical(other.colorId, colorId) || other.colorId == colorId)&&const DeepCollectionEquality().equals(other.harmonious, harmonious)&&const DeepCollectionEquality().equals(other.contrast, contrast)&&const DeepCollectionEquality().equals(other.neutralPairing, neutralPairing)&&const DeepCollectionEquality().equals(other.caution, caution));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,colorId,const DeepCollectionEquality().hash(harmonious),const DeepCollectionEquality().hash(contrast),const DeepCollectionEquality().hash(neutralPairing),const DeepCollectionEquality().hash(caution));
+
+@override
+String toString() {
+  return 'ColorHarmony(colorId: $colorId, harmonious: $harmonious, contrast: $contrast, neutralPairing: $neutralPairing, caution: $caution)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ColorHarmonyCopyWith<$Res>  {
+  factory $ColorHarmonyCopyWith(ColorHarmony value, $Res Function(ColorHarmony) _then) = _$ColorHarmonyCopyWithImpl;
+@useResult
+$Res call({
+@IdConverter() String colorId, List<ColorPartner> harmonious, List<ColorPartner> contrast, List<ColorPartner> neutralPairing, List<ColorPartner> caution
+});
+
+
+
+
+}
+/// @nodoc
+class _$ColorHarmonyCopyWithImpl<$Res>
+    implements $ColorHarmonyCopyWith<$Res> {
+  _$ColorHarmonyCopyWithImpl(this._self, this._then);
+
+  final ColorHarmony _self;
+  final $Res Function(ColorHarmony) _then;
+
+/// Create a copy of ColorHarmony
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? colorId = null,Object? harmonious = null,Object? contrast = null,Object? neutralPairing = null,Object? caution = null,}) {
+  return _then(ColorHarmony(
+colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
+as String,harmonious: null == harmonious ? _self.harmonious : harmonious // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,contrast: null == contrast ? _self.contrast : contrast // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,neutralPairing: null == neutralPairing ? _self.neutralPairing : neutralPairing // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,caution: null == caution ? _self.caution : caution // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ColorHarmony].
+extension ColorHarmonyPatterns on ColorHarmony {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ColorHarmony value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ColorHarmony() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ColorHarmony value)  $default,){
+final _that = this;
+switch (_that) {
+case _ColorHarmony():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ColorHarmony value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ColorHarmony() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String colorId,  List<ColorPartner> harmonious,  List<ColorPartner> contrast,  List<ColorPartner> neutralPairing,  List<ColorPartner> caution)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ColorHarmony() when $default != null:
+return $default(_that.colorId,_that.harmonious,_that.contrast,_that.neutralPairing,_that.caution);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String colorId,  List<ColorPartner> harmonious,  List<ColorPartner> contrast,  List<ColorPartner> neutralPairing,  List<ColorPartner> caution)  $default,) {final _that = this;
+switch (_that) {
+case _ColorHarmony():
+return $default(_that.colorId,_that.harmonious,_that.contrast,_that.neutralPairing,_that.caution);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String colorId,  List<ColorPartner> harmonious,  List<ColorPartner> contrast,  List<ColorPartner> neutralPairing,  List<ColorPartner> caution)?  $default,) {final _that = this;
+switch (_that) {
+case _ColorHarmony() when $default != null:
+return $default(_that.colorId,_that.harmonious,_that.contrast,_that.neutralPairing,_that.caution);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ColorHarmony extends ColorHarmony {
+  const _ColorHarmony({@IdConverter() required this.colorId,  List<ColorPartner> harmonious = const [],  List<ColorPartner> contrast = const [],  List<ColorPartner> neutralPairing = const [],  List<ColorPartner> caution = const []}): _harmonious = harmonious,_contrast = contrast,_neutralPairing = neutralPairing,_caution = caution,super._();
+  factory _ColorHarmony.fromJson(Map<String, dynamic> json) => _$ColorHarmonyFromJson(json);
+
+@override@IdConverter() final  String colorId;
+ final  List<ColorPartner> _harmonious;
+@override@JsonKey() List<ColorPartner> get harmonious {
+  if (_harmonious is EqualUnmodifiableListView) return _harmonious;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_harmonious);
+}
+
+ final  List<ColorPartner> _contrast;
+@override@JsonKey() List<ColorPartner> get contrast {
+  if (_contrast is EqualUnmodifiableListView) return _contrast;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_contrast);
+}
+
+ final  List<ColorPartner> _neutralPairing;
+@override@JsonKey() List<ColorPartner> get neutralPairing {
+  if (_neutralPairing is EqualUnmodifiableListView) return _neutralPairing;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_neutralPairing);
+}
+
+ final  List<ColorPartner> _caution;
+@override@JsonKey() List<ColorPartner> get caution {
+  if (_caution is EqualUnmodifiableListView) return _caution;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_caution);
+}
+
+
+/// Create a copy of ColorHarmony
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ColorHarmonyCopyWith<_ColorHarmony> get copyWith => __$ColorHarmonyCopyWithImpl<_ColorHarmony>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ColorHarmonyToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorHarmony&&(identical(other.colorId, colorId) || other.colorId == colorId)&&const DeepCollectionEquality().equals(other._harmonious, _harmonious)&&const DeepCollectionEquality().equals(other._contrast, _contrast)&&const DeepCollectionEquality().equals(other._neutralPairing, _neutralPairing)&&const DeepCollectionEquality().equals(other._caution, _caution));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,colorId,const DeepCollectionEquality().hash(_harmonious),const DeepCollectionEquality().hash(_contrast),const DeepCollectionEquality().hash(_neutralPairing),const DeepCollectionEquality().hash(_caution));
+
+@override
+String toString() {
+  return 'ColorHarmony(colorId: $colorId, harmonious: $harmonious, contrast: $contrast, neutralPairing: $neutralPairing, caution: $caution)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ColorHarmonyCopyWith<$Res> implements $ColorHarmonyCopyWith<$Res> {
+  factory _$ColorHarmonyCopyWith(_ColorHarmony value, $Res Function(_ColorHarmony) _then) = __$ColorHarmonyCopyWithImpl;
+@override @useResult
+$Res call({
+@IdConverter() String colorId, List<ColorPartner> harmonious, List<ColorPartner> contrast, List<ColorPartner> neutralPairing, List<ColorPartner> caution
+});
+
+
+
+
+}
+/// @nodoc
+class __$ColorHarmonyCopyWithImpl<$Res>
+    implements _$ColorHarmonyCopyWith<$Res> {
+  __$ColorHarmonyCopyWithImpl(this._self, this._then);
+
+  final _ColorHarmony _self;
+  final $Res Function(_ColorHarmony) _then;
+
+/// Create a copy of ColorHarmony
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? colorId = null,Object? harmonious = null,Object? contrast = null,Object? neutralPairing = null,Object? caution = null,}) {
+  return _then(_ColorHarmony(
+colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
+as String,harmonious: null == harmonious ? _self._harmonious : harmonious // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,contrast: null == contrast ? _self._contrast : contrast // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,neutralPairing: null == neutralPairing ? _self._neutralPairing : neutralPairing // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,caution: null == caution ? _self._caution : caution // ignore: cast_nullable_to_non_nullable
+as List<ColorPartner>,
   ));
 }
 
@@ -2246,7 +3068,7 @@ as List<String>,
 /// @nodoc
 mixin _$ColorGuide {
 
- List<ColorFamilyGuide> get families; List<GuidePrinciple> get principles;
+ int get catalogVersion; int get rulesVersion; List<ColorFamilyGuide> get families;@IdListConverter() List<String> get neutralColorIds; List<ColorHarmony> get harmonies;
 /// Create a copy of ColorGuide
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2259,16 +3081,16 @@ $ColorGuideCopyWith<ColorGuide> get copyWith => _$ColorGuideCopyWithImpl<ColorGu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorGuide&&const DeepCollectionEquality().equals(other.families, families)&&const DeepCollectionEquality().equals(other.principles, principles));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorGuide&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion)&&const DeepCollectionEquality().equals(other.families, families)&&const DeepCollectionEquality().equals(other.neutralColorIds, neutralColorIds)&&const DeepCollectionEquality().equals(other.harmonies, harmonies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(families),const DeepCollectionEquality().hash(principles));
+int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion,const DeepCollectionEquality().hash(families),const DeepCollectionEquality().hash(neutralColorIds),const DeepCollectionEquality().hash(harmonies));
 
 @override
 String toString() {
-  return 'ColorGuide(families: $families, principles: $principles)';
+  return 'ColorGuide(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion, families: $families, neutralColorIds: $neutralColorIds, harmonies: $harmonies)';
 }
 
 
@@ -2279,7 +3101,7 @@ abstract mixin class $ColorGuideCopyWith<$Res>  {
   factory $ColorGuideCopyWith(ColorGuide value, $Res Function(ColorGuide) _then) = _$ColorGuideCopyWithImpl;
 @useResult
 $Res call({
- List<ColorFamilyGuide> families, List<GuidePrinciple> principles
+ int catalogVersion, int rulesVersion, List<ColorFamilyGuide> families,@IdListConverter() List<String> neutralColorIds, List<ColorHarmony> harmonies
 });
 
 
@@ -2296,11 +3118,14 @@ class _$ColorGuideCopyWithImpl<$Res>
 
 /// Create a copy of ColorGuide
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? families = null,Object? principles = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? catalogVersion = null,Object? rulesVersion = null,Object? families = null,Object? neutralColorIds = null,Object? harmonies = null,}) {
   return _then(ColorGuide(
-families: null == families ? _self.families : families // ignore: cast_nullable_to_non_nullable
-as List<ColorFamilyGuide>,principles: null == principles ? _self.principles : principles // ignore: cast_nullable_to_non_nullable
-as List<GuidePrinciple>,
+catalogVersion: null == catalogVersion ? _self.catalogVersion : catalogVersion // ignore: cast_nullable_to_non_nullable
+as int,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
+as int,families: null == families ? _self.families : families // ignore: cast_nullable_to_non_nullable
+as List<ColorFamilyGuide>,neutralColorIds: null == neutralColorIds ? _self.neutralColorIds : neutralColorIds // ignore: cast_nullable_to_non_nullable
+as List<String>,harmonies: null == harmonies ? _self.harmonies : harmonies // ignore: cast_nullable_to_non_nullable
+as List<ColorHarmony>,
   ));
 }
 
@@ -2385,10 +3210,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<ColorFamilyGuide> families,  List<GuidePrinciple> principles)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int catalogVersion,  int rulesVersion,  List<ColorFamilyGuide> families, @IdListConverter()  List<String> neutralColorIds,  List<ColorHarmony> harmonies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ColorGuide() when $default != null:
-return $default(_that.families,_that.principles);case _:
+return $default(_that.catalogVersion,_that.rulesVersion,_that.families,_that.neutralColorIds,_that.harmonies);case _:
   return orElse();
 
 }
@@ -2406,10 +3231,10 @@ return $default(_that.families,_that.principles);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<ColorFamilyGuide> families,  List<GuidePrinciple> principles)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int catalogVersion,  int rulesVersion,  List<ColorFamilyGuide> families, @IdListConverter()  List<String> neutralColorIds,  List<ColorHarmony> harmonies)  $default,) {final _that = this;
 switch (_that) {
 case _ColorGuide():
-return $default(_that.families,_that.principles);case _:
+return $default(_that.catalogVersion,_that.rulesVersion,_that.families,_that.neutralColorIds,_that.harmonies);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -2426,10 +3251,10 @@ return $default(_that.families,_that.principles);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<ColorFamilyGuide> families,  List<GuidePrinciple> principles)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int catalogVersion,  int rulesVersion,  List<ColorFamilyGuide> families, @IdListConverter()  List<String> neutralColorIds,  List<ColorHarmony> harmonies)?  $default,) {final _that = this;
 switch (_that) {
 case _ColorGuide() when $default != null:
-return $default(_that.families,_that.principles);case _:
+return $default(_that.catalogVersion,_that.rulesVersion,_that.families,_that.neutralColorIds,_that.harmonies);case _:
   return null;
 
 }
@@ -2440,10 +3265,12 @@ return $default(_that.families,_that.principles);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _ColorGuide implements ColorGuide {
-  const _ColorGuide({required  List<ColorFamilyGuide> families, required  List<GuidePrinciple> principles}): _families = families,_principles = principles;
+class _ColorGuide extends ColorGuide {
+  const _ColorGuide({this.catalogVersion = 1, this.rulesVersion = 1, required  List<ColorFamilyGuide> families, @IdListConverter()  List<String> neutralColorIds = const [],  List<ColorHarmony> harmonies = const []}): _families = families,_neutralColorIds = neutralColorIds,_harmonies = harmonies,super._();
   factory _ColorGuide.fromJson(Map<String, dynamic> json) => _$ColorGuideFromJson(json);
 
+@override@JsonKey() final  int catalogVersion;
+@override@JsonKey() final  int rulesVersion;
  final  List<ColorFamilyGuide> _families;
 @override List<ColorFamilyGuide> get families {
   if (_families is EqualUnmodifiableListView) return _families;
@@ -2451,11 +3278,18 @@ class _ColorGuide implements ColorGuide {
   return EqualUnmodifiableListView(_families);
 }
 
- final  List<GuidePrinciple> _principles;
-@override List<GuidePrinciple> get principles {
-  if (_principles is EqualUnmodifiableListView) return _principles;
+ final  List<String> _neutralColorIds;
+@override@JsonKey()@IdListConverter() List<String> get neutralColorIds {
+  if (_neutralColorIds is EqualUnmodifiableListView) return _neutralColorIds;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_principles);
+  return EqualUnmodifiableListView(_neutralColorIds);
+}
+
+ final  List<ColorHarmony> _harmonies;
+@override@JsonKey() List<ColorHarmony> get harmonies {
+  if (_harmonies is EqualUnmodifiableListView) return _harmonies;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_harmonies);
 }
 
 
@@ -2472,16 +3306,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorGuide&&const DeepCollectionEquality().equals(other._families, _families)&&const DeepCollectionEquality().equals(other._principles, _principles));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorGuide&&(identical(other.catalogVersion, catalogVersion) || other.catalogVersion == catalogVersion)&&(identical(other.rulesVersion, rulesVersion) || other.rulesVersion == rulesVersion)&&const DeepCollectionEquality().equals(other._families, _families)&&const DeepCollectionEquality().equals(other._neutralColorIds, _neutralColorIds)&&const DeepCollectionEquality().equals(other._harmonies, _harmonies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_families),const DeepCollectionEquality().hash(_principles));
+int get hashCode => Object.hash(runtimeType,catalogVersion,rulesVersion,const DeepCollectionEquality().hash(_families),const DeepCollectionEquality().hash(_neutralColorIds),const DeepCollectionEquality().hash(_harmonies));
 
 @override
 String toString() {
-  return 'ColorGuide(families: $families, principles: $principles)';
+  return 'ColorGuide(catalogVersion: $catalogVersion, rulesVersion: $rulesVersion, families: $families, neutralColorIds: $neutralColorIds, harmonies: $harmonies)';
 }
 
 
@@ -2492,7 +3326,7 @@ abstract mixin class _$ColorGuideCopyWith<$Res> implements $ColorGuideCopyWith<$
   factory _$ColorGuideCopyWith(_ColorGuide value, $Res Function(_ColorGuide) _then) = __$ColorGuideCopyWithImpl;
 @override @useResult
 $Res call({
- List<ColorFamilyGuide> families, List<GuidePrinciple> principles
+ int catalogVersion, int rulesVersion, List<ColorFamilyGuide> families,@IdListConverter() List<String> neutralColorIds, List<ColorHarmony> harmonies
 });
 
 
@@ -2509,579 +3343,14 @@ class __$ColorGuideCopyWithImpl<$Res>
 
 /// Create a copy of ColorGuide
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? families = null,Object? principles = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? catalogVersion = null,Object? rulesVersion = null,Object? families = null,Object? neutralColorIds = null,Object? harmonies = null,}) {
   return _then(_ColorGuide(
-families: null == families ? _self._families : families // ignore: cast_nullable_to_non_nullable
-as List<ColorFamilyGuide>,principles: null == principles ? _self._principles : principles // ignore: cast_nullable_to_non_nullable
-as List<GuidePrinciple>,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$ColorPairingRule {
-
-@IdConverter() String get id;@IdConverter() String get colorAId;@IdConverter() String get colorBId; PairingRuleType get ruleType; double get compatibilityScore; String get explanation; String get ruleVersion;
-/// Create a copy of ColorPairingRule
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ColorPairingRuleCopyWith<ColorPairingRule> get copyWith => _$ColorPairingRuleCopyWithImpl<ColorPairingRule>(this as ColorPairingRule, _$identity);
-
-  /// Serializes this ColorPairingRule to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ColorPairingRule&&(identical(other.id, id) || other.id == id)&&(identical(other.colorAId, colorAId) || other.colorAId == colorAId)&&(identical(other.colorBId, colorBId) || other.colorBId == colorBId)&&(identical(other.ruleType, ruleType) || other.ruleType == ruleType)&&(identical(other.compatibilityScore, compatibilityScore) || other.compatibilityScore == compatibilityScore)&&(identical(other.explanation, explanation) || other.explanation == explanation)&&(identical(other.ruleVersion, ruleVersion) || other.ruleVersion == ruleVersion));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,colorAId,colorBId,ruleType,compatibilityScore,explanation,ruleVersion);
-
-@override
-String toString() {
-  return 'ColorPairingRule(id: $id, colorAId: $colorAId, colorBId: $colorBId, ruleType: $ruleType, compatibilityScore: $compatibilityScore, explanation: $explanation, ruleVersion: $ruleVersion)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ColorPairingRuleCopyWith<$Res>  {
-  factory $ColorPairingRuleCopyWith(ColorPairingRule value, $Res Function(ColorPairingRule) _then) = _$ColorPairingRuleCopyWithImpl;
-@useResult
-$Res call({
-@IdConverter() String id,@IdConverter() String colorAId,@IdConverter() String colorBId, PairingRuleType ruleType, double compatibilityScore, String explanation, String ruleVersion
-});
-
-
-
-
-}
-/// @nodoc
-class _$ColorPairingRuleCopyWithImpl<$Res>
-    implements $ColorPairingRuleCopyWith<$Res> {
-  _$ColorPairingRuleCopyWithImpl(this._self, this._then);
-
-  final ColorPairingRule _self;
-  final $Res Function(ColorPairingRule) _then;
-
-/// Create a copy of ColorPairingRule
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? colorAId = null,Object? colorBId = null,Object? ruleType = null,Object? compatibilityScore = null,Object? explanation = null,Object? ruleVersion = null,}) {
-  return _then(ColorPairingRule(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,colorAId: null == colorAId ? _self.colorAId : colorAId // ignore: cast_nullable_to_non_nullable
-as String,colorBId: null == colorBId ? _self.colorBId : colorBId // ignore: cast_nullable_to_non_nullable
-as String,ruleType: null == ruleType ? _self.ruleType : ruleType // ignore: cast_nullable_to_non_nullable
-as PairingRuleType,compatibilityScore: null == compatibilityScore ? _self.compatibilityScore : compatibilityScore // ignore: cast_nullable_to_non_nullable
-as double,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
-as String,ruleVersion: null == ruleVersion ? _self.ruleVersion : ruleVersion // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [ColorPairingRule].
-extension ColorPairingRulePatterns on ColorPairingRule {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ColorPairingRule value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _ColorPairingRule() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ColorPairingRule value)  $default,){
-final _that = this;
-switch (_that) {
-case _ColorPairingRule():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ColorPairingRule value)?  $default,){
-final _that = this;
-switch (_that) {
-case _ColorPairingRule() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id, @IdConverter()  String colorAId, @IdConverter()  String colorBId,  PairingRuleType ruleType,  double compatibilityScore,  String explanation,  String ruleVersion)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _ColorPairingRule() when $default != null:
-return $default(_that.id,_that.colorAId,_that.colorBId,_that.ruleType,_that.compatibilityScore,_that.explanation,_that.ruleVersion);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id, @IdConverter()  String colorAId, @IdConverter()  String colorBId,  PairingRuleType ruleType,  double compatibilityScore,  String explanation,  String ruleVersion)  $default,) {final _that = this;
-switch (_that) {
-case _ColorPairingRule():
-return $default(_that.id,_that.colorAId,_that.colorBId,_that.ruleType,_that.compatibilityScore,_that.explanation,_that.ruleVersion);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id, @IdConverter()  String colorAId, @IdConverter()  String colorBId,  PairingRuleType ruleType,  double compatibilityScore,  String explanation,  String ruleVersion)?  $default,) {final _that = this;
-switch (_that) {
-case _ColorPairingRule() when $default != null:
-return $default(_that.id,_that.colorAId,_that.colorBId,_that.ruleType,_that.compatibilityScore,_that.explanation,_that.ruleVersion);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _ColorPairingRule implements ColorPairingRule {
-  const _ColorPairingRule({@IdConverter() required this.id, @IdConverter() required this.colorAId, @IdConverter() required this.colorBId, required this.ruleType, required this.compatibilityScore, required this.explanation, required this.ruleVersion});
-  factory _ColorPairingRule.fromJson(Map<String, dynamic> json) => _$ColorPairingRuleFromJson(json);
-
-@override@IdConverter() final  String id;
-@override@IdConverter() final  String colorAId;
-@override@IdConverter() final  String colorBId;
-@override final  PairingRuleType ruleType;
-@override final  double compatibilityScore;
-@override final  String explanation;
-@override final  String ruleVersion;
-
-/// Create a copy of ColorPairingRule
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ColorPairingRuleCopyWith<_ColorPairingRule> get copyWith => __$ColorPairingRuleCopyWithImpl<_ColorPairingRule>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$ColorPairingRuleToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ColorPairingRule&&(identical(other.id, id) || other.id == id)&&(identical(other.colorAId, colorAId) || other.colorAId == colorAId)&&(identical(other.colorBId, colorBId) || other.colorBId == colorBId)&&(identical(other.ruleType, ruleType) || other.ruleType == ruleType)&&(identical(other.compatibilityScore, compatibilityScore) || other.compatibilityScore == compatibilityScore)&&(identical(other.explanation, explanation) || other.explanation == explanation)&&(identical(other.ruleVersion, ruleVersion) || other.ruleVersion == ruleVersion));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,colorAId,colorBId,ruleType,compatibilityScore,explanation,ruleVersion);
-
-@override
-String toString() {
-  return 'ColorPairingRule(id: $id, colorAId: $colorAId, colorBId: $colorBId, ruleType: $ruleType, compatibilityScore: $compatibilityScore, explanation: $explanation, ruleVersion: $ruleVersion)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ColorPairingRuleCopyWith<$Res> implements $ColorPairingRuleCopyWith<$Res> {
-  factory _$ColorPairingRuleCopyWith(_ColorPairingRule value, $Res Function(_ColorPairingRule) _then) = __$ColorPairingRuleCopyWithImpl;
-@override @useResult
-$Res call({
-@IdConverter() String id,@IdConverter() String colorAId,@IdConverter() String colorBId, PairingRuleType ruleType, double compatibilityScore, String explanation, String ruleVersion
-});
-
-
-
-
-}
-/// @nodoc
-class __$ColorPairingRuleCopyWithImpl<$Res>
-    implements _$ColorPairingRuleCopyWith<$Res> {
-  __$ColorPairingRuleCopyWithImpl(this._self, this._then);
-
-  final _ColorPairingRule _self;
-  final $Res Function(_ColorPairingRule) _then;
-
-/// Create a copy of ColorPairingRule
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? colorAId = null,Object? colorBId = null,Object? ruleType = null,Object? compatibilityScore = null,Object? explanation = null,Object? ruleVersion = null,}) {
-  return _then(_ColorPairingRule(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,colorAId: null == colorAId ? _self.colorAId : colorAId // ignore: cast_nullable_to_non_nullable
-as String,colorBId: null == colorBId ? _self.colorBId : colorBId // ignore: cast_nullable_to_non_nullable
-as String,ruleType: null == ruleType ? _self.ruleType : ruleType // ignore: cast_nullable_to_non_nullable
-as PairingRuleType,compatibilityScore: null == compatibilityScore ? _self.compatibilityScore : compatibilityScore // ignore: cast_nullable_to_non_nullable
-as double,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
-as String,ruleVersion: null == ruleVersion ? _self.ruleVersion : ruleVersion // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$RecommendationRule {
-
-@IdConverter() String get id; String get name; RecommendationRuleType get ruleType; Map<String, String> get conditionsJson; double get weight; String get explanation; String get version;
-/// Create a copy of RecommendationRule
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RecommendationRuleCopyWith<RecommendationRule> get copyWith => _$RecommendationRuleCopyWithImpl<RecommendationRule>(this as RecommendationRule, _$identity);
-
-  /// Serializes this RecommendationRule to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecommendationRule&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.ruleType, ruleType) || other.ruleType == ruleType)&&const DeepCollectionEquality().equals(other.conditionsJson, conditionsJson)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.explanation, explanation) || other.explanation == explanation)&&(identical(other.version, version) || other.version == version));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,name,ruleType,const DeepCollectionEquality().hash(conditionsJson),weight,explanation,version);
-
-@override
-String toString() {
-  return 'RecommendationRule(id: $id, name: $name, ruleType: $ruleType, conditionsJson: $conditionsJson, weight: $weight, explanation: $explanation, version: $version)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $RecommendationRuleCopyWith<$Res>  {
-  factory $RecommendationRuleCopyWith(RecommendationRule value, $Res Function(RecommendationRule) _then) = _$RecommendationRuleCopyWithImpl;
-@useResult
-$Res call({
-@IdConverter() String id, String name, RecommendationRuleType ruleType, Map<String, String> conditionsJson, double weight, String explanation, String version
-});
-
-
-
-
-}
-/// @nodoc
-class _$RecommendationRuleCopyWithImpl<$Res>
-    implements $RecommendationRuleCopyWith<$Res> {
-  _$RecommendationRuleCopyWithImpl(this._self, this._then);
-
-  final RecommendationRule _self;
-  final $Res Function(RecommendationRule) _then;
-
-/// Create a copy of RecommendationRule
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? ruleType = null,Object? conditionsJson = null,Object? weight = null,Object? explanation = null,Object? version = null,}) {
-  return _then(RecommendationRule(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,ruleType: null == ruleType ? _self.ruleType : ruleType // ignore: cast_nullable_to_non_nullable
-as RecommendationRuleType,conditionsJson: null == conditionsJson ? _self.conditionsJson : conditionsJson // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as double,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
-as String,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [RecommendationRule].
-extension RecommendationRulePatterns on RecommendationRule {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RecommendationRule value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _RecommendationRule() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RecommendationRule value)  $default,){
-final _that = this;
-switch (_that) {
-case _RecommendationRule():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RecommendationRule value)?  $default,){
-final _that = this;
-switch (_that) {
-case _RecommendationRule() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  RecommendationRuleType ruleType,  Map<String, String> conditionsJson,  double weight,  String explanation,  String version)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _RecommendationRule() when $default != null:
-return $default(_that.id,_that.name,_that.ruleType,_that.conditionsJson,_that.weight,_that.explanation,_that.version);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String name,  RecommendationRuleType ruleType,  Map<String, String> conditionsJson,  double weight,  String explanation,  String version)  $default,) {final _that = this;
-switch (_that) {
-case _RecommendationRule():
-return $default(_that.id,_that.name,_that.ruleType,_that.conditionsJson,_that.weight,_that.explanation,_that.version);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String name,  RecommendationRuleType ruleType,  Map<String, String> conditionsJson,  double weight,  String explanation,  String version)?  $default,) {final _that = this;
-switch (_that) {
-case _RecommendationRule() when $default != null:
-return $default(_that.id,_that.name,_that.ruleType,_that.conditionsJson,_that.weight,_that.explanation,_that.version);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _RecommendationRule implements RecommendationRule {
-  const _RecommendationRule({@IdConverter() required this.id, required this.name, required this.ruleType, required  Map<String, String> conditionsJson, required this.weight, required this.explanation, required this.version}): _conditionsJson = conditionsJson;
-  factory _RecommendationRule.fromJson(Map<String, dynamic> json) => _$RecommendationRuleFromJson(json);
-
-@override@IdConverter() final  String id;
-@override final  String name;
-@override final  RecommendationRuleType ruleType;
- final  Map<String, String> _conditionsJson;
-@override Map<String, String> get conditionsJson {
-  if (_conditionsJson is EqualUnmodifiableMapView) return _conditionsJson;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_conditionsJson);
-}
-
-@override final  double weight;
-@override final  String explanation;
-@override final  String version;
-
-/// Create a copy of RecommendationRule
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$RecommendationRuleCopyWith<_RecommendationRule> get copyWith => __$RecommendationRuleCopyWithImpl<_RecommendationRule>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$RecommendationRuleToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecommendationRule&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.ruleType, ruleType) || other.ruleType == ruleType)&&const DeepCollectionEquality().equals(other._conditionsJson, _conditionsJson)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.explanation, explanation) || other.explanation == explanation)&&(identical(other.version, version) || other.version == version));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,name,ruleType,const DeepCollectionEquality().hash(_conditionsJson),weight,explanation,version);
-
-@override
-String toString() {
-  return 'RecommendationRule(id: $id, name: $name, ruleType: $ruleType, conditionsJson: $conditionsJson, weight: $weight, explanation: $explanation, version: $version)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$RecommendationRuleCopyWith<$Res> implements $RecommendationRuleCopyWith<$Res> {
-  factory _$RecommendationRuleCopyWith(_RecommendationRule value, $Res Function(_RecommendationRule) _then) = __$RecommendationRuleCopyWithImpl;
-@override @useResult
-$Res call({
-@IdConverter() String id, String name, RecommendationRuleType ruleType, Map<String, String> conditionsJson, double weight, String explanation, String version
-});
-
-
-
-
-}
-/// @nodoc
-class __$RecommendationRuleCopyWithImpl<$Res>
-    implements _$RecommendationRuleCopyWith<$Res> {
-  __$RecommendationRuleCopyWithImpl(this._self, this._then);
-
-  final _RecommendationRule _self;
-  final $Res Function(_RecommendationRule) _then;
-
-/// Create a copy of RecommendationRule
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? ruleType = null,Object? conditionsJson = null,Object? weight = null,Object? explanation = null,Object? version = null,}) {
-  return _then(_RecommendationRule(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,ruleType: null == ruleType ? _self.ruleType : ruleType // ignore: cast_nullable_to_non_nullable
-as RecommendationRuleType,conditionsJson: null == conditionsJson ? _self._conditionsJson : conditionsJson // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as double,explanation: null == explanation ? _self.explanation : explanation // ignore: cast_nullable_to_non_nullable
-as String,version: null == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
-as String,
+catalogVersion: null == catalogVersion ? _self.catalogVersion : catalogVersion // ignore: cast_nullable_to_non_nullable
+as int,rulesVersion: null == rulesVersion ? _self.rulesVersion : rulesVersion // ignore: cast_nullable_to_non_nullable
+as int,families: null == families ? _self._families : families // ignore: cast_nullable_to_non_nullable
+as List<ColorFamilyGuide>,neutralColorIds: null == neutralColorIds ? _self._neutralColorIds : neutralColorIds // ignore: cast_nullable_to_non_nullable
+as List<String>,harmonies: null == harmonies ? _self._harmonies : harmonies // ignore: cast_nullable_to_non_nullable
+as List<ColorHarmony>,
   ));
 }
 

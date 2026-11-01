@@ -61,7 +61,7 @@ class LookDetailScreen extends ConsumerWidget {
     await SharePlus.instance.share(ShareParams(
       text: l10n.shareText(look.title, pieces),
       subject: look.title,
-      uri: image != null && image.usageApproved ? Uri.tryParse(image.url) : null,
+      uri: image != null ? Uri.tryParse(image.url) : null,
     ));
   }
 

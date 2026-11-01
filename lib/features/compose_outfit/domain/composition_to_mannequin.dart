@@ -12,6 +12,7 @@ MannequinOutfit compositionToMannequin(OutfitComposition composition) => Mannequ
       top: _layer(composition.top, GarmentSlot.top),
       bottom: _layer(composition.bottom, GarmentSlot.bottom),
       onePiece: _layer(composition.onePiece, GarmentSlot.onePiece),
+      outerwear: _layer(composition.outerwear, GarmentSlot.top),
       shoes: _layer(composition.shoes, GarmentSlot.shoes),
       accessories: [
         for (final a in composition.accessories) ?_layer(a, GarmentSlot.accessory),

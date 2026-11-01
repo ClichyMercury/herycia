@@ -1,27 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/json/id_converter.dart';
+import '../../catalog/domain/catalog_models.dart';
 
 part 'look_models.freezed.dart';
 part 'look_models.g.dart';
-
-enum LookStatus {
-  @JsonValue('draft')
-  draft,
-  @JsonValue('published')
-  published,
-  @JsonValue('archived')
-  archived,
-}
-
-enum LookOrigin {
-  @JsonValue('editorial')
-  editorial,
-  @JsonValue('stylist')
-  stylist,
-  @JsonValue('vendor')
-  vendor,
-}
 
 enum PieceRole {
   @JsonValue('top')
@@ -30,23 +13,19 @@ enum PieceRole {
   bottom,
   @JsonValue('one_piece')
   onePiece,
-  @JsonValue('shoes')
-  shoes,
+  @JsonValue('footwear')
+  footwear,
   @JsonValue('accessory')
   accessory,
-}
+  @JsonValue('outerwear')
+  outerwear;
 
-enum LicenseType {
-  @JsonValue('owned')
-  owned,
-  @JsonValue('cc0')
-  cc0,
-  @JsonValue('cc_by')
-  ccBy,
-  @JsonValue('unsplash')
-  unsplash,
-  @JsonValue('partner')
-  partner,
+  String get wire => switch (this) {
+        PieceRole.onePiece => 'one_piece',
+        _ => name,
+      };
+
+  static PieceRole fromWire(String value) => values.firstWhere((r) => r.wire == value);
 }
 
 @freezed
@@ -57,25 +36,23 @@ abstract class LookImage with _$LookImage {
     @IdConverter() required String id,
     required String url,
     String? thumbnailUrl,
-    required String sourceName,
-    String? sourceUrl,
-    required LicenseType licenseType,
-    String? attribution,
-    required bool usageApproved,
     required String altText,
+    String? credit,
+    required String licenseType,
+    String? sourceName,
+    String? sourceUrl,
   }) = _LookImage;
 
   factory LookImage.fromJson(Map<String, dynamic> json) => _$LookImageFromJson(json);
 
-  bool get requiresCredit => licenseType == LicenseType.ccBy || attribution != null;
+  bool get requiresCredit => credit != null && credit!.isNotEmpty;
 }
 
 @freezed
 abstract class LookItem with _$LookItem {
   const factory LookItem({
-    @IdConverter() required String id,
-    @IdConverter() required String clothingTypeId,
-    @IdConverter() required String colorId,
+    required CatalogRef clothingType,
+    required ColorRef color,
     required PieceRole role,
     @Default(true) bool isRequired,
     @Default(0) int sortOrder,
@@ -90,15 +67,13 @@ abstract class Look with _$Look {
     @IdConverter() required String id,
     required String title,
     required String slug,
-    required String description,
-    @NullableIdConverter() String? styleId,
-    @NullableIdConverter() String? occasionId,
-    required LookStatus status,
-    @NullableUtcDateTimeConverter() DateTime? publishedAt,
-    @Default(LookOrigin.editorial) LookOrigin origin,
+    String? description,
+    CatalogRef? style,
+    CatalogRef? occasion,
+    LookImage? image,
     required List<LookItem> items,
-    LookImage? primaryImage,
-    @Default([]) List<LookImage> images,
+    @Default('editorial') String origin,
+    @NullableUtcDateTimeConverter() DateTime? publishedAt,
   }) = _Look;
 
   factory Look.fromJson(Map<String, dynamic> json) => _$LookFromJson(json);
@@ -132,13 +107,15 @@ abstract class LookQuery with _$LookQuery {
   const factory LookQuery({
     String? styleSlug,
     String? occasionSlug,
+    String? excludeId,
     @Default(1) int page,
     @Default(10) int perPage,
   }) = _LookQuery;
 
   Map<String, String> toQuery() => {
-        'style_slug': ?styleSlug,
-        'occasion_slug': ?occasionSlug,
+        'style': ?styleSlug,
+        'occasion': ?occasionSlug,
+        'exclude': ?excludeId,
         'page': '$page',
         'per_page': '$perPage',
       };

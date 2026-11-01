@@ -6,6 +6,33 @@ part of 'catalog_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_CatalogRef _$CatalogRefFromJson(Map<String, dynamic> json) => _CatalogRef(
+  id: const IdConverter().fromJson(json['id'] as Object),
+  slug: json['slug'] as String,
+  name: json['name'] as String,
+);
+
+Map<String, dynamic> _$CatalogRefToJson(_CatalogRef instance) =>
+    <String, dynamic>{
+      'id': const IdConverter().toJson(instance.id),
+      'slug': instance.slug,
+      'name': instance.name,
+    };
+
+_ColorRef _$ColorRefFromJson(Map<String, dynamic> json) => _ColorRef(
+  id: const IdConverter().fromJson(json['id'] as Object),
+  slug: json['slug'] as String,
+  name: json['name'] as String,
+  hexCode: json['hex_code'] as String,
+);
+
+Map<String, dynamic> _$ColorRefToJson(_ColorRef instance) => <String, dynamic>{
+  'id': const IdConverter().toJson(instance.id),
+  'slug': instance.slug,
+  'name': instance.name,
+  'hex_code': instance.hexCode,
+};
+
 _ClothingCategory _$ClothingCategoryFromJson(Map<String, dynamic> json) =>
     _ClothingCategory(
       id: const IdConverter().fromJson(json['id'] as Object),
@@ -30,7 +57,7 @@ const _$CategoryGroupEnumMap = {
   CategoryGroup.top: 'top',
   CategoryGroup.bottom: 'bottom',
   CategoryGroup.onePiece: 'one_piece',
-  CategoryGroup.shoes: 'shoes',
+  CategoryGroup.footwear: 'footwear',
   CategoryGroup.accessory: 'accessory',
 };
 
@@ -62,9 +89,14 @@ _CatalogColor _$CatalogColorFromJson(Map<String, dynamic> json) =>
       hexCode: json['hex_code'] as String,
       colorFamily: json['color_family'] as String,
       temperature: json['temperature'] as String?,
-      brightness: (json['brightness'] as num?)?.toDouble(),
-      saturation: (json['saturation'] as num?)?.toDouble(),
+      brightness: json['brightness'] as String?,
+      saturation: json['saturation'] as String?,
       isNeutral: json['is_neutral'] as bool? ?? false,
+      aliases:
+          (json['aliases'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$CatalogColorToJson(_CatalogColor instance) =>
@@ -78,6 +110,7 @@ Map<String, dynamic> _$CatalogColorToJson(_CatalogColor instance) =>
       'brightness': instance.brightness,
       'saturation': instance.saturation,
       'is_neutral': instance.isNeutral,
+      'aliases': instance.aliases,
     };
 
 _OutfitStyle _$OutfitStyleFromJson(Map<String, dynamic> json) => _OutfitStyle(
@@ -115,134 +148,101 @@ Map<String, dynamic> _$OccasionToJson(_Occasion instance) => <String, dynamic>{
 
 _CatalogVersion _$CatalogVersionFromJson(Map<String, dynamic> json) =>
     _CatalogVersion(
-      catalogVersion: json['catalog_version'] as String,
-      rulesVersion: json['rules_version'] as String,
-      updatedAt: const UtcDateTimeConverter().fromJson(
-        json['updated_at'] as String,
-      ),
+      catalogVersion: (json['catalog_version'] as num).toInt(),
+      rulesVersion: (json['rules_version'] as num).toInt(),
     );
 
 Map<String, dynamic> _$CatalogVersionToJson(_CatalogVersion instance) =>
     <String, dynamic>{
       'catalog_version': instance.catalogVersion,
       'rules_version': instance.rulesVersion,
-      'updated_at': const UtcDateTimeConverter().toJson(instance.updatedAt),
     };
 
 _ColorFamilyGuide _$ColorFamilyGuideFromJson(Map<String, dynamic> json) =>
     _ColorFamilyGuide(
       slug: json['slug'] as String,
       name: json['name'] as String,
-      description: json['description'] as String,
-      isNeutral: json['is_neutral'] as bool? ?? false,
       colorIds: const IdListConverter().fromJson(json['color_ids'] as List),
-      pairsWellWithColorIds: json['pairs_well_with_color_ids'] == null
-          ? const []
-          : const IdListConverter().fromJson(
-              json['pairs_well_with_color_ids'] as List,
-            ),
     );
 
 Map<String, dynamic> _$ColorFamilyGuideToJson(_ColorFamilyGuide instance) =>
     <String, dynamic>{
       'slug': instance.slug,
       'name': instance.name,
-      'description': instance.description,
-      'is_neutral': instance.isNeutral,
       'color_ids': const IdListConverter().toJson(instance.colorIds),
-      'pairs_well_with_color_ids': const IdListConverter().toJson(
-        instance.pairsWellWithColorIds,
-      ),
     };
 
-_GuidePrinciple _$GuidePrincipleFromJson(Map<String, dynamic> json) =>
-    _GuidePrinciple(
-      slug: json['slug'] as String,
-      title: json['title'] as String,
-      body: json['body'] as String,
-      exampleColorIds: json['example_color_ids'] == null
-          ? const []
-          : const IdListConverter().fromJson(json['example_color_ids'] as List),
+_ColorPartner _$ColorPartnerFromJson(Map<String, dynamic> json) =>
+    _ColorPartner(
+      colorId: const IdConverter().fromJson(json['color_id'] as Object),
+      score: (json['score'] as num).toInt(),
+      explanation: json['explanation'] as String,
     );
 
-Map<String, dynamic> _$GuidePrincipleToJson(
-  _GuidePrinciple instance,
+Map<String, dynamic> _$ColorPartnerToJson(_ColorPartner instance) =>
+    <String, dynamic>{
+      'color_id': const IdConverter().toJson(instance.colorId),
+      'score': instance.score,
+      'explanation': instance.explanation,
+    };
+
+_ColorHarmony _$ColorHarmonyFromJson(Map<String, dynamic> json) =>
+    _ColorHarmony(
+      colorId: const IdConverter().fromJson(json['color_id'] as Object),
+      harmonious:
+          (json['harmonious'] as List<dynamic>?)
+              ?.map((e) => ColorPartner.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      contrast:
+          (json['contrast'] as List<dynamic>?)
+              ?.map((e) => ColorPartner.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      neutralPairing:
+          (json['neutral_pairing'] as List<dynamic>?)
+              ?.map((e) => ColorPartner.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      caution:
+          (json['caution'] as List<dynamic>?)
+              ?.map((e) => ColorPartner.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$ColorHarmonyToJson(
+  _ColorHarmony instance,
 ) => <String, dynamic>{
-  'slug': instance.slug,
-  'title': instance.title,
-  'body': instance.body,
-  'example_color_ids': const IdListConverter().toJson(instance.exampleColorIds),
+  'color_id': const IdConverter().toJson(instance.colorId),
+  'harmonious': instance.harmonious.map((e) => e.toJson()).toList(),
+  'contrast': instance.contrast.map((e) => e.toJson()).toList(),
+  'neutral_pairing': instance.neutralPairing.map((e) => e.toJson()).toList(),
+  'caution': instance.caution.map((e) => e.toJson()).toList(),
 };
 
 _ColorGuide _$ColorGuideFromJson(Map<String, dynamic> json) => _ColorGuide(
+  catalogVersion: (json['catalog_version'] as num?)?.toInt() ?? 1,
+  rulesVersion: (json['rules_version'] as num?)?.toInt() ?? 1,
   families: (json['families'] as List<dynamic>)
       .map((e) => ColorFamilyGuide.fromJson(e as Map<String, dynamic>))
       .toList(),
-  principles: (json['principles'] as List<dynamic>)
-      .map((e) => GuidePrinciple.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  neutralColorIds: json['neutral_color_ids'] == null
+      ? const []
+      : const IdListConverter().fromJson(json['neutral_color_ids'] as List),
+  harmonies:
+      (json['harmonies'] as List<dynamic>?)
+          ?.map((e) => ColorHarmony.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
-Map<String, dynamic> _$ColorGuideToJson(_ColorGuide instance) =>
-    <String, dynamic>{
-      'families': instance.families.map((e) => e.toJson()).toList(),
-      'principles': instance.principles.map((e) => e.toJson()).toList(),
-    };
-
-_ColorPairingRule _$ColorPairingRuleFromJson(Map<String, dynamic> json) =>
-    _ColorPairingRule(
-      id: const IdConverter().fromJson(json['id'] as Object),
-      colorAId: const IdConverter().fromJson(json['color_a_id'] as Object),
-      colorBId: const IdConverter().fromJson(json['color_b_id'] as Object),
-      ruleType: $enumDecode(_$PairingRuleTypeEnumMap, json['rule_type']),
-      compatibilityScore: (json['compatibility_score'] as num).toDouble(),
-      explanation: json['explanation'] as String,
-      ruleVersion: json['rule_version'] as String,
-    );
-
-Map<String, dynamic> _$ColorPairingRuleToJson(_ColorPairingRule instance) =>
-    <String, dynamic>{
-      'id': const IdConverter().toJson(instance.id),
-      'color_a_id': const IdConverter().toJson(instance.colorAId),
-      'color_b_id': const IdConverter().toJson(instance.colorBId),
-      'rule_type': _$PairingRuleTypeEnumMap[instance.ruleType]!,
-      'compatibility_score': instance.compatibilityScore,
-      'explanation': instance.explanation,
-      'rule_version': instance.ruleVersion,
-    };
-
-const _$PairingRuleTypeEnumMap = {
-  PairingRuleType.neutralBase: 'neutral_base',
-  PairingRuleType.toneOnTone: 'tone_on_tone',
-  PairingRuleType.analogous: 'analogous',
-  PairingRuleType.complementary: 'complementary',
-  PairingRuleType.contrast: 'contrast',
-  PairingRuleType.bold: 'bold',
-};
-
-_RecommendationRule _$RecommendationRuleFromJson(Map<String, dynamic> json) =>
-    _RecommendationRule(
-      id: const IdConverter().fromJson(json['id'] as Object),
-      name: json['name'] as String,
-      ruleType: $enumDecode(_$RecommendationRuleTypeEnumMap, json['rule_type']),
-      conditionsJson: Map<String, String>.from(json['conditions_json'] as Map),
-      weight: (json['weight'] as num).toDouble(),
-      explanation: json['explanation'] as String,
-      version: json['version'] as String,
-    );
-
-Map<String, dynamic> _$RecommendationRuleToJson(_RecommendationRule instance) =>
-    <String, dynamic>{
-      'id': const IdConverter().toJson(instance.id),
-      'name': instance.name,
-      'rule_type': _$RecommendationRuleTypeEnumMap[instance.ruleType]!,
-      'conditions_json': instance.conditionsJson,
-      'weight': instance.weight,
-      'explanation': instance.explanation,
-      'version': instance.version,
-    };
-
-const _$RecommendationRuleTypeEnumMap = {
-  RecommendationRuleType.typeOccasion: 'type_occasion',
-  RecommendationRuleType.typeStyle: 'type_style',
+Map<String, dynamic> _$ColorGuideToJson(
+  _ColorGuide instance,
+) => <String, dynamic>{
+  'catalog_version': instance.catalogVersion,
+  'rules_version': instance.rulesVersion,
+  'families': instance.families.map((e) => e.toJson()).toList(),
+  'neutral_color_ids': const IdListConverter().toJson(instance.neutralColorIds),
+  'harmonies': instance.harmonies.map((e) => e.toJson()).toList(),
 };

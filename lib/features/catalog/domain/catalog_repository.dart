@@ -14,8 +14,4 @@ abstract interface class CatalogRepository {
   Future<List<Occasion>> occasions();
 
   Future<ColorGuide> colorGuide();
-
-  Future<List<ColorPairingRule>> colorPairingRules();
-
-  Future<List<RecommendationRule>> recommendationRules();
 }

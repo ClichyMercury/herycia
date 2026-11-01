@@ -5,19 +5,16 @@ import 'catalog_providers.dart';
 
 class CatalogLookup {
   CatalogLookup({
-    required List<ClothingCategory> categories,
-    required List<ClothingType> types,
-    required List<CatalogColor> colors,
-    required List<OutfitStyle> styles,
-    required List<Occasion> occasions,
-  })  : categories = categories,
-        types = types,
-        colors = colors,
-        styles = styles,
-        occasions = occasions,
-        _categories = {for (final c in categories) c.id: c},
+    required this.categories,
+    required this.types,
+    required this.colors,
+    required this.styles,
+    required this.occasions,
+  })  : _categories = {for (final c in categories) c.id: c},
         _types = {for (final t in types) t.id: t},
+        _typesBySlug = {for (final t in types) t.slug: t},
         _colors = {for (final c in colors) c.id: c},
+        _colorsBySlug = {for (final c in colors) c.slug: c},
         _styles = {for (final s in styles) s.id: s},
         _stylesBySlug = {for (final s in styles) s.slug: s},
         _occasions = {for (final o in occasions) o.id: o},
@@ -30,7 +27,9 @@ class CatalogLookup {
   final List<Occasion> occasions;
   final Map<String, ClothingCategory> _categories;
   final Map<String, ClothingType> _types;
+  final Map<String, ClothingType> _typesBySlug;
   final Map<String, CatalogColor> _colors;
+  final Map<String, CatalogColor> _colorsBySlug;
   final Map<String, OutfitStyle> _styles;
   final Map<String, OutfitStyle> _stylesBySlug;
   final Map<String, Occasion> _occasions;
@@ -38,7 +37,15 @@ class CatalogLookup {
 
   ClothingType? type(String id) => _types[id];
 
+  ClothingType? typeBySlug(String slug) => _typesBySlug[slug];
+
+  ClothingType typeOf(CatalogRef ref) => _types[ref.id] ?? _typesBySlug[ref.slug] ?? ClothingType.fromRef(ref);
+
   CatalogColor? color(String id) => _colors[id];
+
+  CatalogColor? colorBySlug(String slug) => _colorsBySlug[slug];
+
+  CatalogColor colorOf(ColorRef ref) => _colors[ref.id] ?? _colorsBySlug[ref.slug] ?? CatalogColor.fromRef(ref);
 
   OutfitStyle? style(String id) => _styles[id];
 

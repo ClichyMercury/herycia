@@ -8,7 +8,8 @@ enum CompositionRole {
   top(CategoryGroup.top, PieceRole.top),
   bottom(CategoryGroup.bottom, PieceRole.bottom),
   onePiece(CategoryGroup.onePiece, PieceRole.onePiece),
-  shoes(CategoryGroup.shoes, PieceRole.shoes),
+  outerwear(CategoryGroup.top, PieceRole.outerwear),
+  shoes(CategoryGroup.footwear, PieceRole.footwear),
   accessory(CategoryGroup.accessory, PieceRole.accessory);
 
   const CompositionRole(this.group, this.pieceRole);
@@ -40,6 +41,7 @@ class OutfitComposition {
     this.top,
     this.bottom,
     this.onePiece,
+    this.outerwear,
     this.shoes,
     this.accessories = const [],
     this.occasionSlug,
@@ -52,6 +54,7 @@ class OutfitComposition {
   final ComposedPiece? top;
   final ComposedPiece? bottom;
   final ComposedPiece? onePiece;
+  final ComposedPiece? outerwear;
   final ComposedPiece? shoes;
   final List<ComposedPiece> accessories;
   final String? occasionSlug;
@@ -62,7 +65,7 @@ class OutfitComposition {
   bool get canAddAccessory => accessories.length < maxAccessories;
 
   bool get isEmpty =>
-      top == null && bottom == null && onePiece == null && shoes == null && accessories.isEmpty;
+      top == null && bottom == null && onePiece == null && outerwear == null && shoes == null && accessories.isEmpty;
 
   List<CompositionRole> get missingRequired => [
         if (!hasOnePiece && top == null) CompositionRole.top,
@@ -72,12 +75,13 @@ class OutfitComposition {
 
   bool get isComplete => missingRequired.isEmpty;
 
-  List<ComposedPiece> get pieces => [?top, ?bottom, ?onePiece, ?shoes, ...accessories];
+  List<ComposedPiece> get pieces => [?top, ?bottom, ?onePiece, ?outerwear, ?shoes, ...accessories];
 
   List<(CompositionRole, ComposedPiece)> get rolePieces => [
         if (top != null) (CompositionRole.top, top!),
         if (bottom != null) (CompositionRole.bottom, bottom!),
         if (onePiece != null) (CompositionRole.onePiece, onePiece!),
+        if (outerwear != null) (CompositionRole.outerwear, outerwear!),
         if (shoes != null) (CompositionRole.shoes, shoes!),
         for (final a in accessories) (CompositionRole.accessory, a),
       ];
@@ -91,10 +95,48 @@ class OutfitComposition {
         styleSlug: styleSlug,
       );
 
+  static OutfitComposition fromRolePieces(
+    Iterable<(CompositionRole, ComposedPiece)> pieces, {
+    String? occasionSlug,
+    String? styleSlug,
+  }) {
+    var composition = OutfitComposition(occasionSlug: occasionSlug, styleSlug: styleSlug);
+    for (final (role, piece) in pieces) {
+      composition = composition.withPiece(role, piece);
+    }
+    return composition;
+  }
+
+  OutfitComposition applyChange(
+    OutfitChange change, {
+    required ClothingType? Function(String id) type,
+    required CatalogColor? Function(String id) color,
+  }) {
+    final pieces = [...rolePieces];
+    final item = change.item;
+    final replacement = item == null
+        ? null
+        : switch ((type(item.clothingTypeId), color(item.colorId))) {
+            (final t?, final c?) => (CompositionRole.fromPieceRole(item.role), ComposedPiece(type: t, color: c)),
+            _ => null,
+          };
+    final index = change.itemIndex;
+    switch (change.action) {
+      case ChangeAction.addItem:
+        if (replacement != null) pieces.add(replacement);
+      case ChangeAction.replaceItem:
+        if (replacement != null && index != null && index < pieces.length) pieces[index] = replacement;
+      case ChangeAction.removeItem:
+        if (index != null && index < pieces.length) pieces.removeAt(index);
+    }
+    return fromRolePieces(pieces, occasionSlug: occasionSlug, styleSlug: styleSlug);
+  }
+
   OutfitComposition withContext({String? occasionSlug, String? styleSlug}) => OutfitComposition(
         top: top,
         bottom: bottom,
         onePiece: onePiece,
+        outerwear: outerwear,
         shoes: shoes,
         accessories: accessories,
         occasionSlug: occasionSlug,
@@ -116,6 +158,7 @@ class OutfitComposition {
         CompositionRole.top => top,
         CompositionRole.bottom => bottom,
         CompositionRole.onePiece => onePiece,
+        CompositionRole.outerwear => outerwear,
         CompositionRole.shoes => shoes,
         CompositionRole.accessory => null,
       };
@@ -124,6 +167,7 @@ class OutfitComposition {
         CompositionRole.top => _copy(top: piece, onePiece: null),
         CompositionRole.bottom => _copy(bottom: piece, onePiece: null),
         CompositionRole.onePiece => _copy(onePiece: piece, top: null, bottom: null),
+        CompositionRole.outerwear => _copy(outerwear: piece),
         CompositionRole.shoes => _copy(shoes: piece),
         CompositionRole.accessory => _withAccessory(piece),
       };
@@ -132,6 +176,7 @@ class OutfitComposition {
         CompositionRole.top => _copy(top: null),
         CompositionRole.bottom => _copy(bottom: null),
         CompositionRole.onePiece => _copy(onePiece: null),
+        CompositionRole.outerwear => _copy(outerwear: null),
         CompositionRole.shoes => _copy(shoes: null),
         CompositionRole.accessory => _copy(accessories: const []),
       };
@@ -155,6 +200,7 @@ class OutfitComposition {
     Object? top = _keep,
     Object? bottom = _keep,
     Object? onePiece = _keep,
+    Object? outerwear = _keep,
     Object? shoes = _keep,
     List<ComposedPiece>? accessories,
   }) =>
@@ -162,6 +208,7 @@ class OutfitComposition {
         top: identical(top, _keep) ? this.top : top as ComposedPiece?,
         bottom: identical(bottom, _keep) ? this.bottom : bottom as ComposedPiece?,
         onePiece: identical(onePiece, _keep) ? this.onePiece : onePiece as ComposedPiece?,
+        outerwear: identical(outerwear, _keep) ? this.outerwear : outerwear as ComposedPiece?,
         shoes: identical(shoes, _keep) ? this.shoes : shoes as ComposedPiece?,
         accessories: accessories ?? this.accessories,
         occasionSlug: occasionSlug,
@@ -174,6 +221,7 @@ class OutfitComposition {
       other.top == top &&
       other.bottom == bottom &&
       other.onePiece == onePiece &&
+      other.outerwear == outerwear &&
       other.shoes == shoes &&
       other.occasionSlug == occasionSlug &&
       other.styleSlug == styleSlug &&
@@ -181,5 +229,5 @@ class OutfitComposition {
 
   @override
   int get hashCode =>
-      Object.hash(top, bottom, onePiece, shoes, Object.hashAll(accessories), occasionSlug, styleSlug);
+      Object.hash(top, bottom, onePiece, outerwear, shoes, Object.hashAll(accessories), occasionSlug, styleSlug);
 }

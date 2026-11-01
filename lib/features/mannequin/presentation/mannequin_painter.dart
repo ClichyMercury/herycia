@@ -40,6 +40,7 @@ class MannequinPainter extends CustomPainter {
     if (outfit.bottom case final bottom?) _paintBottom(canvas, g, bottom);
     if (outfit.onePiece case final onePiece?) _paintOnePiece(canvas, g, onePiece);
     if (top != null && top.shape.isLayeredOverBottom) _paintTop(canvas, g, top);
+    if (outfit.outerwear case final outerwear?) _paintTop(canvas, g, outerwear);
     if (outfit.shoes case final shoes?) _paintShoes(canvas, g, shoes);
 
     const order = [

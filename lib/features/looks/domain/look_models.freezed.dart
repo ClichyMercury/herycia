@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LookImage {
 
-@IdConverter() String get id; String get url; String? get thumbnailUrl; String get sourceName; String? get sourceUrl; LicenseType get licenseType; String? get attribution; bool get usageApproved; String get altText;
+@IdConverter() String get id; String get url; String? get thumbnailUrl; String get altText; String? get credit; String get licenseType; String? get sourceName; String? get sourceUrl;
 /// Create a copy of LookImage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $LookImageCopyWith<LookImage> get copyWith => _$LookImageCopyWithImpl<LookImage>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookImage&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl)&&(identical(other.licenseType, licenseType) || other.licenseType == licenseType)&&(identical(other.attribution, attribution) || other.attribution == attribution)&&(identical(other.usageApproved, usageApproved) || other.usageApproved == usageApproved)&&(identical(other.altText, altText) || other.altText == altText));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookImage&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.altText, altText) || other.altText == altText)&&(identical(other.credit, credit) || other.credit == credit)&&(identical(other.licenseType, licenseType) || other.licenseType == licenseType)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url,thumbnailUrl,sourceName,sourceUrl,licenseType,attribution,usageApproved,altText);
+int get hashCode => Object.hash(runtimeType,id,url,thumbnailUrl,altText,credit,licenseType,sourceName,sourceUrl);
 
 @override
 String toString() {
-  return 'LookImage(id: $id, url: $url, thumbnailUrl: $thumbnailUrl, sourceName: $sourceName, sourceUrl: $sourceUrl, licenseType: $licenseType, attribution: $attribution, usageApproved: $usageApproved, altText: $altText)';
+  return 'LookImage(id: $id, url: $url, thumbnailUrl: $thumbnailUrl, altText: $altText, credit: $credit, licenseType: $licenseType, sourceName: $sourceName, sourceUrl: $sourceUrl)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $LookImageCopyWith<$Res>  {
   factory $LookImageCopyWith(LookImage value, $Res Function(LookImage) _then) = _$LookImageCopyWithImpl;
 @useResult
 $Res call({
-@IdConverter() String id, String url, String? thumbnailUrl, String sourceName, String? sourceUrl, LicenseType licenseType, String? attribution, bool usageApproved, String altText
+@IdConverter() String id, String url, String? thumbnailUrl, String altText, String? credit, String licenseType, String? sourceName, String? sourceUrl
 });
 
 
@@ -66,18 +66,17 @@ class _$LookImageCopyWithImpl<$Res>
 
 /// Create a copy of LookImage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? thumbnailUrl = freezed,Object? sourceName = null,Object? sourceUrl = freezed,Object? licenseType = null,Object? attribution = freezed,Object? usageApproved = null,Object? altText = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? thumbnailUrl = freezed,Object? altText = null,Object? credit = freezed,Object? licenseType = null,Object? sourceName = freezed,Object? sourceUrl = freezed,}) {
   return _then(LookImage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,thumbnailUrl: freezed == thumbnailUrl ? _self.thumbnailUrl : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-as String?,sourceName: null == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
-as String,sourceUrl: freezed == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
+as String?,altText: null == altText ? _self.altText : altText // ignore: cast_nullable_to_non_nullable
+as String,credit: freezed == credit ? _self.credit : credit // ignore: cast_nullable_to_non_nullable
 as String?,licenseType: null == licenseType ? _self.licenseType : licenseType // ignore: cast_nullable_to_non_nullable
-as LicenseType,attribution: freezed == attribution ? _self.attribution : attribution // ignore: cast_nullable_to_non_nullable
-as String?,usageApproved: null == usageApproved ? _self.usageApproved : usageApproved // ignore: cast_nullable_to_non_nullable
-as bool,altText: null == altText ? _self.altText : altText // ignore: cast_nullable_to_non_nullable
-as String,
+as String,sourceName: freezed == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
+as String?,sourceUrl: freezed == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -162,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String sourceName,  String? sourceUrl,  LicenseType licenseType,  String? attribution,  bool usageApproved,  String altText)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String altText,  String? credit,  String licenseType,  String? sourceName,  String? sourceUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LookImage() when $default != null:
-return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sourceUrl,_that.licenseType,_that.attribution,_that.usageApproved,_that.altText);case _:
+return $default(_that.id,_that.url,_that.thumbnailUrl,_that.altText,_that.credit,_that.licenseType,_that.sourceName,_that.sourceUrl);case _:
   return orElse();
 
 }
@@ -183,10 +182,10 @@ return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sou
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String sourceName,  String? sourceUrl,  LicenseType licenseType,  String? attribution,  bool usageApproved,  String altText)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String altText,  String? credit,  String licenseType,  String? sourceName,  String? sourceUrl)  $default,) {final _that = this;
 switch (_that) {
 case _LookImage():
-return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sourceUrl,_that.licenseType,_that.attribution,_that.usageApproved,_that.altText);case _:
+return $default(_that.id,_that.url,_that.thumbnailUrl,_that.altText,_that.credit,_that.licenseType,_that.sourceName,_that.sourceUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +202,10 @@ return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sou
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String sourceName,  String? sourceUrl,  LicenseType licenseType,  String? attribution,  bool usageApproved,  String altText)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String url,  String? thumbnailUrl,  String altText,  String? credit,  String licenseType,  String? sourceName,  String? sourceUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _LookImage() when $default != null:
-return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sourceUrl,_that.licenseType,_that.attribution,_that.usageApproved,_that.altText);case _:
+return $default(_that.id,_that.url,_that.thumbnailUrl,_that.altText,_that.credit,_that.licenseType,_that.sourceName,_that.sourceUrl);case _:
   return null;
 
 }
@@ -218,18 +217,17 @@ return $default(_that.id,_that.url,_that.thumbnailUrl,_that.sourceName,_that.sou
 @JsonSerializable()
 
 class _LookImage extends LookImage {
-  const _LookImage({@IdConverter() required this.id, required this.url, this.thumbnailUrl, required this.sourceName, this.sourceUrl, required this.licenseType, this.attribution, required this.usageApproved, required this.altText}): super._();
+  const _LookImage({@IdConverter() required this.id, required this.url, this.thumbnailUrl, required this.altText, this.credit, required this.licenseType, this.sourceName, this.sourceUrl}): super._();
   factory _LookImage.fromJson(Map<String, dynamic> json) => _$LookImageFromJson(json);
 
 @override@IdConverter() final  String id;
 @override final  String url;
 @override final  String? thumbnailUrl;
-@override final  String sourceName;
-@override final  String? sourceUrl;
-@override final  LicenseType licenseType;
-@override final  String? attribution;
-@override final  bool usageApproved;
 @override final  String altText;
+@override final  String? credit;
+@override final  String licenseType;
+@override final  String? sourceName;
+@override final  String? sourceUrl;
 
 /// Create a copy of LookImage
 /// with the given fields replaced by the non-null parameter values.
@@ -244,16 +242,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookImage&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl)&&(identical(other.licenseType, licenseType) || other.licenseType == licenseType)&&(identical(other.attribution, attribution) || other.attribution == attribution)&&(identical(other.usageApproved, usageApproved) || other.usageApproved == usageApproved)&&(identical(other.altText, altText) || other.altText == altText));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookImage&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.thumbnailUrl, thumbnailUrl) || other.thumbnailUrl == thumbnailUrl)&&(identical(other.altText, altText) || other.altText == altText)&&(identical(other.credit, credit) || other.credit == credit)&&(identical(other.licenseType, licenseType) || other.licenseType == licenseType)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url,thumbnailUrl,sourceName,sourceUrl,licenseType,attribution,usageApproved,altText);
+int get hashCode => Object.hash(runtimeType,id,url,thumbnailUrl,altText,credit,licenseType,sourceName,sourceUrl);
 
 @override
 String toString() {
-  return 'LookImage(id: $id, url: $url, thumbnailUrl: $thumbnailUrl, sourceName: $sourceName, sourceUrl: $sourceUrl, licenseType: $licenseType, attribution: $attribution, usageApproved: $usageApproved, altText: $altText)';
+  return 'LookImage(id: $id, url: $url, thumbnailUrl: $thumbnailUrl, altText: $altText, credit: $credit, licenseType: $licenseType, sourceName: $sourceName, sourceUrl: $sourceUrl)';
 }
 
 
@@ -264,7 +262,7 @@ abstract mixin class _$LookImageCopyWith<$Res> implements $LookImageCopyWith<$Re
   factory _$LookImageCopyWith(_LookImage value, $Res Function(_LookImage) _then) = __$LookImageCopyWithImpl;
 @override @useResult
 $Res call({
-@IdConverter() String id, String url, String? thumbnailUrl, String sourceName, String? sourceUrl, LicenseType licenseType, String? attribution, bool usageApproved, String altText
+@IdConverter() String id, String url, String? thumbnailUrl, String altText, String? credit, String licenseType, String? sourceName, String? sourceUrl
 });
 
 
@@ -281,18 +279,17 @@ class __$LookImageCopyWithImpl<$Res>
 
 /// Create a copy of LookImage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? thumbnailUrl = freezed,Object? sourceName = null,Object? sourceUrl = freezed,Object? licenseType = null,Object? attribution = freezed,Object? usageApproved = null,Object? altText = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? thumbnailUrl = freezed,Object? altText = null,Object? credit = freezed,Object? licenseType = null,Object? sourceName = freezed,Object? sourceUrl = freezed,}) {
   return _then(_LookImage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,thumbnailUrl: freezed == thumbnailUrl ? _self.thumbnailUrl : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-as String?,sourceName: null == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
-as String,sourceUrl: freezed == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
+as String?,altText: null == altText ? _self.altText : altText // ignore: cast_nullable_to_non_nullable
+as String,credit: freezed == credit ? _self.credit : credit // ignore: cast_nullable_to_non_nullable
 as String?,licenseType: null == licenseType ? _self.licenseType : licenseType // ignore: cast_nullable_to_non_nullable
-as LicenseType,attribution: freezed == attribution ? _self.attribution : attribution // ignore: cast_nullable_to_non_nullable
-as String?,usageApproved: null == usageApproved ? _self.usageApproved : usageApproved // ignore: cast_nullable_to_non_nullable
-as bool,altText: null == altText ? _self.altText : altText // ignore: cast_nullable_to_non_nullable
-as String,
+as String,sourceName: freezed == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
+as String?,sourceUrl: freezed == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -303,7 +300,7 @@ as String,
 /// @nodoc
 mixin _$LookItem {
 
-@IdConverter() String get id;@IdConverter() String get clothingTypeId;@IdConverter() String get colorId; PieceRole get role; bool get isRequired; int get sortOrder;
+ CatalogRef get clothingType; ColorRef get color; PieceRole get role; bool get isRequired; int get sortOrder;
 /// Create a copy of LookItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -316,16 +313,16 @@ $LookItemCopyWith<LookItem> get copyWith => _$LookItemCopyWithImpl<LookItem>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookItem&&(identical(other.id, id) || other.id == id)&&(identical(other.clothingTypeId, clothingTypeId) || other.clothingTypeId == clothingTypeId)&&(identical(other.colorId, colorId) || other.colorId == colorId)&&(identical(other.role, role) || other.role == role)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookItem&&(identical(other.clothingType, clothingType) || other.clothingType == clothingType)&&(identical(other.color, color) || other.color == color)&&(identical(other.role, role) || other.role == role)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,clothingTypeId,colorId,role,isRequired,sortOrder);
+int get hashCode => Object.hash(runtimeType,clothingType,color,role,isRequired,sortOrder);
 
 @override
 String toString() {
-  return 'LookItem(id: $id, clothingTypeId: $clothingTypeId, colorId: $colorId, role: $role, isRequired: $isRequired, sortOrder: $sortOrder)';
+  return 'LookItem(clothingType: $clothingType, color: $color, role: $role, isRequired: $isRequired, sortOrder: $sortOrder)';
 }
 
 
@@ -336,11 +333,11 @@ abstract mixin class $LookItemCopyWith<$Res>  {
   factory $LookItemCopyWith(LookItem value, $Res Function(LookItem) _then) = _$LookItemCopyWithImpl;
 @useResult
 $Res call({
-@IdConverter() String id,@IdConverter() String clothingTypeId,@IdConverter() String colorId, PieceRole role, bool isRequired, int sortOrder
+ CatalogRef clothingType, ColorRef color, PieceRole role, bool isRequired, int sortOrder
 });
 
 
-
+$CatalogRefCopyWith<$Res> get clothingType;$ColorRefCopyWith<$Res> get color;
 
 }
 /// @nodoc
@@ -353,18 +350,35 @@ class _$LookItemCopyWithImpl<$Res>
 
 /// Create a copy of LookItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? clothingTypeId = null,Object? colorId = null,Object? role = null,Object? isRequired = null,Object? sortOrder = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? clothingType = null,Object? color = null,Object? role = null,Object? isRequired = null,Object? sortOrder = null,}) {
   return _then(LookItem(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,clothingTypeId: null == clothingTypeId ? _self.clothingTypeId : clothingTypeId // ignore: cast_nullable_to_non_nullable
-as String,colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
-as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+clothingType: null == clothingType ? _self.clothingType : clothingType // ignore: cast_nullable_to_non_nullable
+as CatalogRef,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as ColorRef,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as PieceRole,isRequired: null == isRequired ? _self.isRequired : isRequired // ignore: cast_nullable_to_non_nullable
 as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
-
+/// Create a copy of LookItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CatalogRefCopyWith<$Res> get clothingType {
+  
+  return $CatalogRefCopyWith<$Res>(_self.clothingType, (value) {
+    return _then(_self.copyWith(clothingType: value));
+  });
+}/// Create a copy of LookItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ColorRefCopyWith<$Res> get color {
+  
+  return $ColorRefCopyWith<$Res>(_self.color, (value) {
+    return _then(_self.copyWith(color: value));
+  });
+}
 }
 
 
@@ -446,10 +460,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id, @IdConverter()  String clothingTypeId, @IdConverter()  String colorId,  PieceRole role,  bool isRequired,  int sortOrder)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CatalogRef clothingType,  ColorRef color,  PieceRole role,  bool isRequired,  int sortOrder)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LookItem() when $default != null:
-return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isRequired,_that.sortOrder);case _:
+return $default(_that.clothingType,_that.color,_that.role,_that.isRequired,_that.sortOrder);case _:
   return orElse();
 
 }
@@ -467,10 +481,10 @@ return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isR
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id, @IdConverter()  String clothingTypeId, @IdConverter()  String colorId,  PieceRole role,  bool isRequired,  int sortOrder)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CatalogRef clothingType,  ColorRef color,  PieceRole role,  bool isRequired,  int sortOrder)  $default,) {final _that = this;
 switch (_that) {
 case _LookItem():
-return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isRequired,_that.sortOrder);case _:
+return $default(_that.clothingType,_that.color,_that.role,_that.isRequired,_that.sortOrder);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -487,10 +501,10 @@ return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isR
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id, @IdConverter()  String clothingTypeId, @IdConverter()  String colorId,  PieceRole role,  bool isRequired,  int sortOrder)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CatalogRef clothingType,  ColorRef color,  PieceRole role,  bool isRequired,  int sortOrder)?  $default,) {final _that = this;
 switch (_that) {
 case _LookItem() when $default != null:
-return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isRequired,_that.sortOrder);case _:
+return $default(_that.clothingType,_that.color,_that.role,_that.isRequired,_that.sortOrder);case _:
   return null;
 
 }
@@ -502,12 +516,11 @@ return $default(_that.id,_that.clothingTypeId,_that.colorId,_that.role,_that.isR
 @JsonSerializable()
 
 class _LookItem implements LookItem {
-  const _LookItem({@IdConverter() required this.id, @IdConverter() required this.clothingTypeId, @IdConverter() required this.colorId, required this.role, this.isRequired = true, this.sortOrder = 0});
+  const _LookItem({required this.clothingType, required this.color, required this.role, this.isRequired = true, this.sortOrder = 0});
   factory _LookItem.fromJson(Map<String, dynamic> json) => _$LookItemFromJson(json);
 
-@override@IdConverter() final  String id;
-@override@IdConverter() final  String clothingTypeId;
-@override@IdConverter() final  String colorId;
+@override final  CatalogRef clothingType;
+@override final  ColorRef color;
 @override final  PieceRole role;
 @override@JsonKey() final  bool isRequired;
 @override@JsonKey() final  int sortOrder;
@@ -525,16 +538,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookItem&&(identical(other.id, id) || other.id == id)&&(identical(other.clothingTypeId, clothingTypeId) || other.clothingTypeId == clothingTypeId)&&(identical(other.colorId, colorId) || other.colorId == colorId)&&(identical(other.role, role) || other.role == role)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookItem&&(identical(other.clothingType, clothingType) || other.clothingType == clothingType)&&(identical(other.color, color) || other.color == color)&&(identical(other.role, role) || other.role == role)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,clothingTypeId,colorId,role,isRequired,sortOrder);
+int get hashCode => Object.hash(runtimeType,clothingType,color,role,isRequired,sortOrder);
 
 @override
 String toString() {
-  return 'LookItem(id: $id, clothingTypeId: $clothingTypeId, colorId: $colorId, role: $role, isRequired: $isRequired, sortOrder: $sortOrder)';
+  return 'LookItem(clothingType: $clothingType, color: $color, role: $role, isRequired: $isRequired, sortOrder: $sortOrder)';
 }
 
 
@@ -545,11 +558,11 @@ abstract mixin class _$LookItemCopyWith<$Res> implements $LookItemCopyWith<$Res>
   factory _$LookItemCopyWith(_LookItem value, $Res Function(_LookItem) _then) = __$LookItemCopyWithImpl;
 @override @useResult
 $Res call({
-@IdConverter() String id,@IdConverter() String clothingTypeId,@IdConverter() String colorId, PieceRole role, bool isRequired, int sortOrder
+ CatalogRef clothingType, ColorRef color, PieceRole role, bool isRequired, int sortOrder
 });
 
 
-
+@override $CatalogRefCopyWith<$Res> get clothingType;@override $ColorRefCopyWith<$Res> get color;
 
 }
 /// @nodoc
@@ -562,26 +575,43 @@ class __$LookItemCopyWithImpl<$Res>
 
 /// Create a copy of LookItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? clothingTypeId = null,Object? colorId = null,Object? role = null,Object? isRequired = null,Object? sortOrder = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? clothingType = null,Object? color = null,Object? role = null,Object? isRequired = null,Object? sortOrder = null,}) {
   return _then(_LookItem(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,clothingTypeId: null == clothingTypeId ? _self.clothingTypeId : clothingTypeId // ignore: cast_nullable_to_non_nullable
-as String,colorId: null == colorId ? _self.colorId : colorId // ignore: cast_nullable_to_non_nullable
-as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+clothingType: null == clothingType ? _self.clothingType : clothingType // ignore: cast_nullable_to_non_nullable
+as CatalogRef,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as ColorRef,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as PieceRole,isRequired: null == isRequired ? _self.isRequired : isRequired // ignore: cast_nullable_to_non_nullable
 as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
 
-
+/// Create a copy of LookItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CatalogRefCopyWith<$Res> get clothingType {
+  
+  return $CatalogRefCopyWith<$Res>(_self.clothingType, (value) {
+    return _then(_self.copyWith(clothingType: value));
+  });
+}/// Create a copy of LookItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ColorRefCopyWith<$Res> get color {
+  
+  return $ColorRefCopyWith<$Res>(_self.color, (value) {
+    return _then(_self.copyWith(color: value));
+  });
+}
 }
 
 
 /// @nodoc
 mixin _$Look {
 
-@IdConverter() String get id; String get title; String get slug; String get description;@NullableIdConverter() String? get styleId;@NullableIdConverter() String? get occasionId; LookStatus get status;@NullableUtcDateTimeConverter() DateTime? get publishedAt; LookOrigin get origin; List<LookItem> get items; LookImage? get primaryImage; List<LookImage> get images;
+@IdConverter() String get id; String get title; String get slug; String? get description; CatalogRef? get style; CatalogRef? get occasion; LookImage? get image; List<LookItem> get items; String get origin;@NullableUtcDateTimeConverter() DateTime? get publishedAt;
 /// Create a copy of Look
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -594,16 +624,16 @@ $LookCopyWith<Look> get copyWith => _$LookCopyWithImpl<Look>(this as Look, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Look&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.description, description) || other.description == description)&&(identical(other.styleId, styleId) || other.styleId == styleId)&&(identical(other.occasionId, occasionId) || other.occasionId == occasionId)&&(identical(other.status, status) || other.status == status)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.origin, origin) || other.origin == origin)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.primaryImage, primaryImage) || other.primaryImage == primaryImage)&&const DeepCollectionEquality().equals(other.images, images));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Look&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.description, description) || other.description == description)&&(identical(other.style, style) || other.style == style)&&(identical(other.occasion, occasion) || other.occasion == occasion)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.origin, origin) || other.origin == origin)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,slug,description,styleId,occasionId,status,publishedAt,origin,const DeepCollectionEquality().hash(items),primaryImage,const DeepCollectionEquality().hash(images));
+int get hashCode => Object.hash(runtimeType,id,title,slug,description,style,occasion,image,const DeepCollectionEquality().hash(items),origin,publishedAt);
 
 @override
 String toString() {
-  return 'Look(id: $id, title: $title, slug: $slug, description: $description, styleId: $styleId, occasionId: $occasionId, status: $status, publishedAt: $publishedAt, origin: $origin, items: $items, primaryImage: $primaryImage, images: $images)';
+  return 'Look(id: $id, title: $title, slug: $slug, description: $description, style: $style, occasion: $occasion, image: $image, items: $items, origin: $origin, publishedAt: $publishedAt)';
 }
 
 
@@ -614,11 +644,11 @@ abstract mixin class $LookCopyWith<$Res>  {
   factory $LookCopyWith(Look value, $Res Function(Look) _then) = _$LookCopyWithImpl;
 @useResult
 $Res call({
-@IdConverter() String id, String title, String slug, String description,@NullableIdConverter() String? styleId,@NullableIdConverter() String? occasionId, LookStatus status,@NullableUtcDateTimeConverter() DateTime? publishedAt, LookOrigin origin, List<LookItem> items, LookImage? primaryImage, List<LookImage> images
+@IdConverter() String id, String title, String slug, String? description, CatalogRef? style, CatalogRef? occasion, LookImage? image, List<LookItem> items, String origin,@NullableUtcDateTimeConverter() DateTime? publishedAt
 });
 
 
-$LookImageCopyWith<$Res>? get primaryImage;
+$CatalogRefCopyWith<$Res>? get style;$CatalogRefCopyWith<$Res>? get occasion;$LookImageCopyWith<$Res>? get image;
 
 }
 /// @nodoc
@@ -631,34 +661,56 @@ class _$LookCopyWithImpl<$Res>
 
 /// Create a copy of Look
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? slug = null,Object? description = null,Object? styleId = freezed,Object? occasionId = freezed,Object? status = null,Object? publishedAt = freezed,Object? origin = null,Object? items = null,Object? primaryImage = freezed,Object? images = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? slug = null,Object? description = freezed,Object? style = freezed,Object? occasion = freezed,Object? image = freezed,Object? items = null,Object? origin = null,Object? publishedAt = freezed,}) {
   return _then(Look(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,styleId: freezed == styleId ? _self.styleId : styleId // ignore: cast_nullable_to_non_nullable
-as String?,occasionId: freezed == occasionId ? _self.occasionId : occasionId // ignore: cast_nullable_to_non_nullable
-as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as LookStatus,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
-as LookOrigin,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
-as List<LookItem>,primaryImage: freezed == primaryImage ? _self.primaryImage : primaryImage // ignore: cast_nullable_to_non_nullable
-as LookImage?,images: null == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
-as List<LookImage>,
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,style: freezed == style ? _self.style : style // ignore: cast_nullable_to_non_nullable
+as CatalogRef?,occasion: freezed == occasion ? _self.occasion : occasion // ignore: cast_nullable_to_non_nullable
+as CatalogRef?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as LookImage?,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
+as List<LookItem>,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
+as String,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 /// Create a copy of Look
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$LookImageCopyWith<$Res>? get primaryImage {
-    if (_self.primaryImage == null) {
+$CatalogRefCopyWith<$Res>? get style {
+    if (_self.style == null) {
     return null;
   }
 
-  return $LookImageCopyWith<$Res>(_self.primaryImage!, (value) {
-    return _then(_self.copyWith(primaryImage: value));
+  return $CatalogRefCopyWith<$Res>(_self.style!, (value) {
+    return _then(_self.copyWith(style: value));
+  });
+}/// Create a copy of Look
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CatalogRefCopyWith<$Res>? get occasion {
+    if (_self.occasion == null) {
+    return null;
+  }
+
+  return $CatalogRefCopyWith<$Res>(_self.occasion!, (value) {
+    return _then(_self.copyWith(occasion: value));
+  });
+}/// Create a copy of Look
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LookImageCopyWith<$Res>? get image {
+    if (_self.image == null) {
+    return null;
+  }
+
+  return $LookImageCopyWith<$Res>(_self.image!, (value) {
+    return _then(_self.copyWith(image: value));
   });
 }
 }
@@ -742,10 +794,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String title,  String slug,  String description, @NullableIdConverter()  String? styleId, @NullableIdConverter()  String? occasionId,  LookStatus status, @NullableUtcDateTimeConverter()  DateTime? publishedAt,  LookOrigin origin,  List<LookItem> items,  LookImage? primaryImage,  List<LookImage> images)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String title,  String slug,  String? description,  CatalogRef? style,  CatalogRef? occasion,  LookImage? image,  List<LookItem> items,  String origin, @NullableUtcDateTimeConverter()  DateTime? publishedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Look() when $default != null:
-return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,_that.occasionId,_that.status,_that.publishedAt,_that.origin,_that.items,_that.primaryImage,_that.images);case _:
+return $default(_that.id,_that.title,_that.slug,_that.description,_that.style,_that.occasion,_that.image,_that.items,_that.origin,_that.publishedAt);case _:
   return orElse();
 
 }
@@ -763,10 +815,10 @@ return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String title,  String slug,  String description, @NullableIdConverter()  String? styleId, @NullableIdConverter()  String? occasionId,  LookStatus status, @NullableUtcDateTimeConverter()  DateTime? publishedAt,  LookOrigin origin,  List<LookItem> items,  LookImage? primaryImage,  List<LookImage> images)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@IdConverter()  String id,  String title,  String slug,  String? description,  CatalogRef? style,  CatalogRef? occasion,  LookImage? image,  List<LookItem> items,  String origin, @NullableUtcDateTimeConverter()  DateTime? publishedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Look():
-return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,_that.occasionId,_that.status,_that.publishedAt,_that.origin,_that.items,_that.primaryImage,_that.images);case _:
+return $default(_that.id,_that.title,_that.slug,_that.description,_that.style,_that.occasion,_that.image,_that.items,_that.origin,_that.publishedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -783,10 +835,10 @@ return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String title,  String slug,  String description, @NullableIdConverter()  String? styleId, @NullableIdConverter()  String? occasionId,  LookStatus status, @NullableUtcDateTimeConverter()  DateTime? publishedAt,  LookOrigin origin,  List<LookItem> items,  LookImage? primaryImage,  List<LookImage> images)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@IdConverter()  String id,  String title,  String slug,  String? description,  CatalogRef? style,  CatalogRef? occasion,  LookImage? image,  List<LookItem> items,  String origin, @NullableUtcDateTimeConverter()  DateTime? publishedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Look() when $default != null:
-return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,_that.occasionId,_that.status,_that.publishedAt,_that.origin,_that.items,_that.primaryImage,_that.images);case _:
+return $default(_that.id,_that.title,_that.slug,_that.description,_that.style,_that.occasion,_that.image,_that.items,_that.origin,_that.publishedAt);case _:
   return null;
 
 }
@@ -798,18 +850,16 @@ return $default(_that.id,_that.title,_that.slug,_that.description,_that.styleId,
 @JsonSerializable()
 
 class _Look implements Look {
-  const _Look({@IdConverter() required this.id, required this.title, required this.slug, required this.description, @NullableIdConverter() this.styleId, @NullableIdConverter() this.occasionId, required this.status, @NullableUtcDateTimeConverter() this.publishedAt, this.origin = LookOrigin.editorial, required  List<LookItem> items, this.primaryImage,  List<LookImage> images = const []}): _items = items,_images = images;
+  const _Look({@IdConverter() required this.id, required this.title, required this.slug, this.description, this.style, this.occasion, this.image, required  List<LookItem> items, this.origin = 'editorial', @NullableUtcDateTimeConverter() this.publishedAt}): _items = items;
   factory _Look.fromJson(Map<String, dynamic> json) => _$LookFromJson(json);
 
 @override@IdConverter() final  String id;
 @override final  String title;
 @override final  String slug;
-@override final  String description;
-@override@NullableIdConverter() final  String? styleId;
-@override@NullableIdConverter() final  String? occasionId;
-@override final  LookStatus status;
-@override@NullableUtcDateTimeConverter() final  DateTime? publishedAt;
-@override@JsonKey() final  LookOrigin origin;
+@override final  String? description;
+@override final  CatalogRef? style;
+@override final  CatalogRef? occasion;
+@override final  LookImage? image;
  final  List<LookItem> _items;
 @override List<LookItem> get items {
   if (_items is EqualUnmodifiableListView) return _items;
@@ -817,14 +867,8 @@ class _Look implements Look {
   return EqualUnmodifiableListView(_items);
 }
 
-@override final  LookImage? primaryImage;
- final  List<LookImage> _images;
-@override@JsonKey() List<LookImage> get images {
-  if (_images is EqualUnmodifiableListView) return _images;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_images);
-}
-
+@override@JsonKey() final  String origin;
+@override@NullableUtcDateTimeConverter() final  DateTime? publishedAt;
 
 /// Create a copy of Look
 /// with the given fields replaced by the non-null parameter values.
@@ -839,16 +883,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Look&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.description, description) || other.description == description)&&(identical(other.styleId, styleId) || other.styleId == styleId)&&(identical(other.occasionId, occasionId) || other.occasionId == occasionId)&&(identical(other.status, status) || other.status == status)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.origin, origin) || other.origin == origin)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.primaryImage, primaryImage) || other.primaryImage == primaryImage)&&const DeepCollectionEquality().equals(other._images, _images));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Look&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.description, description) || other.description == description)&&(identical(other.style, style) || other.style == style)&&(identical(other.occasion, occasion) || other.occasion == occasion)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.origin, origin) || other.origin == origin)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,slug,description,styleId,occasionId,status,publishedAt,origin,const DeepCollectionEquality().hash(_items),primaryImage,const DeepCollectionEquality().hash(_images));
+int get hashCode => Object.hash(runtimeType,id,title,slug,description,style,occasion,image,const DeepCollectionEquality().hash(_items),origin,publishedAt);
 
 @override
 String toString() {
-  return 'Look(id: $id, title: $title, slug: $slug, description: $description, styleId: $styleId, occasionId: $occasionId, status: $status, publishedAt: $publishedAt, origin: $origin, items: $items, primaryImage: $primaryImage, images: $images)';
+  return 'Look(id: $id, title: $title, slug: $slug, description: $description, style: $style, occasion: $occasion, image: $image, items: $items, origin: $origin, publishedAt: $publishedAt)';
 }
 
 
@@ -859,11 +903,11 @@ abstract mixin class _$LookCopyWith<$Res> implements $LookCopyWith<$Res> {
   factory _$LookCopyWith(_Look value, $Res Function(_Look) _then) = __$LookCopyWithImpl;
 @override @useResult
 $Res call({
-@IdConverter() String id, String title, String slug, String description,@NullableIdConverter() String? styleId,@NullableIdConverter() String? occasionId, LookStatus status,@NullableUtcDateTimeConverter() DateTime? publishedAt, LookOrigin origin, List<LookItem> items, LookImage? primaryImage, List<LookImage> images
+@IdConverter() String id, String title, String slug, String? description, CatalogRef? style, CatalogRef? occasion, LookImage? image, List<LookItem> items, String origin,@NullableUtcDateTimeConverter() DateTime? publishedAt
 });
 
 
-@override $LookImageCopyWith<$Res>? get primaryImage;
+@override $CatalogRefCopyWith<$Res>? get style;@override $CatalogRefCopyWith<$Res>? get occasion;@override $LookImageCopyWith<$Res>? get image;
 
 }
 /// @nodoc
@@ -876,21 +920,19 @@ class __$LookCopyWithImpl<$Res>
 
 /// Create a copy of Look
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? slug = null,Object? description = null,Object? styleId = freezed,Object? occasionId = freezed,Object? status = null,Object? publishedAt = freezed,Object? origin = null,Object? items = null,Object? primaryImage = freezed,Object? images = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? slug = null,Object? description = freezed,Object? style = freezed,Object? occasion = freezed,Object? image = freezed,Object? items = null,Object? origin = null,Object? publishedAt = freezed,}) {
   return _then(_Look(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,styleId: freezed == styleId ? _self.styleId : styleId // ignore: cast_nullable_to_non_nullable
-as String?,occasionId: freezed == occasionId ? _self.occasionId : occasionId // ignore: cast_nullable_to_non_nullable
-as String?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as LookStatus,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
-as LookOrigin,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
-as List<LookItem>,primaryImage: freezed == primaryImage ? _self.primaryImage : primaryImage // ignore: cast_nullable_to_non_nullable
-as LookImage?,images: null == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
-as List<LookImage>,
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,style: freezed == style ? _self.style : style // ignore: cast_nullable_to_non_nullable
+as CatalogRef?,occasion: freezed == occasion ? _self.occasion : occasion // ignore: cast_nullable_to_non_nullable
+as CatalogRef?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as LookImage?,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
+as List<LookItem>,origin: null == origin ? _self.origin : origin // ignore: cast_nullable_to_non_nullable
+as String,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -898,13 +940,37 @@ as List<LookImage>,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$LookImageCopyWith<$Res>? get primaryImage {
-    if (_self.primaryImage == null) {
+$CatalogRefCopyWith<$Res>? get style {
+    if (_self.style == null) {
     return null;
   }
 
-  return $LookImageCopyWith<$Res>(_self.primaryImage!, (value) {
-    return _then(_self.copyWith(primaryImage: value));
+  return $CatalogRefCopyWith<$Res>(_self.style!, (value) {
+    return _then(_self.copyWith(style: value));
+  });
+}/// Create a copy of Look
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CatalogRefCopyWith<$Res>? get occasion {
+    if (_self.occasion == null) {
+    return null;
+  }
+
+  return $CatalogRefCopyWith<$Res>(_self.occasion!, (value) {
+    return _then(_self.copyWith(occasion: value));
+  });
+}/// Create a copy of Look
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LookImageCopyWith<$Res>? get image {
+    if (_self.image == null) {
+    return null;
+  }
+
+  return $LookImageCopyWith<$Res>(_self.image!, (value) {
+    return _then(_self.copyWith(image: value));
   });
 }
 }
@@ -1184,7 +1250,7 @@ as int,
 /// @nodoc
 mixin _$LookQuery {
 
- String? get styleSlug; String? get occasionSlug; int get page; int get perPage;
+ String? get styleSlug; String? get occasionSlug; String? get excludeId; int get page; int get perPage;
 /// Create a copy of LookQuery
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1195,16 +1261,16 @@ $LookQueryCopyWith<LookQuery> get copyWith => _$LookQueryCopyWithImpl<LookQuery>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookQuery&&(identical(other.styleSlug, styleSlug) || other.styleSlug == styleSlug)&&(identical(other.occasionSlug, occasionSlug) || other.occasionSlug == occasionSlug)&&(identical(other.page, page) || other.page == page)&&(identical(other.perPage, perPage) || other.perPage == perPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LookQuery&&(identical(other.styleSlug, styleSlug) || other.styleSlug == styleSlug)&&(identical(other.occasionSlug, occasionSlug) || other.occasionSlug == occasionSlug)&&(identical(other.excludeId, excludeId) || other.excludeId == excludeId)&&(identical(other.page, page) || other.page == page)&&(identical(other.perPage, perPage) || other.perPage == perPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,styleSlug,occasionSlug,page,perPage);
+int get hashCode => Object.hash(runtimeType,styleSlug,occasionSlug,excludeId,page,perPage);
 
 @override
 String toString() {
-  return 'LookQuery(styleSlug: $styleSlug, occasionSlug: $occasionSlug, page: $page, perPage: $perPage)';
+  return 'LookQuery(styleSlug: $styleSlug, occasionSlug: $occasionSlug, excludeId: $excludeId, page: $page, perPage: $perPage)';
 }
 
 
@@ -1215,7 +1281,7 @@ abstract mixin class $LookQueryCopyWith<$Res>  {
   factory $LookQueryCopyWith(LookQuery value, $Res Function(LookQuery) _then) = _$LookQueryCopyWithImpl;
 @useResult
 $Res call({
- String? styleSlug, String? occasionSlug, int page, int perPage
+ String? styleSlug, String? occasionSlug, String? excludeId, int page, int perPage
 });
 
 
@@ -1232,10 +1298,11 @@ class _$LookQueryCopyWithImpl<$Res>
 
 /// Create a copy of LookQuery
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? styleSlug = freezed,Object? occasionSlug = freezed,Object? page = null,Object? perPage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? styleSlug = freezed,Object? occasionSlug = freezed,Object? excludeId = freezed,Object? page = null,Object? perPage = null,}) {
   return _then(LookQuery(
 styleSlug: freezed == styleSlug ? _self.styleSlug : styleSlug // ignore: cast_nullable_to_non_nullable
 as String?,occasionSlug: freezed == occasionSlug ? _self.occasionSlug : occasionSlug // ignore: cast_nullable_to_non_nullable
+as String?,excludeId: freezed == excludeId ? _self.excludeId : excludeId // ignore: cast_nullable_to_non_nullable
 as String?,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,perPage: null == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
 as int,
@@ -1323,10 +1390,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? styleSlug,  String? occasionSlug,  int page,  int perPage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? styleSlug,  String? occasionSlug,  String? excludeId,  int page,  int perPage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LookQuery() when $default != null:
-return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);case _:
+return $default(_that.styleSlug,_that.occasionSlug,_that.excludeId,_that.page,_that.perPage);case _:
   return orElse();
 
 }
@@ -1344,10 +1411,10 @@ return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? styleSlug,  String? occasionSlug,  int page,  int perPage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? styleSlug,  String? occasionSlug,  String? excludeId,  int page,  int perPage)  $default,) {final _that = this;
 switch (_that) {
 case _LookQuery():
-return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);case _:
+return $default(_that.styleSlug,_that.occasionSlug,_that.excludeId,_that.page,_that.perPage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1364,10 +1431,10 @@ return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? styleSlug,  String? occasionSlug,  int page,  int perPage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? styleSlug,  String? occasionSlug,  String? excludeId,  int page,  int perPage)?  $default,) {final _that = this;
 switch (_that) {
 case _LookQuery() when $default != null:
-return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);case _:
+return $default(_that.styleSlug,_that.occasionSlug,_that.excludeId,_that.page,_that.perPage);case _:
   return null;
 
 }
@@ -1379,11 +1446,12 @@ return $default(_that.styleSlug,_that.occasionSlug,_that.page,_that.perPage);cas
 
 
 class _LookQuery extends LookQuery {
-  const _LookQuery({this.styleSlug, this.occasionSlug, this.page = 1, this.perPage = 10}): super._();
+  const _LookQuery({this.styleSlug, this.occasionSlug, this.excludeId, this.page = 1, this.perPage = 10}): super._();
   
 
 @override final  String? styleSlug;
 @override final  String? occasionSlug;
+@override final  String? excludeId;
 @override@JsonKey() final  int page;
 @override@JsonKey() final  int perPage;
 
@@ -1397,16 +1465,16 @@ _$LookQueryCopyWith<_LookQuery> get copyWith => __$LookQueryCopyWithImpl<_LookQu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookQuery&&(identical(other.styleSlug, styleSlug) || other.styleSlug == styleSlug)&&(identical(other.occasionSlug, occasionSlug) || other.occasionSlug == occasionSlug)&&(identical(other.page, page) || other.page == page)&&(identical(other.perPage, perPage) || other.perPage == perPage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LookQuery&&(identical(other.styleSlug, styleSlug) || other.styleSlug == styleSlug)&&(identical(other.occasionSlug, occasionSlug) || other.occasionSlug == occasionSlug)&&(identical(other.excludeId, excludeId) || other.excludeId == excludeId)&&(identical(other.page, page) || other.page == page)&&(identical(other.perPage, perPage) || other.perPage == perPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,styleSlug,occasionSlug,page,perPage);
+int get hashCode => Object.hash(runtimeType,styleSlug,occasionSlug,excludeId,page,perPage);
 
 @override
 String toString() {
-  return 'LookQuery(styleSlug: $styleSlug, occasionSlug: $occasionSlug, page: $page, perPage: $perPage)';
+  return 'LookQuery(styleSlug: $styleSlug, occasionSlug: $occasionSlug, excludeId: $excludeId, page: $page, perPage: $perPage)';
 }
 
 
@@ -1417,7 +1485,7 @@ abstract mixin class _$LookQueryCopyWith<$Res> implements $LookQueryCopyWith<$Re
   factory _$LookQueryCopyWith(_LookQuery value, $Res Function(_LookQuery) _then) = __$LookQueryCopyWithImpl;
 @override @useResult
 $Res call({
- String? styleSlug, String? occasionSlug, int page, int perPage
+ String? styleSlug, String? occasionSlug, String? excludeId, int page, int perPage
 });
 
 
@@ -1434,10 +1502,11 @@ class __$LookQueryCopyWithImpl<$Res>
 
 /// Create a copy of LookQuery
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? styleSlug = freezed,Object? occasionSlug = freezed,Object? page = null,Object? perPage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? styleSlug = freezed,Object? occasionSlug = freezed,Object? excludeId = freezed,Object? page = null,Object? perPage = null,}) {
   return _then(_LookQuery(
 styleSlug: freezed == styleSlug ? _self.styleSlug : styleSlug // ignore: cast_nullable_to_non_nullable
 as String?,occasionSlug: freezed == occasionSlug ? _self.occasionSlug : occasionSlug // ignore: cast_nullable_to_non_nullable
+as String?,excludeId: freezed == excludeId ? _self.excludeId : excludeId // ignore: cast_nullable_to_non_nullable
 as String?,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,perPage: null == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
 as int,

@@ -5,26 +5,12 @@ import '../../../core/json/id_converter.dart';
 part 'account_models.freezed.dart';
 part 'account_models.g.dart';
 
-enum UserRole {
-  @JsonValue('user')
-  user,
-  @JsonValue('content_admin')
-  contentAdmin,
-  @JsonValue('super_admin')
-  superAdmin,
-  @JsonValue('stylist')
-  stylist,
-  @JsonValue('vendor')
-  vendor,
-}
-
 @freezed
 abstract class AppUser with _$AppUser {
   const factory AppUser({
     @IdConverter() required String id,
     required String name,
     String? email,
-    @Default([UserRole.user]) List<UserRole> roles,
     @NullableUtcDateTimeConverter() DateTime? emailVerifiedAt,
     @UtcDateTimeConverter() required DateTime createdAt,
   }) = _AppUser;
@@ -35,10 +21,10 @@ abstract class AppUser with _$AppUser {
 @freezed
 abstract class AuthSession with _$AuthSession {
   const factory AuthSession({
-    required String token,
+    required String accessToken,
     @Default('Bearer') String tokenType,
-    @UtcDateTimeConverter() required DateTime expiresAt,
-    required AppUser user,
+    @Default(900) int expiresIn,
+    AppUser? user,
   }) = _AuthSession;
 
   factory AuthSession.fromJson(Map<String, dynamic> json) => _$AuthSessionFromJson(json);
@@ -51,8 +37,6 @@ abstract class RegisterRequest with _$RegisterRequest {
     required String email,
     required String password,
     required String passwordConfirmation,
-    required bool acceptsPrivacyPolicy,
-    @Default('mobile') String deviceName,
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);
@@ -63,7 +47,6 @@ abstract class LoginRequest with _$LoginRequest {
   const factory LoginRequest({
     required String email,
     required String password,
-    @Default('mobile') String deviceName,
   }) = _LoginRequest;
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) => _$LoginRequestFromJson(json);
@@ -73,13 +56,25 @@ abstract class LoginRequest with _$LoginRequest {
 abstract class ResetPasswordRequest with _$ResetPasswordRequest {
   const factory ResetPasswordRequest({
     required String email,
-    required String token,
+    required String otp,
     required String password,
     required String passwordConfirmation,
   }) = _ResetPasswordRequest;
 
   factory ResetPasswordRequest.fromJson(Map<String, dynamic> json) =>
       _$ResetPasswordRequestFromJson(json);
+}
+
+@freezed
+abstract class ChangePasswordRequest with _$ChangePasswordRequest {
+  const factory ChangePasswordRequest({
+    required String currentPassword,
+    required String password,
+    required String passwordConfirmation,
+  }) = _ChangePasswordRequest;
+
+  factory ChangePasswordRequest.fromJson(Map<String, dynamic> json) =>
+      _$ChangePasswordRequestFromJson(json);
 }
 
 enum ThemePreference {
@@ -92,15 +87,35 @@ enum ThemePreference {
 }
 
 @freezed
+abstract class RemotePreferences with _$RemotePreferences {
+  const factory RemotePreferences({
+    @Default('fr') String language,
+    @IdListConverter() @Default([]) List<String> styleIds,
+    @IdListConverter() @Default([]) List<String> occasionIds,
+    @NullableUtcDateTimeConverter() DateTime? updatedAt,
+  }) = _RemotePreferences;
+
+  factory RemotePreferences.fromJson(Map<String, dynamic> json) => _$RemotePreferencesFromJson(json);
+}
+
+@freezed
 abstract class UserPreferences with _$UserPreferences {
+  const UserPreferences._();
+
   const factory UserPreferences({
     @Default('fr') String language,
-    @Default([]) List<String> styleSlugs,
-    @Default([]) List<String> occasionSlugs,
+    @Default([]) List<String> styleIds,
+    @Default([]) List<String> occasionIds,
     @Default(ThemePreference.system) ThemePreference theme,
     @Default('straight') String silhouette,
     @NullableUtcDateTimeConverter() DateTime? updatedAt,
   }) = _UserPreferences;
 
   factory UserPreferences.fromJson(Map<String, dynamic> json) => _$UserPreferencesFromJson(json);
+
+  RemotePreferences toRemote() =>
+      RemotePreferences(language: language, styleIds: styleIds, occasionIds: occasionIds);
+
+  UserPreferences withRemote(RemotePreferences remote) =>
+      copyWith(language: remote.language, styleIds: remote.styleIds, occasionIds: remote.occasionIds);
 }

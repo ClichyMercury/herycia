@@ -32,31 +32,33 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ColorGuideScreen), findsOneWidget);
 
-    await scrollTo(tester, find.byKey(const ValueKey('family-blue')));
-    await tester.tap(find.byKey(const ValueKey('family-blue')));
+    await scrollTo(tester, find.byKey(const ValueKey('family-bleu')));
+    await tester.tap(find.byKey(const ValueKey('family-bleu')));
     await tester.pumpAndSettle();
     expect(find.byType(ColorFamilyScreen), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('guide-swatch-royal-blue')));
+    await tester.tap(find.byKey(const ValueKey('guide-swatch-bleu-marine')));
     await tester.pumpAndSettle();
-    expect(find.text('Associations conseillées pour : bleu roi'), findsOneWidget);
+    expect(find.text('Associations conseillées pour : bleu marine'), findsOneWidget);
+    expect(find.byKey(const ValueKey('guide-group-harmonious')), findsOneWidget);
 
     await scrollTo(tester, find.byKey(const ValueKey('guide-compose')));
     await tester.tap(find.byKey(const ValueKey('guide-compose')));
     await tester.pumpAndSettle();
     expect(find.byType(FromItemScreen), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('category-top')));
+    await tester.tap(find.byKey(const ValueKey('category-hauts')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('type-shirt')));
+    await tester.tap(find.byKey(const ValueKey('type-chemise')));
     await tester.pumpAndSettle();
     final draft = container.read(fromItemDraftProvider);
-    expect(draft.color!.slug, 'royal-blue');
+    expect(draft.color!.slug, 'bleu-marine');
     expect(draft.step, FromItemStep.filters);
   });
 
   testWidgets('principes d’harmonie', (tester) async {
     await pumpFullApp(tester, MockApiHarness(fixtures), location: '/compose/color-guide/principles');
-    expect(find.text('Partir des neutres'), findsOneWidget);
+    expect(find.text('Partir d\'une base neutre'), findsOneWidget);
+    expect(find.text('Savoir doser'), findsOneWidget);
   });
 }

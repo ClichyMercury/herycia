@@ -24,10 +24,17 @@ class PreferencesController extends AsyncNotifier<UserPreferences> {
     }
   }
 
-  Future<void> _writeLocal(UserPreferences prefs, {required bool pending}) async {
+  Future<void> _writeLocal(UserPreferences prefs, {bool? pending}) async {
     final db = ref.read(appDatabaseProvider);
     await db.writeValue(_key, jsonEncode(prefs.toJson()));
-    await db.writeValue(_pendingKey, pending ? '1' : null);
+    if (pending != null) await db.writeValue(_pendingKey, pending ? '1' : null);
+  }
+
+  Future<UserPreferences> _push(UserPreferences local) async {
+    final pushed = await ref.read(preferencesRepositoryProvider).update(local.toRemote());
+    final merged = local.withRemote(pushed);
+    await _writeLocal(merged, pending: false);
+    return merged;
   }
 
   @override
@@ -35,27 +42,14 @@ class PreferencesController extends AsyncNotifier<UserPreferences> {
     final signedIn = ref.watch(isSignedInProvider);
     final local = await _readLocal();
     if (!signedIn) return local;
-    final repo = ref.read(preferencesRepositoryProvider);
     try {
       final pending = await ref.read(appDatabaseProvider).readValue(_pendingKey) != null;
-      if (pending) {
-        final pushed = await repo.update(local);
-        await _writeLocal(pushed, pending: false);
-        return pushed;
-      }
-      final remote = await repo.get();
-      final remoteIsNewer = remote.updatedAt != null &&
-          (local.updatedAt == null || remote.updatedAt!.isAfter(local.updatedAt!));
-      if (remoteIsNewer) {
-        await _writeLocal(remote, pending: false);
-        return remote;
-      }
-      if (local.updatedAt != null) {
-        final pushed = await repo.update(local);
-        await _writeLocal(pushed, pending: false);
-        return pushed;
-      }
-      return remote;
+      if (pending) return await _push(local);
+      final remote = await ref.read(preferencesRepositoryProvider).get();
+      if (remote.updatedAt == null) return await _push(local);
+      final merged = local.withRemote(remote);
+      await _writeLocal(merged, pending: false);
+      return merged;
     } on NetworkUnavailableException {
       return local;
     } on ApiException {
@@ -64,14 +58,15 @@ class PreferencesController extends AsyncNotifier<UserPreferences> {
   }
 
   Future<void> save(UserPreferences prefs) async {
+    final signedIn = ref.read(isSignedInProvider);
+    final previous = state.value;
     final updated = prefs.copyWith(updatedAt: clock());
     state = AsyncData(updated);
-    await _writeLocal(updated, pending: ref.read(isSignedInProvider));
-    if (!ref.read(isSignedInProvider)) return;
+    final remoteChanged = previous == null || previous.toRemote() != updated.toRemote();
+    await _writeLocal(updated, pending: signedIn && remoteChanged ? true : null);
+    if (!signedIn || !remoteChanged) return;
     try {
-      final pushed = await ref.read(preferencesRepositoryProvider).update(updated);
-      await _writeLocal(pushed, pending: false);
-      state = AsyncData(pushed);
+      state = AsyncData(await _push(updated));
     } on NetworkUnavailableException {
       return;
     } on ApiException {
@@ -84,5 +79,7 @@ class PreferencesController extends AsyncNotifier<UserPreferences> {
     await save(edit(current));
   }
 }
+
+const privacyConsentKey = 'privacy_accepted_at';
 
 final preferencesProvider = AsyncNotifierProvider<PreferencesController, UserPreferences>(PreferencesController.new);

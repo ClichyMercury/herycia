@@ -1,0 +1,62 @@
+{
+  "data": {
+    "request_id": "rq1.dl83OGVmYzVjYjNhMmI3OGFhLjA3NDM2OWJjYTg0Y2I0M2IuMTc5MzQ4MDk3Mg.qAfuW9Yz7fCyTOUP_n4kvrfnJ7JJt4ylDgxFRKJQnNk",
+    "catalog_version": 1,
+    "rules_version": 1,
+    "current_score": 76,
+    "improvements": [
+      {
+        "text": "Ajoutez « Chaussures habillées » en noir.",
+        "change": {
+          "action": "add_item",
+          "item_index": null,
+          "item": {
+            "clothing_type_id": "95004ef5-cea4-58c7-8c12-4dc453c1765b",
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "role": "footwear"
+          }
+        },
+        "resulting_score": 89
+      },
+      {
+        "text": "Passez « Pantalon » en noir.",
+        "change": {
+          "action": "replace_item",
+          "item_index": 0,
+          "item": {
+            "clothing_type_id": "1d867035-98c1-5c73-b792-1b1234231248",
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "role": "bottom"
+          }
+        },
+        "resulting_score": 84
+      },
+      {
+        "text": "Ajoutez « Montre » en noir.",
+        "change": {
+          "action": "add_item",
+          "item_index": null,
+          "item": {
+            "clothing_type_id": "146959c7-6034-57b8-bd2b-6f5461feb002",
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "role": "accessory"
+          }
+        },
+        "resulting_score": 81
+      },
+      {
+        "text": "Passez « Chemise » en camel.",
+        "change": {
+          "action": "replace_item",
+          "item_index": 1,
+          "item": {
+            "clothing_type_id": "f9c84ba6-8813-5dc9-84be-bf8a5c4e0521",
+            "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+            "role": "top"
+          }
+        },
+        "resulting_score": 80
+      }
+    ]
+  }
+}

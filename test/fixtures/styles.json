@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "id": "2f2e1cea-0a8d-5e3d-b21d-2389a145e54a",
+      "slug": "classique",
+      "name": "Classique",
+      "description": "Des pièces intemporelles aux coupes sobres.",
+      "sort_order": 1
+    },
+    {
+      "id": "53b091ff-b61a-59c2-a221-10925d18edb9",
+      "slug": "casual",
+      "name": "Casual",
+      "description": "Des tenues décontractées pour le quotidien.",
+      "sort_order": 2
+    },
+    {
+      "id": "18ca3d5f-d049-51e4-9f81-bf8916bf3732",
+      "slug": "casual-chic",
+      "name": "Casual chic",
+      "description": "Un équilibre entre décontraction et élégance.",
+      "sort_order": 3
+    },
+    {
+      "id": "9c2c5d75-048e-536b-a978-1efa1eea208e",
+      "slug": "elegant",
+      "name": "Élégant",
+      "description": "Des tenues soignées et raffinées.",
+      "sort_order": 4
+    },
+    {
+      "id": "a131576e-49c2-5e11-bdcd-06b80e298737",
+      "slug": "minimaliste",
+      "name": "Minimaliste",
+      "description": "Des lignes épurées et une palette restreinte.",
+      "sort_order": 5
+    },
+    {
+      "id": "2e6d3484-4d9e-5f87-bd37-dfbbaf0cfc23",
+      "slug": "audacieux",
+      "name": "Audacieux",
+      "description": "Des associations marquées qui affirment la personnalité.",
+      "sort_order": 6
+    },
+    {
+      "id": "9d4427e1-b411-5fdb-aa56-8c262b8b61b2",
+      "slug": "streetwear",
+      "name": "Streetwear",
+      "description": "Un style urbain inspiré de la rue.",
+      "sort_order": 7
+    }
+  ]
+}

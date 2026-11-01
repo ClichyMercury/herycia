@@ -1,10 +1,13 @@
-import 'package:flutter/services.dart';
+import 'package:drift/native.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:herycia/core/api/api_client.dart';
+import 'package:herycia/core/storage/app_database.dart';
+import 'package:herycia/core/storage/response_cache.dart';
 import 'package:herycia/core/json/id_converter.dart';
 import 'package:herycia/features/catalog/data/api_catalog_repository.dart';
 import 'package:herycia/features/catalog/domain/catalog_models.dart';
-import 'package:herycia/mock_backend/mock_api_client.dart';
+
+import '../../helpers/mock_api.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +22,9 @@ void main() {
           '6f1c2a9e-0b7d-4c1e-9a3f-2b1d0c9e8f7a');
     });
 
-    test('renvoie un entier quand l’identifiant est numérique, sinon la chaîne', () {
-      expect(converter.toJson('12'), 12);
-      expect(converter.toJson('01J9Z3'), '01J9Z3');
+    test('renvoie toujours la chaîne telle quelle (UUID du contrat)', () {
+      expect(converter.toJson('12'), '12');
+      expect(converter.toJson('0491898d-fc0d-51ca-9b9f-e2cdadf5a975'), '0491898d-fc0d-51ca-9b9f-e2cdadf5a975');
     });
 
     test('rejette une chaîne vide ou un autre type', () {
@@ -45,21 +48,23 @@ void main() {
   group('Modèles du catalogue', () {
     test('CatalogColor lit le JSON snake_case de l’API', () {
       final color = CatalogColor.fromJson({
-        'id': 3,
+        'id': '162543d0-27c2-5a4e-ae5d-e1e64980999e',
         'name': 'Bleu marine',
-        'slug': 'navy',
-        'hex_code': '#1F2A44',
-        'color_family': 'blue',
+        'slug': 'bleu-marine',
+        'hex_code': '#1B2A49',
+        'color_family': 'bleu',
         'temperature': 'cool',
-        'brightness': 0.19,
-        'saturation': 1,
+        'brightness': 'dark',
+        'saturation': 'medium',
         'is_neutral': true,
+        'aliases': ['marine'],
       });
-      expect(color.id, '3');
-      expect(color.colorFamily, 'blue');
-      expect(color.saturation, 1.0);
+      expect(color.id, '162543d0-27c2-5a4e-ae5d-e1e64980999e');
+      expect(color.colorFamily, 'bleu');
+      expect(color.brightness, 'dark');
+      expect(color.aliases, ['marine']);
       expect(color.isNeutral, isTrue);
-      expect(color.color, const Color(0xFF1F2A44));
+      expect(color.color, const Color(0xFF1B2A49));
     });
 
     test('valeurs par défaut quand les champs facultatifs manquent', () {
@@ -78,7 +83,7 @@ void main() {
       final category = ClothingCategory.fromJson({
         'id': 3,
         'name': 'Pièces complètes',
-        'slug': 'one-piece',
+        'slug': 'pieces-completes',
         'group_type': 'one_piece',
       });
       expect(category.groupType, CategoryGroup.onePiece);
@@ -94,7 +99,7 @@ void main() {
         sortOrder: 2,
       );
       expect(ClothingType.fromJson(type.toJson()), type);
-      expect(type.toJson()['category_id'], 2);
+      expect(type.toJson()['category_id'], '2');
     });
 
     test('égalité par valeur', () {
@@ -105,12 +110,14 @@ void main() {
     });
   });
 
-  group('Données mock livrées avec l’app', () {
-    final r = ApiCatalogRepository(MockApiClient.fromBundle(
-      rootBundle,
-      tokenStore: InMemoryTokenStore(),
-      latency: Duration.zero,
-    ));
+  group('Référentiel réel embarqué pour le faux serveur', () {
+    late ApiCatalogRepository r;
+
+    setUp(() async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      r = ApiCatalogRepository(MockApiHarness(await MockApiHarness.fixtures()).client, ResponseCache(db));
+    });
 
     test('les 5 catégories du cahier des charges, accessoires facultatifs', () async {
       final categories = await r.categories();
@@ -118,7 +125,7 @@ void main() {
         CategoryGroup.top,
         CategoryGroup.bottom,
         CategoryGroup.onePiece,
-        CategoryGroup.shoes,
+        CategoryGroup.footwear,
         CategoryGroup.accessory,
       ]);
       expect(categories.where((c) => c.isOptional).map((c) => c.groupType), [CategoryGroup.accessory]);
@@ -128,7 +135,7 @@ void main() {
       final categories = await r.categories();
       final onePieceCategory = categories.firstWhere((c) => c.groupType == CategoryGroup.onePiece);
       final types = await r.types();
-      expect(types.where((t) => t.isOnePiece).map((t) => t.slug).toSet(), {'dress', 'jumpsuit'});
+      expect(types.where((t) => t.isOnePiece).map((t) => t.slug).toSet(), {'robe', 'combinaison'});
       expect(types.where((t) => t.isOnePiece).every((t) => t.categoryId == onePieceCategory.id), isTrue);
     });
 
@@ -146,17 +153,17 @@ void main() {
       }
       expect(colors.map((c) => c.slug).toSet(), hasLength(colors.length));
       expect(colors.map((c) => c.colorFamily).toSet(), {
-        'black', 'white', 'grey', 'beige', 'cream', 'brown', 'camel', 'blue',
-        'green', 'red', 'burgundy', 'pink', 'purple', 'yellow', 'orange',
+        'noir', 'blanc', 'gris', 'beige', 'creme', 'marron', 'camel', 'bleu',
+        'vert', 'rouge', 'bordeaux', 'rose', 'violet', 'jaune', 'orange',
       });
     });
 
-    test('styles et occasions initiaux en slugs anglais', () async {
+    test('styles et occasions du serveur, slugs français', () async {
       expect((await r.styles()).map((s) => s.slug), [
-        'classic', 'casual', 'smart-casual', 'elegant', 'minimalist', 'bold', 'streetwear',
+        'classique', 'casual', 'casual-chic', 'elegant', 'minimaliste', 'audacieux', 'streetwear',
       ]);
       expect((await r.occasions()).map((o) => o.slug), [
-        'everyday', 'work', 'night-out', 'ceremony', 'evening', 'casual-event',
+        'quotidien', 'travail-entretien', 'sortie', 'ceremonie', 'soiree', 'evenement-decontracte',
       ]);
     });
 

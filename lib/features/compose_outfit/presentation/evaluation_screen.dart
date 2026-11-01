@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../core/presentation/error_text.dart';
 import '../../../design_system/design_system.dart';
 import '../../../l10n/l10n.dart';
 import '../../account/application/session_controller.dart';
-import '../../account/presentation/sign_in_prompt.dart';
 import '../../catalog/application/catalog_lookup.dart';
 import '../../favorites/application/saved_outfits_providers.dart';
-import '../../favorites/application/wardrobe_providers.dart';
 import '../../favorites/domain/wardrobe_models.dart';
 import '../../mannequin/application/silhouette_provider.dart';
 import '../../mannequin/presentation/mannequin_view.dart';
@@ -98,9 +95,11 @@ class _EvaluationBody extends ConsumerWidget {
     final typo = context.typo;
     final previous = ref.watch(previousScoreProvider);
     final lookup = ref.watch(catalogLookupProvider).value;
+    final improvements = ref.watch(improvementProvider(composition.toRequest()));
+    final signedIn = ref.watch(isSignedInProvider);
 
-    final structural = evaluation.warnings.where((w) => w.kind == RemarkKind.structural).toList();
-    final styleRemarks = evaluation.warnings.where((w) => w.kind == RemarkKind.style).toList();
+    final structural = evaluation.warnings.where((w) => w.type == WarningType.structure).toList();
+    final preferences = evaluation.warnings.where((w) => w.type == WarningType.preference).toList();
 
     Widget section(String title, List<Widget> children) => Padding(
           padding: const EdgeInsets.only(top: AppSpacing.betweenSections),
@@ -114,28 +113,36 @@ class _EvaluationBody extends ConsumerWidget {
           ),
         );
 
-    Widget line(IconData icon, Color iconColor, String text) => Padding(
+    Widget line(IconData icon, Color iconColor, String text, {String? tag}) => Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.s3),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(icon, size: AppSizes.iconInButton, color: iconColor),
               const SizedBox(width: AppSpacing.s3),
-              Expanded(child: Text(text, style: typo.body.copyWith(color: colors.textPrimary))),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (tag != null) Text(tag.toUpperCase(), style: typo.overline.copyWith(color: colors.textTertiary)),
+                    Text(text, style: typo.body.copyWith(color: colors.textPrimary)),
+                  ],
+                ),
+              ),
             ],
           ),
         );
 
-    void applySuggestion(Improvement improvement) {
-      final color = lookup?.color(improvement.toColorId);
-      if (color == null) return;
+    void apply(Improvement improvement) {
+      if (lookup == null) return;
       ref.read(previousScoreProvider.notifier).remember(evaluation.score);
-      ref.read(compositionProvider.notifier).recolor(
-            CompositionRole.fromPieceRole(improvement.role),
-            improvement.clothingTypeId,
-            color,
+      ref.read(compositionProvider.notifier).restore(
+            composition.applyChange(improvement.change, type: lookup.type, color: lookup.color),
           );
     }
+
+    final actionable = improvements.value?.improvements ?? const <Improvement>[];
+    final offline = evaluation.cachedAt != null;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(AppSpacing.screenHorizontal, 0, AppSpacing.screenHorizontal, AppSpacing.s8),
@@ -163,7 +170,7 @@ class _EvaluationBody extends ConsumerWidget {
                     onExplain: () => showModalBottomSheet<void>(
                       context: context,
                       useSafeArea: true,
-                      builder: (_) => BreakdownSheet(breakdown: evaluation.breakdown),
+                      builder: (_) => BreakdownSheet(breakdown: evaluation.scoreBreakdown),
                     ),
                   ),
                   if (previous != null && previous != evaluation.score)
@@ -175,10 +182,13 @@ class _EvaluationBody extends ConsumerWidget {
                         variant: evaluation.score > previous ? AppBadgeVariant.fresh : AppBadgeVariant.neutral,
                       ),
                     ),
-                  if (evaluation.computedOffline)
+                  if (offline)
                     Padding(
                       padding: const EdgeInsets.only(top: AppSpacing.s2),
-                      child: AppBadge(label: l10n.offlineComputed),
+                      child: AppBadge(
+                        key: const ValueKey('cached-result'),
+                        label: l10n.cachedResult(MaterialLocalizations.of(context).formatShortDate(evaluation.cachedAt!)),
+                      ),
                     ),
                 ],
               ),
@@ -186,36 +196,45 @@ class _EvaluationBody extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.s4),
-        Text(evaluation.explanation, style: typo.bodyStrong.copyWith(color: colors.textPrimary)),
+        Text(
+          evaluation.isComplete ? l10n.evaluationComplete : l10n.evaluationIncomplete,
+          style: typo.bodyStrong.copyWith(color: colors.textPrimary),
+        ),
+        Text(l10n.evaluationIndicative, style: typo.caption.copyWith(color: colors.textTertiary)),
         if (evaluation.strengths.isNotEmpty)
           section(l10n.evaluationStrengths, [
-            for (final s in evaluation.strengths) line(AppIcons.check, colors.success, s),
+            for (final s in evaluation.strengths) line(AppIcons.check, colors.success, s.text),
           ]),
         if (structural.isNotEmpty)
           section(l10n.evaluationStructural, [
-            for (final w in structural) line(AppIcons.warning, colors.warning, w.message),
+            for (final w in structural) line(AppIcons.warning, colors.warning, w.text, tag: l10n.warningStructure),
           ]),
-        if (styleRemarks.isNotEmpty)
+        if (preferences.isNotEmpty)
           section(l10n.evaluationStyleRemarks, [
-            for (final w in styleRemarks) line(AppIcons.info, colors.info, w.message),
+            for (final w in preferences) line(AppIcons.info, colors.info, w.text, tag: l10n.warningPreference),
           ]),
         section(l10n.evaluationSuggestions, [
-          if (evaluation.suggestions.isEmpty)
+          if (actionable.isNotEmpty)
+            for (final (i, s) in actionable.indexed)
+              _SuggestionTile(
+                key: ValueKey('suggestion-$i'),
+                suggestion: s,
+                currentScore: improvements.value!.currentScore,
+                composition: composition,
+                onApply: () => apply(s),
+              )
+          else if (evaluation.suggestions.isNotEmpty)
+            for (final s in evaluation.suggestions) line(AppIcons.fromItem, colors.textSecondary, s.text)
+          else
             Text(l10n.evaluationNoSuggestion, style: typo.body.copyWith(color: colors.textSecondary)),
-          for (final s in evaluation.suggestions)
-            _SuggestionTile(
-              key: ValueKey('suggestion-${s.clothingTypeId}-${s.toColorId}'),
-              suggestion: s,
-              onApply: () => applySuggestion(s),
-            ),
         ]),
         const SizedBox(height: AppSpacing.betweenSections),
-        if (!evaluation.computedOffline) FeedbackPrompt(requestId: evaluation.requestId),
+        if (signedIn && !offline) FeedbackPrompt(requestId: evaluation.requestId),
         const SizedBox(height: AppSpacing.s4),
         AppButton(
           key: const ValueKey('evaluation-save'),
           label: l10n.evaluationSave,
-          onPressed: () => _save(context, ref),
+          onPressed: () => _save(context, ref, evaluation),
         ),
         AppButton(
           label: l10n.evaluationEditOutfit,
@@ -227,26 +246,22 @@ class _EvaluationBody extends ConsumerWidget {
   }
 }
 
-Future<void> _save(BuildContext context, WidgetRef ref) async {
+Future<void> _save(BuildContext context, WidgetRef ref, EvaluationResponse evaluation) async {
   final l10n = context.l10n;
-  if (!ref.read(isSignedInProvider)) {
-    await showSignInPrompt(context, l10n.signInPromptSave);
-    return;
-  }
   final composition = ref.read(compositionProvider);
   final request = composition.toRequest();
   final today = MaterialLocalizations.of(context).formatShortDate(DateTime.now());
   try {
-    await ref.read(savedOutfitsRepositoryProvider).create(SavedOutfitInput(
-          clientUuid: const Uuid().v4(),
+    await ref.read(savedOutfitsProvider.notifier).create(
           title: l10n.savedOutfitDefaultTitle(today),
           composition: CompositionPayload(
             items: request.items,
             occasionSlug: request.occasionSlug,
             styleSlug: request.styleSlug,
           ),
-        ));
-    ref.invalidate(savedOutfitsProvider);
+          score: evaluation.score,
+          ruleVersion: evaluation.rulesVersion,
+        );
     if (context.mounted) showAppToast(context, message: l10n.savedOutfitSaved);
   } catch (e) {
     if (context.mounted) showAppToast(context, message: errorText(e, l10n));
@@ -254,16 +269,27 @@ Future<void> _save(BuildContext context, WidgetRef ref) async {
 }
 
 class _SuggestionTile extends ConsumerWidget {
-  const _SuggestionTile({super.key, required this.suggestion, required this.onApply});
+  const _SuggestionTile({
+    super.key,
+    required this.suggestion,
+    required this.currentScore,
+    required this.composition,
+    required this.onApply,
+  });
 
   final Improvement suggestion;
+  final int currentScore;
+  final OutfitComposition composition;
   final VoidCallback onApply;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lookup = ref.watch(catalogLookupProvider).value;
-    final from = lookup?.color(suggestion.fromColorId);
-    final to = lookup?.color(suggestion.toColorId);
+    final change = suggestion.change;
+    final index = change.itemIndex;
+    final pieces = composition.rolePieces;
+    final from = index != null && index < pieces.length ? pieces[index].$2.color : null;
+    final to = change.item == null ? null : lookup?.color(change.item!.colorId);
     final colors = context.colors;
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.s3),
@@ -275,20 +301,22 @@ class _SuggestionTile extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          if (from != null) AppColorSwatch(color: from.color, name: from.name, size: SwatchSize.sm),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s1),
-            child: Icon(AppIcons.chevronRight, size: 16, color: colors.textTertiary),
-          ),
+          if (from != null) ...[
+            AppColorSwatch(color: from.color, name: from.name, size: SwatchSize.sm),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s1),
+              child: Icon(AppIcons.chevronRight, size: 16, color: colors.textTertiary),
+            ),
+          ],
           if (to != null) AppColorSwatch(color: to.color, name: to.name, size: SwatchSize.sm),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(suggestion.explanation, style: context.typo.body.copyWith(color: colors.textPrimary)),
+                Text(suggestion.text, style: context.typo.body.copyWith(color: colors.textPrimary)),
                 Text(
-                  context.l10n.evaluationGain(suggestion.gain),
+                  context.l10n.evaluationGain(suggestion.resultingScore - currentScore),
                   style: context.typo.caption.copyWith(color: colors.textSecondary),
                 ),
               ],

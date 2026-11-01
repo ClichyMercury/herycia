@@ -1,0 +1,603 @@
+{
+  "data": {
+    "catalog_version": 1,
+    "rules_version": 1,
+    "families": [
+      {
+        "slug": "noir",
+        "name": "Noir",
+        "color_ids": [
+          "e4415da7-2919-5acc-8b06-5657736ae031"
+        ]
+      },
+      {
+        "slug": "blanc",
+        "name": "Blanc",
+        "color_ids": [
+          "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+          "578fee36-d6e6-541e-9d3c-53c5b88b2220"
+        ]
+      },
+      {
+        "slug": "gris",
+        "name": "Gris",
+        "color_ids": [
+          "4a7b59ad-cdce-509a-862d-e3dd75ba2510",
+          "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+          "1639317e-4f0a-588b-a4ac-63513aba2829"
+        ]
+      },
+      {
+        "slug": "beige",
+        "name": "Beige",
+        "color_ids": [
+          "d8127959-52d0-5fdf-8082-71cc878d7d31",
+          "817994b0-fcd5-52d8-ac2c-c1053796702d",
+          "f082c9fd-5f06-58c8-8714-412f3598ba72"
+        ]
+      },
+      {
+        "slug": "creme",
+        "name": "Crème",
+        "color_ids": [
+          "79da2d51-5e7b-5b17-acf4-e723662aab48",
+          "6cace339-1a89-5f50-970a-ec8741371a10"
+        ]
+      },
+      {
+        "slug": "marron",
+        "name": "Marron",
+        "color_ids": [
+          "2d2b09e1-ed50-5ee4-8866-afed9c4d727c",
+          "f491c79a-d4fd-5cd0-aa9b-230aaa8d208a",
+          "069120ad-85d8-516a-90e3-3457089ddc2d"
+        ]
+      },
+      {
+        "slug": "camel",
+        "name": "Camel",
+        "color_ids": [
+          "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+          "03ee7da4-19cf-5669-8274-e3759d419c5e"
+        ]
+      },
+      {
+        "slug": "bleu",
+        "name": "Bleu",
+        "color_ids": [
+          "8f53161c-3012-551d-94d9-bb19bd5c4d81",
+          "ac3ba93a-e758-502d-984c-5efbc5c47ed8",
+          "c807109f-0e98-517b-b2bd-9b5486f33026",
+          "162543d0-27c2-5a4e-ae5d-e1e64980999e"
+        ]
+      },
+      {
+        "slug": "vert",
+        "name": "Vert",
+        "color_ids": [
+          "6c114d05-9e49-5a96-aa9f-772b9a9ac781",
+          "2e52fa85-a2e8-51ec-8aa0-3d796c3e9ae8",
+          "fe4b2979-e2dc-5c26-8186-5669e86c1107",
+          "4dd9dc7a-7790-57e9-bd01-5023a4cfb59f"
+        ]
+      },
+      {
+        "slug": "rouge",
+        "name": "Rouge",
+        "color_ids": [
+          "5cf99278-40b4-50f2-8a91-342ee70c9975",
+          "8596f9df-e12d-5367-9d58-09ccbbe1adf0",
+          "4a2d7d04-024d-583a-a525-271929b1df79"
+        ]
+      },
+      {
+        "slug": "bordeaux",
+        "name": "Bordeaux",
+        "color_ids": [
+          "d9a5c744-8978-557d-8a5c-3f1a384b2564",
+          "6e40438b-11ca-50eb-8981-182dad710180"
+        ]
+      },
+      {
+        "slug": "rose",
+        "name": "Rose",
+        "color_ids": [
+          "71afdc1f-1d83-5b8d-9de9-6dce03489f0d",
+          "287ba693-adb3-5ad7-843f-9e001103127d",
+          "f99735e8-25a1-583a-baec-744b4c28c4aa",
+          "03b047e1-622a-509d-bf57-d34590a8174b"
+        ]
+      },
+      {
+        "slug": "violet",
+        "name": "Violet",
+        "color_ids": [
+          "e5ffd1d3-a3ce-59ed-a324-c086ae958733",
+          "e80d9cad-bd4d-58c2-a0ab-4b00a9b2d2a4",
+          "d39a7057-03fa-5cf6-80dc-ea0a0156235b"
+        ]
+      },
+      {
+        "slug": "jaune",
+        "name": "Jaune",
+        "color_ids": [
+          "e5a37267-8336-5874-a18e-e6b1829148cc",
+          "6213e9d0-d4e1-5038-95a7-bd8dee2be240",
+          "ecdd9d1b-1491-5a80-97c6-3d8f5fc0b1a6"
+        ]
+      },
+      {
+        "slug": "orange",
+        "name": "Orange",
+        "color_ids": [
+          "bf72bfcc-47c0-5851-be9a-755ad4536d17",
+          "634c0e1e-3bd5-57e9-9729-65ae92ce7968",
+          "02dabb50-1c8f-560c-ab9f-406077d93ff4"
+        ]
+      }
+    ],
+    "neutral_color_ids": [
+      "e4415da7-2919-5acc-8b06-5657736ae031",
+      "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+      "578fee36-d6e6-541e-9d3c-53c5b88b2220",
+      "4a7b59ad-cdce-509a-862d-e3dd75ba2510",
+      "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+      "1639317e-4f0a-588b-a4ac-63513aba2829",
+      "d8127959-52d0-5fdf-8082-71cc878d7d31",
+      "817994b0-fcd5-52d8-ac2c-c1053796702d",
+      "f082c9fd-5f06-58c8-8714-412f3598ba72",
+      "79da2d51-5e7b-5b17-acf4-e723662aab48",
+      "6cace339-1a89-5f50-970a-ec8741371a10"
+    ],
+    "harmonies": [
+      {
+        "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+        "harmonious": [
+          {
+            "color_id": "fe4b2979-e2dc-5c26-8186-5669e86c1107",
+            "score": 80,
+            "explanation": "Le kaki gagne en structure à côté du noir."
+          }
+        ],
+        "contrast": [
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 95,
+            "explanation": "Le noir et le blanc forment un contraste net et intemporel."
+          },
+          {
+            "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+            "score": 85,
+            "explanation": "Le camel réchauffe le noir avec un contraste maîtrisé."
+          }
+        ],
+        "neutral_pairing": [
+          {
+            "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+            "score": 88,
+            "explanation": "Le gris adoucit le noir sans perdre en sobriété."
+          },
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 82,
+            "explanation": "Le beige adoucit le noir et garde un style sobre."
+          }
+        ],
+        "caution": [
+          {
+            "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+            "score": 45,
+            "explanation": "Le bleu marine et le noir sont très proches : le contraste manque de franchise."
+          },
+          {
+            "color_id": "f491c79a-d4fd-5cd0-aa9b-230aaa8d208a",
+            "score": 40,
+            "explanation": "Le marron foncé et le noir se distinguent peu et alourdissent l'ensemble."
+          }
+        ]
+      },
+      {
+        "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+        "harmonious": [
+          {
+            "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+            "score": 92,
+            "explanation": "Le bleu marine sur une base blanche donne un look frais et soigné."
+          },
+          {
+            "color_id": "ac3ba93a-e758-502d-984c-5efbc5c47ed8",
+            "score": 90,
+            "explanation": "Le denim et le blanc composent une association simple et lumineuse."
+          },
+          {
+            "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+            "score": 88,
+            "explanation": "Le camel ressort avec élégance sur le blanc."
+          }
+        ],
+        "contrast": [
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 95,
+            "explanation": "Le noir et le blanc forment un contraste net et intemporel."
+          }
+        ],
+        "neutral_pairing": [
+          {
+            "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+            "score": 88,
+            "explanation": "Le gris et le blanc forment une base neutre et lumineuse."
+          },
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 85,
+            "explanation": "Le beige et le blanc créent un ensemble clair et apaisé."
+          }
+        ],
+        "caution": []
+      },
+      {
+        "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+        "harmonious": [
+          {
+            "color_id": "71afdc1f-1d83-5b8d-9de9-6dce03489f0d",
+            "score": 84,
+            "explanation": "Le rose pâle et le gris composent une palette douce et moderne."
+          },
+          {
+            "color_id": "d9a5c744-8978-557d-8a5c-3f1a384b2564",
+            "score": 82,
+            "explanation": "Le gris met en valeur la profondeur du bordeaux."
+          },
+          {
+            "color_id": "e5ffd1d3-a3ce-59ed-a324-c086ae958733",
+            "score": 78,
+            "explanation": "La lavande reste délicate sur une base grise."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 88,
+            "explanation": "Le gris adoucit le noir sans perdre en sobriété."
+          },
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 88,
+            "explanation": "Le gris et le blanc forment une base neutre et lumineuse."
+          }
+        ],
+        "caution": []
+      },
+      {
+        "color_id": "1639317e-4f0a-588b-a4ac-63513aba2829",
+        "harmonious": [
+          {
+            "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+            "score": 84,
+            "explanation": "Le camel apporte de la chaleur à l'anthracite."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+        "harmonious": [
+          {
+            "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+            "score": 90,
+            "explanation": "Le bleu marine et le beige s'équilibrent par leur contraste doux."
+          },
+          {
+            "color_id": "fe4b2979-e2dc-5c26-8186-5669e86c1107",
+            "score": 85,
+            "explanation": "Le kaki et le beige partagent des tons naturels qui s'accordent."
+          },
+          {
+            "color_id": "ac3ba93a-e758-502d-984c-5efbc5c47ed8",
+            "score": 82,
+            "explanation": "Le denim et le beige restent doux et naturels ensemble."
+          },
+          {
+            "color_id": "d9a5c744-8978-557d-8a5c-3f1a384b2564",
+            "score": 80,
+            "explanation": "Le beige adoucit l'intensité du bordeaux."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 85,
+            "explanation": "Le beige et le blanc créent un ensemble clair et apaisé."
+          },
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 82,
+            "explanation": "Le beige adoucit le noir et garde un style sobre."
+          }
+        ],
+        "caution": []
+      },
+      {
+        "color_id": "79da2d51-5e7b-5b17-acf4-e723662aab48",
+        "harmonious": [
+          {
+            "color_id": "6c114d05-9e49-5a96-aa9f-772b9a9ac781",
+            "score": 82,
+            "explanation": "Le vert sauge et la crème forment un duo naturel et apaisant."
+          },
+          {
+            "color_id": "02dabb50-1c8f-560c-ab9f-406077d93ff4",
+            "score": 82,
+            "explanation": "La crème tempère la chaleur de la terracotta."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "f491c79a-d4fd-5cd0-aa9b-230aaa8d208a",
+        "harmonious": [],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 40,
+            "explanation": "Le marron foncé et le noir se distinguent peu et alourdissent l'ensemble."
+          }
+        ]
+      },
+      {
+        "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+        "harmonious": [
+          {
+            "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+            "score": 90,
+            "explanation": "Le camel réchauffe la profondeur du bleu marine."
+          },
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 88,
+            "explanation": "Le camel ressort avec élégance sur le blanc."
+          },
+          {
+            "color_id": "1639317e-4f0a-588b-a4ac-63513aba2829",
+            "score": 84,
+            "explanation": "Le camel apporte de la chaleur à l'anthracite."
+          }
+        ],
+        "contrast": [
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 85,
+            "explanation": "Le camel réchauffe le noir avec un contraste maîtrisé."
+          }
+        ],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "ac3ba93a-e758-502d-984c-5efbc5c47ed8",
+        "harmonious": [
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 90,
+            "explanation": "Le denim et le blanc composent une association simple et lumineuse."
+          },
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 82,
+            "explanation": "Le denim et le beige restent doux et naturels ensemble."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+        "harmonious": [
+          {
+            "color_id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+            "score": 92,
+            "explanation": "Le bleu marine sur une base blanche donne un look frais et soigné."
+          },
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 90,
+            "explanation": "Le bleu marine et le beige s'équilibrent par leur contraste doux."
+          },
+          {
+            "color_id": "af1ac4b5-8c3f-5418-87c0-dedb842fee78",
+            "score": 90,
+            "explanation": "Le camel réchauffe la profondeur du bleu marine."
+          }
+        ],
+        "contrast": [
+          {
+            "color_id": "ecdd9d1b-1491-5a80-97c6-3d8f5fc0b1a6",
+            "score": 85,
+            "explanation": "La moutarde fait ressortir le bleu marine par contraste de teintes."
+          }
+        ],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 45,
+            "explanation": "Le bleu marine et le noir sont très proches : le contraste manque de franchise."
+          }
+        ]
+      },
+      {
+        "color_id": "6c114d05-9e49-5a96-aa9f-772b9a9ac781",
+        "harmonious": [
+          {
+            "color_id": "79da2d51-5e7b-5b17-acf4-e723662aab48",
+            "score": 82,
+            "explanation": "Le vert sauge et la crème forment un duo naturel et apaisant."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "fe4b2979-e2dc-5c26-8186-5669e86c1107",
+        "harmonious": [
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 85,
+            "explanation": "Le kaki et le beige partagent des tons naturels qui s'accordent."
+          },
+          {
+            "color_id": "e4415da7-2919-5acc-8b06-5657736ae031",
+            "score": 80,
+            "explanation": "Le kaki gagne en structure à côté du noir."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "4dd9dc7a-7790-57e9-bd01-5023a4cfb59f",
+        "harmonious": [],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "5cf99278-40b4-50f2-8a91-342ee70c9975",
+            "score": 32,
+            "explanation": "Le vert forêt et le rouge forment un contraste difficile à équilibrer."
+          }
+        ]
+      },
+      {
+        "color_id": "5cf99278-40b4-50f2-8a91-342ee70c9975",
+        "harmonious": [],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "634c0e1e-3bd5-57e9-9729-65ae92ce7968",
+            "score": 38,
+            "explanation": "Le rouge et l'orange saturés se disputent l'attention."
+          },
+          {
+            "color_id": "f99735e8-25a1-583a-baec-744b4c28c4aa",
+            "score": 35,
+            "explanation": "Le rouge et le rose vifs se concurrent et peinent à s'harmoniser."
+          },
+          {
+            "color_id": "4dd9dc7a-7790-57e9-bd01-5023a4cfb59f",
+            "score": 32,
+            "explanation": "Le vert forêt et le rouge forment un contraste difficile à équilibrer."
+          }
+        ]
+      },
+      {
+        "color_id": "d9a5c744-8978-557d-8a5c-3f1a384b2564",
+        "harmonious": [
+          {
+            "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+            "score": 82,
+            "explanation": "Le gris met en valeur la profondeur du bordeaux."
+          },
+          {
+            "color_id": "817994b0-fcd5-52d8-ac2c-c1053796702d",
+            "score": 80,
+            "explanation": "Le beige adoucit l'intensité du bordeaux."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "71afdc1f-1d83-5b8d-9de9-6dce03489f0d",
+        "harmonious": [
+          {
+            "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+            "score": 84,
+            "explanation": "Le rose pâle et le gris composent une palette douce et moderne."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "f99735e8-25a1-583a-baec-744b4c28c4aa",
+        "harmonious": [],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "5cf99278-40b4-50f2-8a91-342ee70c9975",
+            "score": 35,
+            "explanation": "Le rouge et le rose vifs se concurrent et peinent à s'harmoniser."
+          }
+        ]
+      },
+      {
+        "color_id": "e5ffd1d3-a3ce-59ed-a324-c086ae958733",
+        "harmonious": [
+          {
+            "color_id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+            "score": 78,
+            "explanation": "La lavande reste délicate sur une base grise."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "ecdd9d1b-1491-5a80-97c6-3d8f5fc0b1a6",
+        "harmonious": [],
+        "contrast": [
+          {
+            "color_id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+            "score": 85,
+            "explanation": "La moutarde fait ressortir le bleu marine par contraste de teintes."
+          }
+        ],
+        "neutral_pairing": [],
+        "caution": []
+      },
+      {
+        "color_id": "634c0e1e-3bd5-57e9-9729-65ae92ce7968",
+        "harmonious": [],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": [
+          {
+            "color_id": "5cf99278-40b4-50f2-8a91-342ee70c9975",
+            "score": 38,
+            "explanation": "Le rouge et l'orange saturés se disputent l'attention."
+          }
+        ]
+      },
+      {
+        "color_id": "02dabb50-1c8f-560c-ab9f-406077d93ff4",
+        "harmonious": [
+          {
+            "color_id": "79da2d51-5e7b-5b17-acf4-e723662aab48",
+            "score": 82,
+            "explanation": "La crème tempère la chaleur de la terracotta."
+          }
+        ],
+        "contrast": [],
+        "neutral_pairing": [],
+        "caution": []
+      }
+    ]
+  }
+}

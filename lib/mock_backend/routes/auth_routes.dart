@@ -1,129 +1,129 @@
 part of '../mock_backend.dart';
 
 extension _AuthRoutes on MockBackend {
-  static const minPasswordLength = 8;
-
-  MockUser? _userByEmail(String email) {
-    final normalized = email.trim().toLowerCase();
-    for (final u in users.values) {
-      if (u.email == normalized) return u;
-    }
-    return null;
-  }
-
-  void _validatePassword(Validator v, Map<String, dynamic> body) {
-    final password = body['password'];
-    if (password is! String || password.length < minPasswordLength) {
-      v.add('password', 'Le mot de passe doit contenir au moins $minPasswordLength caractères.');
-    } else if (body['password_confirmation'] != password) {
-      v.add('password_confirmation', 'Les deux mots de passe ne correspondent pas.');
-    }
-  }
-
   List<MockRoute> get _authRoutes => [
-        MockRoute('POST', '/auth/register', (r, p) {
-          final body = r.bodyMap;
-          final v = Validator();
-          final name = v.requiredString(body, 'name', 'nom ou pseudonyme', max: 60);
-          final email = v.requiredString(body, 'email', 'adresse e-mail');
-          if (email != null && !emailPattern.hasMatch(email)) {
-            v.add('email', 'Entrez une adresse e-mail valide.');
-          } else if (email != null && _userByEmail(email) != null) {
-            v.add('email', 'Un compte existe déjà avec cette adresse.');
-          }
-          _validatePassword(v, body);
-          if (body['accepts_privacy_policy'] != true) {
-            v.add('accepts_privacy_policy', 'Vous devez accepter la politique de confidentialité.');
-          }
-          v.throwIfInvalid();
-          final user = MockUser(
-            id: nextId('user'),
-            name: name!,
-            email: email!.toLowerCase(),
-            passwordForMockOnly: body['password'] as String,
-            createdAt: clock(),
-          );
-          users[user.id] = user;
-          return MockResponse.created({'data': issueToken(user).toJson()});
-        }),
-        MockRoute('POST', '/auth/login', (r, p) {
-          final body = r.bodyMap;
-          final v = Validator();
-          final email = v.requiredString(body, 'email', 'adresse e-mail');
-          final password = v.requiredString(body, 'password', 'mot de passe');
-          v.throwIfInvalid();
-          final key = email!.toLowerCase();
-          final now = clock();
-          final recent = (failedLogins[key] ?? [])
-              .where((t) => now.difference(t) < const Duration(minutes: 1))
-              .toList();
-          if (recent.length >= MockBackend.maxLoginAttemptsPerMinute) {
-            throw const HttpError(
-              429,
-              ApiErrorCode.rateLimited,
-              'Trop de tentatives. Réessayez dans une minute.',
-              {},
-              {'retry_after': 60},
-            );
-          }
-          final user = _userByEmail(key);
-          if (user == null || user.passwordForMockOnly != password) {
-            failedLogins[key] = [...recent, now];
-            throw HttpError.validation({
-              'email': ['Ces identifiants ne correspondent à aucun compte.'],
-            });
-          }
-          failedLogins.remove(key);
-          return MockResponse.ok({'data': issueToken(user).toJson()});
-        }),
-        MockRoute('POST', '/auth/logout', (r, p) {
-          requireUser(r);
-          tokens.remove(r.bearerToken);
+        MockRoute('POST', '/auth/register', _register),
+        MockRoute('POST', '/auth/login', _login),
+        MockRoute('POST', '/auth/refresh', _refresh),
+        MockRoute('POST', '/auth/logout', (request, _) {
+          final token = tokens[request.bearerToken];
+          if (token == null) throw HttpError.unauthenticated();
+          token.revoked = true;
           return const MockResponse.noContent();
         }),
-        MockRoute('POST', '/auth/forgot-password', (r, p) {
+        MockRoute('POST', '/auth/password/forgot', _forgot),
+        MockRoute('POST', '/auth/password/reset', _reset),
+        MockRoute('GET', '/me', (request, _) => MockResponse.ok({'data': requireUser(request).toJson()})),
+        MockRoute('PATCH', '/me', (request, _) {
+          final user = requireUser(request);
           final v = Validator();
-          final email = v.requiredString(r.bodyMap, 'email', 'adresse e-mail');
-          if (email != null && !emailPattern.hasMatch(email)) v.add('email', 'Entrez une adresse e-mail valide.');
+          final name = v.string(request.bodyMap, 'name', required: false, max: 100);
           v.throwIfInvalid();
-          final user = _userByEmail(email!);
-          if (user != null) resetTokens[user.email] = 'reset_${nextId('reset').padLeft(4, '0')}';
-          return const MockResponse.ok({
-            'message': 'Si un compte existe pour cette adresse, un e-mail de réinitialisation a été envoyé.',
-          });
+          if (name != null) user.name = name;
+          return MockResponse.ok({'data': user.toJson()});
         }),
-        MockRoute('POST', '/auth/reset-password', (r, p) {
-          final body = r.bodyMap;
-          final v = Validator();
-          final email = v.requiredString(body, 'email', 'adresse e-mail');
-          final token = v.requiredString(body, 'token', 'jeton');
-          _validatePassword(v, body);
-          v.throwIfInvalid();
-          final user = _userByEmail(email!);
-          if (user == null || resetTokens[user.email] != token) {
-            throw HttpError.validation({
-              'token': ['Ce lien de réinitialisation est invalide ou a expiré.'],
-            });
+        MockRoute('PUT', '/me/password', _changePassword),
+        MockRoute('DELETE', '/me', (request, _) {
+          final user = requireUser(request);
+          if (request.bodyMap['password'] != user.passwordForMockOnly) {
+            throw HttpError.field('password', 'Le mot de passe est incorrect.');
           }
-          user.passwordForMockOnly = body['password'] as String;
-          resetTokens.remove(user.email);
-          tokens.removeWhere((_, entry) => entry.userId == user.id);
-          return const MockResponse.ok({'message': 'Votre mot de passe a été modifié.'});
-        }),
-        MockRoute('GET', '/me', (r, p) {
-          return MockResponse.ok({'data': requireUser(r).toModel().toJson()});
-        }),
-        MockRoute('DELETE', '/me', (r, p) {
-          final user = requireUser(r);
-          users.remove(user.id);
-          tokens.removeWhere((_, entry) => entry.userId == user.id);
+          users.remove(user.email);
           favorites.remove(user.id);
           savedOutfits.remove(user.id);
           preferences.remove(user.id);
-          for (final f in feedback) {
-            if (f.userId == user.id) f.userId = null;
-          }
+          revokeAllTokens(user);
           return const MockResponse.noContent();
         }),
       ];
+
+  MockResponse _register(MockRequest request, Map<String, String> _) {
+    final body = request.bodyMap;
+    final v = Validator();
+    final name = v.string(body, 'name', max: 100);
+    final email = v.string(body, 'email')?.toLowerCase();
+    final password = v.password(body);
+    if (email != null && !emailPattern.hasMatch(email)) v.add('email', "L'adresse e-mail est invalide.");
+    if (email != null && users.containsKey(email)) v.add('email', 'Cette adresse e-mail est déjà utilisée.');
+    v.throwIfInvalid();
+    final user = MockUser(
+      id: nextUuid(),
+      name: name!,
+      email: email!,
+      passwordForMockOnly: password!,
+      createdAt: clock(),
+    );
+    users[email] = user;
+    return MockResponse.created(authPayload(user, issueToken(user.id)));
+  }
+
+  MockResponse _login(MockRequest request, Map<String, String> _) {
+    final body = request.bodyMap;
+    final v = Validator();
+    final email = v.string(body, 'email')?.toLowerCase();
+    final password = v.string(body, 'password');
+    v.throwIfInvalid();
+    final user = users[email];
+    if (user == null || user.passwordForMockOnly != password) throw HttpError.unauthenticated('Identifiants invalides.');
+    return MockResponse.ok(authPayload(user, issueToken(user.id)));
+  }
+
+  MockResponse _refresh(MockRequest request, Map<String, String> _) {
+    final token = tokens[request.bearerToken];
+    if (token == null || token.revoked) throw HttpError.unauthenticated();
+    final user = _userOf(token);
+    if (user == null || token.issuedAt.isBefore(user.tokenValidAfter)) throw HttpError.unauthenticated();
+    if (clock().isAfter(token.loginAt.add(MockBackend.refreshWindow))) throw HttpError.unauthenticated();
+    token.revoked = true;
+    return MockResponse.ok(authPayload(user, issueToken(user.id, loginAt: token.loginAt), withUser: false));
+  }
+
+  MockResponse _forgot(MockRequest request, Map<String, String> _) {
+    final v = Validator();
+    final email = v.string(request.bodyMap, 'email')?.toLowerCase();
+    v.throwIfInvalid();
+    if (users.containsKey(email)) otps[email!] = (otp: MockBackend.mockOtp, attempts: 0);
+    return const MockResponse(202, {
+      'data': {'message': 'Si un compte existe pour cette adresse, un code de réinitialisation vient d’être envoyé.'},
+    });
+  }
+
+  MockResponse _reset(MockRequest request, Map<String, String> _) {
+    final body = request.bodyMap;
+    final v = Validator();
+    final email = v.string(body, 'email')?.toLowerCase();
+    final otp = v.string(body, 'otp');
+    final password = v.password(body);
+    if (otp != null && !RegExp(r'^\d{6}$').hasMatch(otp)) v.add('otp', 'Le code doit contenir 6 chiffres.');
+    v.throwIfInvalid();
+    final pending = otps[email];
+    final user = users[email];
+    if (pending == null || user == null || pending.otp != otp || pending.attempts >= 5) {
+      if (pending != null) otps[email!] = (otp: pending.otp, attempts: pending.attempts + 1);
+      throw HttpError.field('otp', 'Ce code est invalide ou a expiré.');
+    }
+    otps.remove(email);
+    user.passwordForMockOnly = password!;
+    revokeAllTokens(user);
+    return const MockResponse.ok({
+      'data': {'message': 'Votre mot de passe a été réinitialisé.'},
+    });
+  }
+
+  MockResponse _changePassword(MockRequest request, Map<String, String> _) {
+    final user = requireUser(request);
+    final body = request.bodyMap;
+    final v = Validator();
+    final current = v.string(body, 'current_password');
+    final password = v.password(body);
+    if (current != null && current != user.passwordForMockOnly) {
+      v.add('current_password', 'Le mot de passe actuel est incorrect.');
+    }
+    v.throwIfInvalid();
+    user.passwordForMockOnly = password!;
+    revokeAllTokens(user);
+    final token = issueToken(user.id);
+    tokens[token] = MockToken(userId: user.id, issuedAt: user.tokenValidAfter, loginAt: user.tokenValidAfter);
+    return MockResponse.ok(authPayload(user, token, withUser: false));
+  }
 }

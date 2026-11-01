@@ -69,16 +69,16 @@ class FakeCatalogRepository implements CatalogRepository {
   int colorCalls = 0;
 
   static const navy = CatalogColor(
-    id: '10',
+    id: '162543d0-27c2-5a4e-ae5d-e1e64980999e',
     name: 'Bleu marine',
-    slug: 'navy',
-    hexCode: '#1F2A44',
-    colorFamily: 'blue',
+    slug: 'bleu-marine',
+    hexCode: '#1B2A49',
+    colorFamily: 'bleu',
     isNeutral: true,
   );
 
   static const camel = CatalogColor(
-    id: '9',
+    id: 'af1ac4b5-8c3f-5418-87c0-dedb842fee78',
     name: 'Camel',
     slug: 'camel',
     hexCode: '#C19A6B',
@@ -99,21 +99,28 @@ class FakeCatalogRepository implements CatalogRepository {
   }
 
   static const categoryList = [
-    ClothingCategory(id: '1', name: 'Hauts', slug: 'top', groupType: CategoryGroup.top),
-    ClothingCategory(id: '2', name: 'Bas', slug: 'bottom', groupType: CategoryGroup.bottom),
-    ClothingCategory(id: '3', name: 'Pièces complètes', slug: 'one-piece', groupType: CategoryGroup.onePiece),
-    ClothingCategory(id: '4', name: 'Chaussures', slug: 'shoes', groupType: CategoryGroup.shoes),
-    ClothingCategory(id: '5', name: 'Accessoires', slug: 'accessories', groupType: CategoryGroup.accessory, isOptional: true),
+    ClothingCategory(id: 'c-top', name: 'Hauts', slug: 'hauts', groupType: CategoryGroup.top),
+    ClothingCategory(id: 'c-bottom', name: 'Bas', slug: 'bas', groupType: CategoryGroup.bottom),
+    ClothingCategory(id: 'c-one', name: 'Pièces complètes', slug: 'pieces-completes', groupType: CategoryGroup.onePiece),
+    ClothingCategory(id: 'c-shoes', name: 'Chaussures', slug: 'chaussures', groupType: CategoryGroup.footwear),
+    ClothingCategory(
+      id: 'c-acc',
+      name: 'Accessoires',
+      slug: 'accessoires',
+      groupType: CategoryGroup.accessory,
+      isOptional: true,
+    ),
   ];
 
-  static const shirt = ClothingType(id: '11', categoryId: '1', name: 'Chemise', slug: 'shirt');
-  static const jeans = ClothingType(id: '21', categoryId: '2', name: 'Jean', slug: 'jeans');
-  static const dress = ClothingType(id: '31', categoryId: '3', name: 'Robe', slug: 'dress', isOnePiece: true);
-  static const sneakers = ClothingType(id: '41', categoryId: '4', name: 'Baskets', slug: 'sneakers');
-  static const watch = ClothingType(id: '51', categoryId: '5', name: 'Montre', slug: 'watch');
-  static const belt = ClothingType(id: '52', categoryId: '5', name: 'Ceinture', slug: 'belt');
+  static const shirt = ClothingType(id: 't-shirt', categoryId: 'c-top', name: 'Chemise', slug: 'chemise');
+  static const blazer = ClothingType(id: 't-blazer', categoryId: 'c-top', name: 'Blazer', slug: 'blazer');
+  static const jeans = ClothingType(id: 't-jeans', categoryId: 'c-bottom', name: 'Jean', slug: 'jean');
+  static const dress = ClothingType(id: 't-dress', categoryId: 'c-one', name: 'Robe', slug: 'robe', isOnePiece: true);
+  static const sneakers = ClothingType(id: 't-sneakers', categoryId: 'c-shoes', name: 'Baskets', slug: 'baskets');
+  static const watch = ClothingType(id: 't-watch', categoryId: 'c-acc', name: 'Montre', slug: 'montre');
+  static const belt = ClothingType(id: 't-belt', categoryId: 'c-acc', name: 'Ceinture', slug: 'ceinture');
 
-  static const typeList = [shirt, jeans, dress, sneakers, watch, belt];
+  static const typeList = [shirt, blazer, jeans, dress, sneakers, watch, belt];
 
   @override
   Future<List<ClothingCategory>> categories() async => categoryList;
@@ -123,20 +130,10 @@ class FakeCatalogRepository implements CatalogRepository {
       typeList.where((t) => categoryId == null || t.categoryId == categoryId).toList();
 
   @override
-  Future<CatalogVersion> version() async => CatalogVersion(
-        catalogVersion: 'test',
-        rulesVersion: 'test',
-        updatedAt: DateTime.utc(2026, 10, 12),
-      );
+  Future<CatalogVersion> version() async => const CatalogVersion(catalogVersion: 1, rulesVersion: 1);
 
   @override
-  Future<ColorGuide> colorGuide() async => const ColorGuide(families: [], principles: []);
-
-  @override
-  Future<List<ColorPairingRule>> colorPairingRules() async => const [];
-
-  @override
-  Future<List<RecommendationRule>> recommendationRules() async => const [];
+  Future<ColorGuide> colorGuide() async => const ColorGuide(families: []);
 
   @override
   Future<List<OutfitStyle>> styles() async => const [];

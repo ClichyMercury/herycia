@@ -18,10 +18,10 @@ void main() {
     test('associe les slugs du catalogue à une forme', () {
       expect(GarmentShape.resolve(GarmentSlot.top, 't-shirt'), GarmentShape.shortSleeveTop);
       expect(GarmentShape.resolve(GarmentSlot.top, 'blazer'), GarmentShape.outerwear);
-      expect(GarmentShape.resolve(GarmentSlot.bottom, 'skirt'), GarmentShape.skirt);
-      expect(GarmentShape.resolve(GarmentSlot.onePiece, 'jumpsuit'), GarmentShape.jumpsuit);
-      expect(GarmentShape.resolve(GarmentSlot.shoes, 'ankle-boots'), GarmentShape.boots);
-      expect(GarmentShape.resolve(GarmentSlot.accessory, 'jewelry'), GarmentShape.necklace);
+      expect(GarmentShape.resolve(GarmentSlot.bottom, 'jupe'), GarmentShape.skirt);
+      expect(GarmentShape.resolve(GarmentSlot.onePiece, 'combinaison'), GarmentShape.jumpsuit);
+      expect(GarmentShape.resolve(GarmentSlot.shoes, 'bottines'), GarmentShape.boots);
+      expect(GarmentShape.resolve(GarmentSlot.accessory, 'bijoux'), GarmentShape.necklace);
     });
 
     test('un type inconnu ajouté par l’admin retombe sur une forme générique', () {
@@ -35,16 +35,16 @@ void main() {
     });
 
     test('un slug utilisé dans le mauvais emplacement n’est pas détourné', () {
-      expect(GarmentShape.resolve(GarmentSlot.top, 'jeans'), GarmentShape.longSleeveTop);
+      expect(GarmentShape.resolve(GarmentSlot.top, 'jean'), GarmentShape.longSleeveTop);
     });
 
-    test('chaque type du catalogue mock a une forme', () {
+    test('chaque type du catalogue du serveur a une forme', () {
       const bySlot = {
-        GarmentSlot.top: ['t-shirt', 'shirt', 'polo', 'blouse', 'sweater', 'jacket', 'blazer'],
-        GarmentSlot.bottom: ['trousers', 'jeans', 'chinos', 'skirt', 'shorts'],
-        GarmentSlot.onePiece: ['dress', 'jumpsuit'],
-        GarmentSlot.shoes: ['sneakers', 'loafers', 'dress-shoes', 'sandals', 'ankle-boots'],
-        GarmentSlot.accessory: ['belt', 'bag', 'watch', 'jewelry', 'sunglasses', 'scarf', 'tie'],
+        GarmentSlot.top: ['t-shirt', 'chemise', 'polo', 'blouse', 'pull', 'veste', 'blazer'],
+        GarmentSlot.bottom: ['pantalon', 'jean', 'chino', 'jupe', 'short'],
+        GarmentSlot.onePiece: ['robe', 'combinaison'],
+        GarmentSlot.shoes: ['baskets', 'mocassins', 'chaussures-habillees', 'sandales', 'bottines'],
+        GarmentSlot.accessory: ['ceinture', 'sac', 'montre', 'bijoux', 'lunettes', 'foulard', 'cravate'],
       };
       for (final MapEntry(key: slot, value: slugs) in bySlot.entries) {
         for (final slug in slugs) {

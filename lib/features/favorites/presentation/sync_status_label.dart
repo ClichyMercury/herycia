@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/design_system.dart';
 import '../../../l10n/l10n.dart';
-import '../application/favorites_controller.dart';
+import '../application/wardrobe_providers.dart';
 
 class SyncStatusLabel extends ConsumerWidget {
   const SyncStatusLabel({super.key});
@@ -12,12 +12,13 @@ class SyncStatusLabel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final colors = context.colors;
-    final status = ref.watch(favoritesProvider).value?.status ?? FavoritesSyncStatus.localOnly;
+    final status = ref.watch(wardrobeSyncProvider);
     final (IconData icon, Color color, String text) = switch (status) {
-      FavoritesSyncStatus.synced => (AppIcons.check, colors.success, l10n.syncSynced),
-      FavoritesSyncStatus.pending => (AppIcons.retry, colors.textTertiary, l10n.syncPending),
-      FavoritesSyncStatus.failed => (AppIcons.warning, colors.warning, l10n.syncFailed),
-      FavoritesSyncStatus.localOnly => (AppIcons.info, colors.textTertiary, l10n.syncLocalOnly),
+      WardrobeSyncStatus.synced => (AppIcons.check, colors.success, l10n.syncSynced),
+      WardrobeSyncStatus.syncing => (AppIcons.retry, colors.textTertiary, l10n.syncInProgress),
+      WardrobeSyncStatus.pending => (AppIcons.retry, colors.textTertiary, l10n.syncPending),
+      WardrobeSyncStatus.failed => (AppIcons.warning, colors.warning, l10n.syncFailed),
+      WardrobeSyncStatus.localOnly => (AppIcons.info, colors.textTertiary, l10n.syncLocalOnly),
     };
     final label = Row(
       mainAxisSize: MainAxisSize.min,
@@ -29,10 +30,10 @@ class SyncStatusLabel extends ConsumerWidget {
         ),
       ],
     );
-    if (status != FavoritesSyncStatus.failed && status != FavoritesSyncStatus.pending) return label;
+    if (status != WardrobeSyncStatus.failed && status != WardrobeSyncStatus.pending) return label;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => ref.read(favoritesProvider.notifier).sync(),
+      onTap: () => ref.read(wardrobeSyncProvider.notifier).sync(),
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: AppSizes.minTapTarget),
         child: Align(alignment: Alignment.centerLeft, child: label),

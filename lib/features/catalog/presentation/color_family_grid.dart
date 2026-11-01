@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../design_system/design_system.dart';
-import '../../../l10n/l10n.dart';
 import '../application/catalog_providers.dart';
 import '../domain/catalog_models.dart';
 
@@ -16,8 +15,9 @@ class ColorFamilyGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final palette = ref.watch(colorsProvider);
+    final names = {for (final f in ref.watch(colorGuideProvider).value?.families ?? const <ColorFamilyGuide>[]) f.slug: f.name};
     return switch (palette) {
-      AsyncValue(:final value?, hasValue: true) => _grouped(context, value),
+      AsyncValue(:final value?, hasValue: true) => _grouped(context, value, names),
       AsyncValue(error: _?) => ErrorState(onRetry: () => ref.invalidate(colorsProvider)),
       _ => const Padding(
           padding: AppSpacing.screenPadding,
@@ -26,7 +26,7 @@ class ColorFamilyGrid extends ConsumerWidget {
     };
   }
 
-  Widget _grouped(BuildContext context, List<CatalogColor> palette) {
+  Widget _grouped(BuildContext context, List<CatalogColor> palette, Map<String, String> names) {
     final families = <String, List<CatalogColor>>{};
     for (final color in palette) {
       families.putIfAbsent(color.colorFamily, () => []).add(color);
@@ -46,7 +46,7 @@ class ColorFamilyGrid extends ConsumerWidget {
               AppSpacing.s2,
             ),
             child: Text(
-              context.l10n.colorFamily(entry.key).toUpperCase(),
+              (names[entry.key] ?? entry.key).toUpperCase(),
               style: context.typo.overline.copyWith(color: colors.textTertiary),
             ),
           ),

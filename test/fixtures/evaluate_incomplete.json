@@ -1,0 +1,65 @@
+{
+  "data": {
+    "request_id": "rq1.dl82NGQ0NDNmN2M4MTFiOWY2LjA4NTIyM2Q0ZjFkZjc4NDMuMTc5MzQ4MDk3MQ.NKtywUD47UFuqedh2lbWWWPfHXLioYzQ9ICtaq92iP4",
+    "catalog_version": 1,
+    "rules_version": 1,
+    "score": 76,
+    "score_breakdown": {
+      "color": {
+        "points": 30,
+        "max": 40
+      },
+      "structure": {
+        "points": 17,
+        "max": 25
+      },
+      "occasion": {
+        "points": 15,
+        "max": 15
+      },
+      "style": {
+        "points": 10,
+        "max": 10
+      },
+      "completeness": {
+        "points": 4,
+        "max": 10
+      }
+    },
+    "is_complete": false,
+    "strengths": [
+      {
+        "text": "Les pièces conviennent bien à l'occasion choisie."
+      },
+      {
+        "text": "Les pièces correspondent bien au style choisi."
+      }
+    ],
+    "warnings": [
+      {
+        "type": "structure",
+        "text": "Il manque des chaussures pour compléter la tenue.",
+        "item_indexes": []
+      },
+      {
+        "type": "preference",
+        "text": "Cette association reste très sobre : une touche de couleur lui donnerait plus de caractère.",
+        "item_indexes": [
+          0,
+          1
+        ]
+      }
+    ],
+    "suggestions": [
+      {
+        "text": "Ajoutez « Chaussures habillées » en noir."
+      },
+      {
+        "text": "Passez « Pantalon » en noir."
+      },
+      {
+        "text": "Ajoutez « Montre » en noir."
+      }
+    ]
+  }
+}

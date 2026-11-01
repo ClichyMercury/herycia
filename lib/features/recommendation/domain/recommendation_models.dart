@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/json/id_converter.dart';
+import '../../catalog/domain/catalog_models.dart';
 import '../../looks/domain/look_models.dart';
 
 part 'recommendation_models.freezed.dart';
@@ -42,87 +43,45 @@ abstract class OutfitRequest with _$OutfitRequest {
 }
 
 @freezed
+abstract class ScorePart with _$ScorePart {
+  const factory ScorePart({required int points, required int max}) = _ScorePart;
+
+  factory ScorePart.fromJson(Map<String, dynamic> json) => _$ScorePartFromJson(json);
+}
+
+@freezed
 abstract class ScoreBreakdown with _$ScoreBreakdown {
   const ScoreBreakdown._();
 
   const factory ScoreBreakdown({
-    required int color,
-    required int structure,
-    required int occasion,
-    required int style,
-    required int completeness,
+    required ScorePart color,
+    required ScorePart structure,
+    required ScorePart occasion,
+    required ScorePart style,
+    required ScorePart completeness,
   }) = _ScoreBreakdown;
 
   factory ScoreBreakdown.fromJson(Map<String, dynamic> json) => _$ScoreBreakdownFromJson(json);
 
-  static const maxColor = 40;
-  static const maxStructure = 25;
-  static const maxOccasion = 15;
-  static const maxStyle = 10;
-  static const maxCompleteness = 10;
-
-  int get total => color + structure + occasion + style + completeness;
-}
-
-enum RemarkKind {
-  @JsonValue('structural')
-  structural,
-  @JsonValue('style')
-  style,
+  int get total => color.points + structure.points + occasion.points + style.points + completeness.points;
 }
 
 @freezed
-abstract class Remark with _$Remark {
-  const factory Remark({
-    required RemarkKind kind,
-    required String code,
-    required String message,
-    @Default([]) List<PieceRole> roles,
-  }) = _Remark;
-
-  factory Remark.fromJson(Map<String, dynamic> json) => _$RemarkFromJson(json);
-}
-
-@freezed
-abstract class Improvement with _$Improvement {
-  const factory Improvement({
+abstract class StartingItem with _$StartingItem {
+  const factory StartingItem({
+    required CatalogRef clothingType,
+    required ColorRef color,
     required PieceRole role,
-    @IdConverter() required String clothingTypeId,
-    @IdConverter() required String fromColorId,
-    @IdConverter() required String toColorId,
-    required int newScore,
-    required int gain,
-    required String explanation,
-  }) = _Improvement;
+  }) = _StartingItem;
 
-  factory Improvement.fromJson(Map<String, dynamic> json) => _$ImprovementFromJson(json);
+  factory StartingItem.fromJson(Map<String, dynamic> json) => _$StartingItemFromJson(json);
 }
 
 @freezed
-abstract class RecommendedItem with _$RecommendedItem {
-  const factory RecommendedItem({
-    @IdConverter() required String clothingTypeId,
-    @IdConverter() required String colorId,
-    required PieceRole role,
-    @Default(false) bool isAnchor,
-  }) = _RecommendedItem;
+abstract class AppliedFilters with _$AppliedFilters {
+  const factory AppliedFilters({String? occasionSlug, String? styleSlug}) = _AppliedFilters;
 
-  factory RecommendedItem.fromJson(Map<String, dynamic> json) => _$RecommendedItemFromJson(json);
-}
-
-@freezed
-abstract class RecommendedLook with _$RecommendedLook {
-  const factory RecommendedLook({
-    @NullableIdConverter() String? outfitId,
-    required String title,
-    required int score,
-    required ScoreBreakdown breakdown,
-    required String explanation,
-    required List<RecommendedItem> items,
-    LookImage? image,
-  }) = _RecommendedLook;
-
-  factory RecommendedLook.fromJson(Map<String, dynamic> json) => _$RecommendedLookFromJson(json);
+  factory AppliedFilters.fromJson(Map<String, dynamic> json) => _$AppliedFiltersFromJson(json);
 }
 
 enum BroadeningCriterion {
@@ -137,66 +96,164 @@ enum BroadeningCriterion {
 }
 
 @freezed
-abstract class BroadeningStep with _$BroadeningStep {
-  const factory BroadeningStep({
-    required BroadeningCriterion criterion,
-    required String message,
-  }) = _BroadeningStep;
+abstract class Broadening with _$Broadening {
+  const factory Broadening({
+    @Default(false) bool applied,
+    @Default([]) List<BroadeningCriterion> steps,
+  }) = _Broadening;
 
-  factory BroadeningStep.fromJson(Map<String, dynamic> json) => _$BroadeningStepFromJson(json);
+  factory Broadening.fromJson(Map<String, dynamic> json) => _$BroadeningFromJson(json);
+}
+
+@freezed
+abstract class RecommendedItem with _$RecommendedItem {
+  const factory RecommendedItem({
+    required CatalogRef clothingType,
+    required ColorRef color,
+    required PieceRole role,
+    @Default(true) bool isRequired,
+    @Default(false) bool isStartingItem,
+  }) = _RecommendedItem;
+
+  factory RecommendedItem.fromJson(Map<String, dynamic> json) => _$RecommendedItemFromJson(json);
+}
+
+@freezed
+abstract class RecommendedLook with _$RecommendedLook {
+  const factory RecommendedLook({
+    @IdConverter() required String outfitId,
+    required String title,
+    required int score,
+    required ScoreBreakdown scoreBreakdown,
+    required String explanation,
+    required List<RecommendedItem> items,
+    LookImage? image,
+  }) = _RecommendedLook;
+
+  factory RecommendedLook.fromJson(Map<String, dynamic> json) => _$RecommendedLookFromJson(json);
+}
+
+@freezed
+abstract class ColorAdvice with _$ColorAdvice {
+  const factory ColorAdvice({
+    required String text,
+    @IdListConverter() @Default([]) List<String> colorIds,
+  }) = _ColorAdvice;
+
+  factory ColorAdvice.fromJson(Map<String, dynamic> json) => _$ColorAdviceFromJson(json);
 }
 
 @freezed
 abstract class FromItemResponse with _$FromItemResponse {
   const factory FromItemResponse({
     required String requestId,
-    required String catalogVersion,
-    required String rulesVersion,
-    @Default(false) bool computedOffline,
-    @Default([]) List<BroadeningStep> broadened,
+    required int catalogVersion,
+    required int rulesVersion,
+    required StartingItem startingItem,
+    @Default(AppliedFilters()) AppliedFilters filters,
+    @Default(Broadening()) Broadening broadened,
     required List<RecommendedLook> results,
+    @Default([]) List<ColorAdvice> advice,
+    @JsonKey(includeFromJson: false, includeToJson: false) DateTime? cachedAt,
   }) = _FromItemResponse;
 
   factory FromItemResponse.fromJson(Map<String, dynamic> json) => _$FromItemResponseFromJson(json);
 }
 
 @freezed
+abstract class TextNote with _$TextNote {
+  const factory TextNote({required String text}) = _TextNote;
+
+  factory TextNote.fromJson(Map<String, dynamic> json) => _$TextNoteFromJson(json);
+}
+
+enum WarningType {
+  @JsonValue('structure')
+  structure,
+  @JsonValue('preference')
+  preference,
+}
+
+@freezed
+abstract class OutfitWarning with _$OutfitWarning {
+  const factory OutfitWarning({
+    required WarningType type,
+    required String text,
+    @Default([]) List<int> itemIndexes,
+  }) = _OutfitWarning;
+
+  factory OutfitWarning.fromJson(Map<String, dynamic> json) => _$OutfitWarningFromJson(json);
+}
+
+@freezed
 abstract class EvaluationResponse with _$EvaluationResponse {
   const factory EvaluationResponse({
     required String requestId,
-    required String rulesVersion,
-    @Default(false) bool computedOffline,
+    required int catalogVersion,
+    required int rulesVersion,
     required int score,
-    required ScoreBreakdown breakdown,
-    required String explanation,
-    required List<String> strengths,
-    required List<Remark> warnings,
-    required List<Improvement> suggestions,
+    required ScoreBreakdown scoreBreakdown,
+    @Default(false) bool isComplete,
+    @Default([]) List<TextNote> strengths,
+    @Default([]) List<OutfitWarning> warnings,
+    @Default([]) List<TextNote> suggestions,
+    @JsonKey(includeFromJson: false, includeToJson: false) DateTime? cachedAt,
   }) = _EvaluationResponse;
 
-  factory EvaluationResponse.fromJson(Map<String, dynamic> json) =>
-      _$EvaluationResponseFromJson(json);
+  factory EvaluationResponse.fromJson(Map<String, dynamic> json) => _$EvaluationResponseFromJson(json);
+}
+
+enum ChangeAction {
+  @JsonValue('add_item')
+  addItem,
+  @JsonValue('replace_item')
+  replaceItem,
+  @JsonValue('remove_item')
+  removeItem,
+}
+
+@freezed
+abstract class OutfitChange with _$OutfitChange {
+  const factory OutfitChange({
+    required ChangeAction action,
+    int? itemIndex,
+    RequestItem? item,
+  }) = _OutfitChange;
+
+  factory OutfitChange.fromJson(Map<String, dynamic> json) => _$OutfitChangeFromJson(json);
+}
+
+@freezed
+abstract class Improvement with _$Improvement {
+  const factory Improvement({
+    required String text,
+    required OutfitChange change,
+    required int resultingScore,
+  }) = _Improvement;
+
+  factory Improvement.fromJson(Map<String, dynamic> json) => _$ImprovementFromJson(json);
 }
 
 @freezed
 abstract class ImprovementResponse with _$ImprovementResponse {
   const factory ImprovementResponse({
     required String requestId,
-    required String rulesVersion,
-    @Default(false) bool computedOffline,
+    required int catalogVersion,
+    required int rulesVersion,
     required int currentScore,
-    required List<Improvement> improvements,
+    @Default([]) List<Improvement> improvements,
+    @JsonKey(includeFromJson: false, includeToJson: false) DateTime? cachedAt,
   }) = _ImprovementResponse;
 
-  factory ImprovementResponse.fromJson(Map<String, dynamic> json) =>
-      _$ImprovementResponseFromJson(json);
+  factory ImprovementResponse.fromJson(Map<String, dynamic> json) => _$ImprovementResponseFromJson(json);
 }
 
 @freezed
 abstract class FeedbackRequest with _$FeedbackRequest {
   const factory FeedbackRequest({
-    required bool isHelpful,
     @NullableIdConverter() String? outfitId,
+    int? rating,
+    bool? isHelpful,
     String? comment,
   }) = _FeedbackRequest;
 
@@ -208,8 +265,11 @@ abstract class FeedbackRequest with _$FeedbackRequest {
 @freezed
 abstract class FeedbackReceipt with _$FeedbackReceipt {
   const factory FeedbackReceipt({
-    @IdConverter() required String id,
     required String requestId,
+    @NullableIdConverter() String? outfitId,
+    int? rating,
+    bool? isHelpful,
+    String? comment,
     @UtcDateTimeConverter() required DateTime createdAt,
   }) = _FeedbackReceipt;
 

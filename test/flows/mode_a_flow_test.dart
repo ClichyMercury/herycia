@@ -19,12 +19,12 @@ void main() {
   Future<void> chooseShirt(WidgetTester tester) async {
     await tester.tap(find.byKey(const ValueKey('mode-from-item')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('category-top')));
+    await tester.tap(find.byKey(const ValueKey('category-hauts')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('type-shirt')));
+    await tester.tap(find.byKey(const ValueKey('type-chemise')));
     await tester.pumpAndSettle();
-    await scrollTo(tester, find.byKey(const ValueKey('swatch-sky-blue')));
-    await tester.tap(find.byKey(const ValueKey('swatch-sky-blue')));
+    await scrollTo(tester, find.byKey(const ValueKey('swatch-bleu-ciel')));
+    await tester.tap(find.byKey(const ValueKey('swatch-bleu-ciel')));
     await tester.pumpAndSettle();
   }
 
@@ -33,7 +33,7 @@ void main() {
     await chooseShirt(tester);
 
     expect(find.text('Pour quelle occasion ?'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('occasion-work')));
+    await tester.tap(find.byKey(const ValueKey('occasion-travail-entretien')));
     await tester.pumpAndSettle();
     expect(find.text('Chemise bleu ciel · Travail / entretien'), findsOneWidget);
 
@@ -42,7 +42,7 @@ void main() {
     expect(find.byType(FromItemResultsScreen), findsOneWidget);
     expect(find.text('Votre pièce : Chemise bleu ciel'), findsOneWidget);
     expect(find.byType(LookCard), findsWidgets);
-    expect(find.byKey(const ValueKey('broadened')), findsNothing);
+    expect(find.textContaining("nous avons ignoré l'occasion"), findsOneWidget);
   });
 
   testWidgets('retour arrière dans les étapes avec « Changer »', (tester) async {
@@ -57,18 +57,18 @@ void main() {
     await pumpFullApp(tester, MockApiHarness(fixtures));
     await tester.tap(find.byKey(const ValueKey('mode-from-item')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('category-top')));
+    await tester.tap(find.byKey(const ValueKey('category-hauts')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('type-t-shirt')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const ValueKey('swatch-fuchsia')));
     await tester.tap(find.byKey(const ValueKey('swatch-fuchsia')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('occasion-ceremony')));
-    await tester.tap(find.byKey(const ValueKey('occasion-ceremony')));
+    await tester.ensureVisible(find.byKey(const ValueKey('occasion-ceremonie')));
+    await tester.tap(find.byKey(const ValueKey('occasion-ceremonie')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('style-elegant')));
-    await tester.tap(find.byKey(const ValueKey('style-elegant')));
+    await tester.ensureVisible(find.byKey(const ValueKey('style-minimaliste')));
+    await tester.tap(find.byKey(const ValueKey('style-minimaliste')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('from-item-show')));
     await tester.pumpAndSettle();
@@ -96,7 +96,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('look-use-as-base')));
     await tester.pumpAndSettle();
     expect(find.byType(ComposeOutfitScreen), findsOneWidget);
-    expect(container.read(compositionProvider).top!.type.slug, 'shirt');
-    expect(container.read(compositionProvider).top!.color.slug, 'sky-blue');
+    expect(container.read(compositionProvider).top!.type.slug, 'chemise');
+    expect(container.read(compositionProvider).top!.color.slug, 'bleu-ciel');
   });
 }

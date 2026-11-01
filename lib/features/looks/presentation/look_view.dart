@@ -44,6 +44,7 @@ class LookView {
     this.occasion,
     this.style,
     this.requestId,
+    this.rulesVersion,
   });
 
   final String title;
@@ -57,35 +58,34 @@ class LookView {
   final Occasion? occasion;
   final OutfitStyle? style;
   final String? requestId;
+  final int? rulesVersion;
 
-  static List<LookPiece> _pieces(
-    CatalogLookup lookup,
-    Iterable<({String typeId, String colorId, PieceRole role, bool isAnchor})> items,
-  ) =>
-      [
-        for (final i in items)
-          if (lookup.type(i.typeId) case final type?)
-            if (lookup.color(i.colorId) case final color?)
-              LookPiece(type: type, color: color, role: i.role, isAnchor: i.isAnchor),
-      ];
+  bool get isPublishedLook => outfitId != null && requestId == null;
+
+  static Occasion? _occasion(CatalogLookup lookup, CatalogRef? ref) =>
+      ref == null ? null : lookup.occasionBySlug(ref.slug) ?? Occasion(id: ref.id, name: ref.name, slug: ref.slug);
+
+  static OutfitStyle? _style(CatalogLookup lookup, CatalogRef? ref) =>
+      ref == null ? null : lookup.styleBySlug(ref.slug) ?? OutfitStyle(id: ref.id, name: ref.name, slug: ref.slug);
 
   factory LookView.fromLook(Look look, CatalogLookup lookup) => LookView(
         title: look.title,
         outfitId: look.id,
         description: look.description,
-        image: look.primaryImage != null && look.primaryImage!.usageApproved ? look.primaryImage : null,
-        occasion: look.occasionId == null ? null : lookup.occasion(look.occasionId!),
-        style: look.styleId == null ? null : lookup.style(look.styleId!),
-        pieces: _pieces(lookup, [
+        image: look.image,
+        occasion: _occasion(lookup, look.occasion),
+        style: _style(lookup, look.style),
+        pieces: [
           for (final i in [...look.items]..sort((a, b) => a.sortOrder.compareTo(b.sortOrder)))
-            (typeId: i.clothingTypeId, colorId: i.colorId, role: i.role, isAnchor: false),
-        ]),
+            LookPiece(type: lookup.typeOf(i.clothingType), color: lookup.colorOf(i.color), role: i.role),
+        ],
       );
 
   factory LookView.fromRecommendation(
     RecommendedLook look,
     CatalogLookup lookup, {
     required String requestId,
+    int? rulesVersion,
     Occasion? occasion,
     OutfitStyle? style,
   }) =>
@@ -95,14 +95,20 @@ class LookView {
         image: look.image,
         explanation: look.explanation,
         score: look.score,
-        breakdown: look.breakdown,
+        breakdown: look.scoreBreakdown,
         occasion: occasion,
         style: style,
         requestId: requestId,
-        pieces: _pieces(lookup, [
+        rulesVersion: rulesVersion,
+        pieces: [
           for (final i in look.items)
-            (typeId: i.clothingTypeId, colorId: i.colorId, role: i.role, isAnchor: i.isAnchor),
-        ]),
+            LookPiece(
+              type: lookup.typeOf(i.clothingType),
+              color: lookup.colorOf(i.color),
+              role: i.role,
+              isAnchor: i.isStartingItem,
+            ),
+        ],
       );
 
   MannequinOutfit toMannequin() {
@@ -117,10 +123,10 @@ class LookView {
       top: layer(first(PieceRole.top), GarmentSlot.top),
       bottom: layer(first(PieceRole.bottom), GarmentSlot.bottom),
       onePiece: layer(first(PieceRole.onePiece), GarmentSlot.onePiece),
-      shoes: layer(first(PieceRole.shoes), GarmentSlot.shoes),
+      outerwear: layer(first(PieceRole.outerwear), GarmentSlot.top),
+      shoes: layer(first(PieceRole.footwear), GarmentSlot.shoes),
       accessories: [
-        for (final p in pieces.where((p) => p.role == PieceRole.accessory))
-          ?layer(p, GarmentSlot.accessory),
+        for (final p in pieces.where((p) => p.role == PieceRole.accessory)) ?layer(p, GarmentSlot.accessory),
       ],
     );
   }

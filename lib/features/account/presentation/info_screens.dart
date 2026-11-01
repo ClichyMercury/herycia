@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/config/app_version.dart';
 
 import '../../../design_system/design_system.dart';
 import '../../../l10n/l10n.dart';
@@ -35,14 +38,15 @@ class PrivacyScreen extends StatelessWidget {
       _TextScreen(title: context.l10n.privacyTitle, paragraphs: [context.l10n.privacyBody]);
 }
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends ConsumerWidget {
   const AboutScreen({super.key});
 
-  static const version = '1.0.0';
-
   @override
-  Widget build(BuildContext context) => _TextScreen(
-        title: context.l10n.aboutTitle,
-        paragraphs: [context.l10n.aboutVersion(version), context.l10n.aboutBody],
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final version = ref.watch(appVersionProvider).value;
+    return _TextScreen(
+      title: context.l10n.aboutTitle,
+      paragraphs: [if (version != null) context.l10n.aboutVersion(version), context.l10n.aboutBody],
+    );
+  }
 }

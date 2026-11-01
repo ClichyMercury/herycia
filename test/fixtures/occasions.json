@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": "30d60732-5f1e-5a01-bda6-763c717535f2",
+      "slug": "quotidien",
+      "name": "Quotidien",
+      "description": "Les tenues de tous les jours.",
+      "sort_order": 1
+    },
+    {
+      "id": "e779128b-627b-5e78-b00c-0ed261650363",
+      "slug": "travail-entretien",
+      "name": "Travail / entretien",
+      "description": "Les tenues professionnelles et d'entretien.",
+      "sort_order": 2
+    },
+    {
+      "id": "d7dbcef2-20ce-51e4-8bc9-4fdb4dc882e5",
+      "slug": "sortie",
+      "name": "Sortie",
+      "description": "Les sorties entre amis ou en famille.",
+      "sort_order": 3
+    },
+    {
+      "id": "9c155cc5-c09f-5471-ab67-fd2c10e422dd",
+      "slug": "ceremonie",
+      "name": "Cérémonie",
+      "description": "Les mariages et cérémonies.",
+      "sort_order": 4
+    },
+    {
+      "id": "da9a94ab-ae32-531d-a68f-f4924b49ad50",
+      "slug": "soiree",
+      "name": "Soirée",
+      "description": "Les soirées et occasions du soir.",
+      "sort_order": 5
+    },
+    {
+      "id": "965055cf-6e64-5c1c-b2d6-6d09e92ea8c3",
+      "slug": "evenement-decontracte",
+      "name": "Événement décontracté",
+      "description": "Les événements informels en journée.",
+      "sort_order": 6
+    }
+  ]
+}

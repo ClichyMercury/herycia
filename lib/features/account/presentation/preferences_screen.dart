@@ -47,8 +47,8 @@ class PreferencesScreen extends ConsumerWidget {
               AppChip(
                 key: ValueKey('pref-style-${s.slug}'),
                 label: s.name,
-                selected: prefs.styleSlugs.contains(s.slug),
-                onTap: () => controller.change((p) => p.copyWith(styleSlugs: toggle(p.styleSlugs, s.slug))),
+                selected: prefs.styleIds.contains(s.id),
+                onTap: () => controller.change((p) => p.copyWith(styleIds: toggle(p.styleIds, s.id))),
               ),
           ]),
           title(l10n.prefsOccasions),
@@ -57,8 +57,8 @@ class PreferencesScreen extends ConsumerWidget {
               AppChip(
                 key: ValueKey('pref-occasion-${o.slug}'),
                 label: o.name,
-                selected: prefs.occasionSlugs.contains(o.slug),
-                onTap: () => controller.change((p) => p.copyWith(occasionSlugs: toggle(p.occasionSlugs, o.slug))),
+                selected: prefs.occasionIds.contains(o.id),
+                onTap: () => controller.change((p) => p.copyWith(occasionIds: toggle(p.occasionIds, o.id))),
               ),
           ]),
           title(l10n.prefsTheme),

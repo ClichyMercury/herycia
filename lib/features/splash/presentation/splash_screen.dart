@@ -11,6 +11,7 @@ import '../../../l10n/l10n.dart';
 import '../../account/application/preferences_controller.dart';
 import '../../account/application/session_controller.dart';
 import '../../catalog/application/catalog_lookup.dart';
+import '../../catalog/application/catalog_providers.dart';
 
 abstract final class NativeSplashGate {
   static bool preserved = false;
@@ -60,6 +61,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       settle(ref.read(sessionProvider.future)),
       settle(ref.read(preferencesProvider.future)),
       settle(ref.read(catalogLookupProvider.future)),
+      settle(ref.read(colorGuideProvider.future)),
     ]).timeout(timing.max, onTimeout: () => const []);
     await Future.wait([warmUp, Future<void>.delayed(timing.min)]);
     if (mounted) context.go(AppRoutes.compose);

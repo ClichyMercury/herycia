@@ -36,7 +36,7 @@ class LookVisual extends ConsumerWidget {
 String? creditFor(LookView look) {
   final image = look.image;
   if (image == null || !image.requiresCredit) return null;
-  return image.attribution ?? image.sourceName;
+  return image.credit;
 }
 
 List<({Color color, String name})> swatchesOf(LookView look) => [

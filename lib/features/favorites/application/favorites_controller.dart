@@ -1,74 +1,54 @@
-import 'dart:convert';
-
-import 'package:drift/drift.dart' show Value;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../core/api/api_exception.dart';
 import '../../../core/storage/app_database.dart';
 import '../../../core/storage/storage_providers.dart';
 import '../../account/application/session_controller.dart';
+import '../../catalog/application/catalog_providers.dart';
 import '../../looks/presentation/look_view.dart';
 import '../domain/wardrobe_models.dart';
+import 'local_wardrobe.dart';
 import 'wardrobe_providers.dart';
 
-enum FavoritesSyncStatus { localOnly, synced, pending, failed }
+export 'local_wardrobe.dart' show LocalFavorite;
 
-@immutable
-class LocalFavorite {
-  const LocalFavorite({
-    required this.clientUuid,
-    required this.snapshot,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.syncState,
-    this.outfitId,
-    this.serverId,
-  });
-
-  factory LocalFavorite.fromRow(LocalFavoriteRow row) => LocalFavorite(
-        clientUuid: row.clientUuid,
-        serverId: row.serverId,
-        outfitId: row.outfitId,
-        snapshot: LookSnapshot.fromJson(jsonDecode(row.snapshotJson) as Map<String, dynamic>),
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        syncState: row.syncState,
-      );
-
-  final String clientUuid;
-  final String? serverId;
-  final String? outfitId;
-  final LookSnapshot snapshot;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final SyncState syncState;
-
-  String get signature => signatureOf(snapshot.items.map((i) => '${i.role.name}:${i.clothingTypeId}:${i.colorId}'));
-
-  static String signatureOf(Iterable<String> parts) => (parts.toList()..sort()).join('|');
-
-  LocalFavoritesCompanion toCompanion({SyncState? state, String? serverId}) => LocalFavoritesCompanion.insert(
-        clientUuid: clientUuid,
-        serverId: Value(serverId ?? this.serverId),
-        outfitId: Value(outfitId),
-        snapshotJson: jsonEncode(snapshot.toJson()),
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        syncState: state ?? syncState,
-      );
+LookSnapshot snapshotOf(LookView look, {int catalogVersion = 1}) {
+  final image = look.image;
+  final secureImage = image != null && image.url.startsWith('https://');
+  return LookSnapshot(
+    title: look.title.length > 150 ? look.title.substring(0, 150) : look.title,
+    catalogVersion: catalogVersion,
+    style: look.style == null ? null : SnapshotRef(slug: look.style!.slug, name: look.style!.name),
+    occasion: look.occasion == null ? null : SnapshotRef(slug: look.occasion!.slug, name: look.occasion!.name),
+    image: secureImage
+        ? SnapshotImage(
+            url: image.url,
+            thumbnailUrl: (image.thumbnailUrl?.startsWith('https://') ?? false) ? image.thumbnailUrl : null,
+            altText: image.altText,
+            credit: image.credit,
+            licenseType: image.licenseType,
+          )
+        : null,
+    items: [
+      for (final p in look.pieces.take(LookSnapshot.maxItems))
+        SnapshotItem(
+          clothingType: SnapshotRef(slug: p.type.slug, name: p.type.name),
+          color: SnapshotColor(slug: p.color.slug, name: p.color.name, hexCode: p.color.hexCode.toUpperCase()),
+          role: p.role,
+        ),
+    ],
+  );
 }
 
 String lookSignature(LookView look) =>
-    LocalFavorite.signatureOf(look.pieces.map((p) => '${p.role.name}:${p.type.id}:${p.color.id}'));
+    look.isPublishedLook ? 'look:${look.outfitId}' : LocalFavorite.snapshotSignature(snapshotOf(look));
 
 @immutable
 class FavoritesState {
-  const FavoritesState({required this.items, required this.status});
+  const FavoritesState({required this.items});
 
   final List<LocalFavorite> items;
-  final FavoritesSyncStatus status;
 
   List<LocalFavorite> get visible => items.where((f) => f.syncState != SyncState.pendingDelete).toList();
 
@@ -83,31 +63,15 @@ class FavoritesController extends AsyncNotifier<FavoritesState> {
 
   AppDatabase get _db => ref.read(appDatabaseProvider);
 
-  DateTime Function() clock = () => DateTime.now().toUtc();
-
   @override
   Future<FavoritesState> build() async {
-    final signedIn = ref.watch(isSignedInProvider);
-    final items = await _load();
-    if (signedIn) Future.microtask(sync);
-    return FavoritesState(
-      items: items,
-      status: signedIn ? _statusOf(items) : FavoritesSyncStatus.localOnly,
-    );
+    ref.watch(wardrobeRevisionProvider);
+    return FavoritesState(items: [for (final row in await _db.allFavorites()) LocalFavorite.fromRow(row)]);
   }
 
-  Future<List<LocalFavorite>> _load() async => [for (final row in await _db.allFavorites()) LocalFavorite.fromRow(row)];
-
-  FavoritesSyncStatus _statusOf(List<LocalFavorite> items) =>
-      items.any((f) => f.syncState != SyncState.synced) ? FavoritesSyncStatus.pending : FavoritesSyncStatus.synced;
-
-  Future<void> _publish({FavoritesSyncStatus? status}) async {
-    final items = await _load();
-    final signedIn = ref.read(isSignedInProvider);
-    state = AsyncData(FavoritesState(
-      items: items,
-      status: status ?? (signedIn ? _statusOf(items) : FavoritesSyncStatus.localOnly),
-    ));
+  Future<void> _changed() async {
+    ref.read(wardrobeRevisionProvider.notifier).bump();
+    if (ref.read(isSignedInProvider)) await ref.read(wardrobeSyncProvider.notifier).sync();
   }
 
   Future<void> toggle(LookView look) async {
@@ -122,96 +86,36 @@ class FavoritesController extends AsyncNotifier<FavoritesState> {
   }
 
   Future<LocalFavorite> add(LookView look) async {
-    final now = clock();
+    final version = ref.read(catalogVersionProvider).value?.catalogVersion ?? 1;
     final favorite = LocalFavorite(
       clientUuid: _uuid.v4(),
-      outfitId: look.image != null || look.score == null ? look.outfitId : null,
-      snapshot: LookSnapshot(
-        title: look.title,
-        items: [for (final p in look.pieces) p.toRequestItem()],
-        occasionSlug: look.occasion?.slug,
-        styleSlug: look.style?.slug,
-        score: look.score,
-        imageUrl: look.image?.thumbnailUrl,
-        explanation: look.explanation,
-      ),
-      createdAt: now,
-      updatedAt: now,
+      outfitId: look.isPublishedLook ? look.outfitId : null,
+      snapshot: snapshotOf(look, catalogVersion: version),
+      createdAt: DateTime.now().toUtc(),
       syncState: SyncState.pendingUpsert,
     );
     await _db.upsertFavorite(favorite.toCompanion());
-    await _publish();
-    if (ref.read(isSignedInProvider)) await sync();
+    await _changed();
     return favorite;
   }
 
   Future<void> remove(String clientUuid) async {
-    final items = await _load();
-    final favorite = items.where((f) => f.clientUuid == clientUuid).firstOrNull;
-    if (favorite == null) return;
-    if (favorite.serverId == null && favorite.syncState == SyncState.pendingUpsert) {
+    final row = await _db.favorite(clientUuid);
+    if (row == null) return;
+    if (row.serverUpdatedAt == null && row.syncState != SyncState.synced) {
       await _db.deleteFavorite(clientUuid);
     } else {
-      await _db.upsertFavorite(favorite.toCompanion(state: SyncState.pendingDelete));
+      await _db.upsertFavorite(LocalFavorite.fromRow(row).toCompanion(state: SyncState.pendingDelete));
     }
-    await _publish();
-    if (ref.read(isSignedInProvider)) await sync();
+    await _changed();
   }
 
   Future<void> restore(LocalFavorite favorite) async {
     await _db.upsertFavorite(favorite.toCompanion(state: SyncState.pendingUpsert));
-    await _publish();
-    if (ref.read(isSignedInProvider)) await sync();
+    await _changed();
   }
 
-  Future<void> sync() async {
-    if (!ref.read(isSignedInProvider)) return;
-    final repo = ref.read(favoritesRepositoryProvider);
-    try {
-      for (final f in await _load()) {
-        switch (f.syncState) {
-          case SyncState.pendingUpsert:
-            final saved = await repo.save(FavoriteInput(clientUuid: f.clientUuid, outfitId: f.outfitId, snapshot: f.snapshot));
-            await _db.upsertFavorite(f.toCompanion(state: SyncState.synced, serverId: saved.id));
-          case SyncState.pendingDelete:
-            await repo.delete(f.clientUuid);
-            await _db.deleteFavorite(f.clientUuid);
-          case SyncState.synced:
-            break;
-        }
-      }
-      final remote = await repo.list();
-      final local = {for (final f in await _load()) f.clientUuid: f};
-      for (final r in remote) {
-        if (local.containsKey(r.clientUuid)) continue;
-        await _db.upsertFavorite(LocalFavorite(
-          clientUuid: r.clientUuid,
-          serverId: r.id,
-          outfitId: r.outfitId,
-          snapshot: r.snapshot,
-          createdAt: r.createdAt,
-          updatedAt: r.updatedAt,
-          syncState: SyncState.synced,
-        ).toCompanion());
-      }
-      final remoteIds = {for (final r in remote) r.clientUuid};
-      for (final f in local.values) {
-        if (f.syncState == SyncState.synced && !remoteIds.contains(f.clientUuid)) {
-          await _db.deleteFavorite(f.clientUuid);
-        }
-      }
-      await _publish(status: FavoritesSyncStatus.synced);
-    } on NetworkUnavailableException {
-      await _publish(status: FavoritesSyncStatus.pending);
-    } on ApiException {
-      await _publish(status: FavoritesSyncStatus.failed);
-    }
-  }
-
-  Future<void> clearLocal() async {
-    await _db.clearFavorites();
-    await _publish();
-  }
+  Future<void> sync() => ref.read(wardrobeSyncProvider.notifier).sync();
 }
 
 final favoritesProvider = AsyncNotifierProvider<FavoritesController, FavoritesState>(FavoritesController.new);

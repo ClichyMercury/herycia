@@ -1,0 +1,347 @@
+{
+  "data": {
+    "request_id": "rq1.dl9hZmI0NjI0OWM2Y2MyNWViLjIxZjUyNTJjODg3MTQ4YTAuMTc5MzQ4MDk3MA.mioTdlyEzXvcRBHyakjoV1PgIHG8ZDsGbbZK-btX64o",
+    "catalog_version": 1,
+    "rules_version": 1,
+    "starting_item": {
+      "clothing_type": {
+        "id": "b106606b-4405-5a0b-85d8-d863918e23e8",
+        "slug": "jupe",
+        "name": "Jupe"
+      },
+      "color": {
+        "id": "03b047e1-622a-509d-bf57-d34590a8174b",
+        "slug": "fuchsia",
+        "name": "Fuchsia",
+        "hex_code": "#C2185B"
+      },
+      "role": "bottom"
+    },
+    "filters": {
+      "occasion_slug": null,
+      "style_slug": null
+    },
+    "broadened": {
+      "applied": true,
+      "steps": [
+        "style",
+        "occasion"
+      ]
+    },
+    "results": [
+      {
+        "outfit_id": "d2a6aa62-d2e8-504f-9254-55a6a226692f",
+        "title": "Blazer marine pour le bureau",
+        "score": 77,
+        "score_breakdown": {
+          "color": {
+            "points": 31,
+            "max": 40
+          },
+          "structure": {
+            "points": 25,
+            "max": 25
+          },
+          "occasion": {
+            "points": 8,
+            "max": 15
+          },
+          "style": {
+            "points": 5,
+            "max": 10
+          },
+          "completeness": {
+            "points": 8,
+            "max": 10
+          }
+        },
+        "explanation": "Le noir et le blanc forment un contraste net et intemporel.",
+        "items": [
+          {
+            "clothing_type": {
+              "id": "f9c84ba6-8813-5dc9-84be-bf8a5c4e0521",
+              "slug": "chemise",
+              "name": "Chemise"
+            },
+            "color": {
+              "id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+              "slug": "blanc",
+              "name": "Blanc",
+              "hex_code": "#FFFFFF"
+            },
+            "role": "top",
+            "is_required": true,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "f26409bc-63f9-5d5a-b295-b36ebd53d248",
+              "slug": "blazer",
+              "name": "Blazer"
+            },
+            "color": {
+              "id": "162543d0-27c2-5a4e-ae5d-e1e64980999e",
+              "slug": "bleu-marine",
+              "name": "Bleu marine",
+              "hex_code": "#1B2A49"
+            },
+            "role": "outerwear",
+            "is_required": false,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "b106606b-4405-5a0b-85d8-d863918e23e8",
+              "slug": "jupe",
+              "name": "Jupe"
+            },
+            "color": {
+              "id": "03b047e1-622a-509d-bf57-d34590a8174b",
+              "slug": "fuchsia",
+              "name": "Fuchsia",
+              "hex_code": "#C2185B"
+            },
+            "role": "bottom",
+            "is_required": true,
+            "is_starting_item": true
+          },
+          {
+            "clothing_type": {
+              "id": "95004ef5-cea4-58c7-8c12-4dc453c1765b",
+              "slug": "chaussures-habillees",
+              "name": "Chaussures habillées"
+            },
+            "color": {
+              "id": "e4415da7-2919-5acc-8b06-5657736ae031",
+              "slug": "noir",
+              "name": "Noir",
+              "hex_code": "#111111"
+            },
+            "role": "footwear",
+            "is_required": true,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "146959c7-6034-57b8-bd2b-6f5461feb002",
+              "slug": "montre",
+              "name": "Montre"
+            },
+            "color": {
+              "id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+              "slug": "gris",
+              "name": "Gris",
+              "hex_code": "#808080"
+            },
+            "role": "accessory",
+            "is_required": false,
+            "is_starting_item": false
+          }
+        ],
+        "image": {
+          "id": "b65baa9f-ed64-53a2-942e-f38e97dc85b4",
+          "url": "https://hery.mikoha.com/storage/demo/looks/demo-travail-blazer-marine.jpg",
+          "thumbnail_url": "https://hery.mikoha.com/storage/demo/looks/demo-travail-blazer-marine-thumb.jpg",
+          "alt_text": "Illustration fictive : blazer bleu marine, chemise blanche et pantalon anthracite.",
+          "credit": "Image fictive pour le développement local, aucun droit tiers.",
+          "license_type": "demo",
+          "source_name": "Démo locale (image fictive)",
+          "source_url": null
+        }
+      },
+      {
+        "outfit_id": "c84de014-7bf3-5fb8-875e-c359f5db5026",
+        "title": "Pull gris et jean noir",
+        "score": 76,
+        "score_breakdown": {
+          "color": {
+            "points": 32,
+            "max": 40
+          },
+          "structure": {
+            "points": 25,
+            "max": 25
+          },
+          "occasion": {
+            "points": 8,
+            "max": 15
+          },
+          "style": {
+            "points": 5,
+            "max": 10
+          },
+          "completeness": {
+            "points": 6,
+            "max": 10
+          }
+        },
+        "explanation": "Le gris et le blanc forment une base neutre et lumineuse.",
+        "items": [
+          {
+            "clothing_type": {
+              "id": "9c844e53-4e60-56ed-8b97-81137490d75a",
+              "slug": "pull",
+              "name": "Pull"
+            },
+            "color": {
+              "id": "84bf15b2-6a05-52f1-b60f-cdb20f3e624b",
+              "slug": "gris",
+              "name": "Gris",
+              "hex_code": "#808080"
+            },
+            "role": "top",
+            "is_required": true,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "b106606b-4405-5a0b-85d8-d863918e23e8",
+              "slug": "jupe",
+              "name": "Jupe"
+            },
+            "color": {
+              "id": "03b047e1-622a-509d-bf57-d34590a8174b",
+              "slug": "fuchsia",
+              "name": "Fuchsia",
+              "hex_code": "#C2185B"
+            },
+            "role": "bottom",
+            "is_required": true,
+            "is_starting_item": true
+          },
+          {
+            "clothing_type": {
+              "id": "403ecfd2-fe5e-50bf-9351-7d6acf7529b4",
+              "slug": "baskets",
+              "name": "Baskets"
+            },
+            "color": {
+              "id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+              "slug": "blanc",
+              "name": "Blanc",
+              "hex_code": "#FFFFFF"
+            },
+            "role": "footwear",
+            "is_required": true,
+            "is_starting_item": false
+          }
+        ],
+        "image": {
+          "id": "6b11b6a6-6d35-51df-814e-6dab11a3d592",
+          "url": "https://hery.mikoha.com/storage/demo/looks/demo-streetwear-pull-gris.jpg",
+          "thumbnail_url": "https://hery.mikoha.com/storage/demo/looks/demo-streetwear-pull-gris-thumb.jpg",
+          "alt_text": "Illustration fictive : pull gris, jean noir et baskets blanches.",
+          "credit": "Image fictive pour le développement local, aucun droit tiers.",
+          "license_type": "demo",
+          "source_name": "Démo locale (image fictive)",
+          "source_url": null
+        }
+      },
+      {
+        "outfit_id": "d25fd239-ab5b-57e4-8814-18c47815fd47",
+        "title": "Chemise blanche et denim",
+        "score": 74,
+        "score_breakdown": {
+          "color": {
+            "points": 28,
+            "max": 40
+          },
+          "structure": {
+            "points": 25,
+            "max": 25
+          },
+          "occasion": {
+            "points": 8,
+            "max": 15
+          },
+          "style": {
+            "points": 5,
+            "max": 10
+          },
+          "completeness": {
+            "points": 8,
+            "max": 10
+          }
+        },
+        "explanation": "Cette tenue construit un ensemble équilibré autour de la pièce en fuchsia.",
+        "items": [
+          {
+            "clothing_type": {
+              "id": "f9c84ba6-8813-5dc9-84be-bf8a5c4e0521",
+              "slug": "chemise",
+              "name": "Chemise"
+            },
+            "color": {
+              "id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+              "slug": "blanc",
+              "name": "Blanc",
+              "hex_code": "#FFFFFF"
+            },
+            "role": "top",
+            "is_required": true,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "b106606b-4405-5a0b-85d8-d863918e23e8",
+              "slug": "jupe",
+              "name": "Jupe"
+            },
+            "color": {
+              "id": "03b047e1-622a-509d-bf57-d34590a8174b",
+              "slug": "fuchsia",
+              "name": "Fuchsia",
+              "hex_code": "#C2185B"
+            },
+            "role": "bottom",
+            "is_required": true,
+            "is_starting_item": true
+          },
+          {
+            "clothing_type": {
+              "id": "403ecfd2-fe5e-50bf-9351-7d6acf7529b4",
+              "slug": "baskets",
+              "name": "Baskets"
+            },
+            "color": {
+              "id": "0491898d-fc0d-51ca-9b9f-e2cdadf5a975",
+              "slug": "blanc",
+              "name": "Blanc",
+              "hex_code": "#FFFFFF"
+            },
+            "role": "footwear",
+            "is_required": true,
+            "is_starting_item": false
+          },
+          {
+            "clothing_type": {
+              "id": "92860eff-fb0e-5f9f-a2bf-ba2f27065487",
+              "slug": "ceinture",
+              "name": "Ceinture"
+            },
+            "color": {
+              "id": "f491c79a-d4fd-5cd0-aa9b-230aaa8d208a",
+              "slug": "marron",
+              "name": "Marron",
+              "hex_code": "#6B4423"
+            },
+            "role": "accessory",
+            "is_required": false,
+            "is_starting_item": false
+          }
+        ],
+        "image": {
+          "id": "3015870d-9554-59f3-9e63-55c95de74e25",
+          "url": "https://hery.mikoha.com/storage/demo/looks/demo-casual-chemise-denim.jpg",
+          "thumbnail_url": "https://hery.mikoha.com/storage/demo/looks/demo-casual-chemise-denim-thumb.jpg",
+          "alt_text": "Illustration fictive : chemise blanche, jean bleu et baskets blanches.",
+          "credit": "Image fictive pour le développement local, aucun droit tiers.",
+          "license_type": "demo",
+          "source_name": "Démo locale (image fictive)",
+          "source_url": null
+        }
+      }
+    ],
+    "advice": []
+  }
+}

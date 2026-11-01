@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "id": "213f6e59-5153-5c00-9433-4b5e8cf6b699",
+      "slug": "hauts",
+      "name": "Hauts",
+      "group_type": "top",
+      "is_optional": false,
+      "sort_order": 1
+    },
+    {
+      "id": "e5da4983-8379-5ab0-a5b8-3d3dd3994128",
+      "slug": "bas",
+      "name": "Bas",
+      "group_type": "bottom",
+      "is_optional": false,
+      "sort_order": 2
+    },
+    {
+      "id": "5b40f239-9069-56d3-a43c-da78f0f0d17b",
+      "slug": "pieces-completes",
+      "name": "Pièces complètes",
+      "group_type": "one_piece",
+      "is_optional": false,
+      "sort_order": 3
+    },
+    {
+      "id": "a1cd9adf-1c4d-51b1-89e5-88eace2bc8f8",
+      "slug": "chaussures",
+      "name": "Chaussures",
+      "group_type": "footwear",
+      "is_optional": false,
+      "sort_order": 4
+    },
+    {
+      "id": "672ee724-ea63-53ba-9f6f-739269c3edd4",
+      "slug": "accessoires",
+      "name": "Accessoires",
+      "group_type": "accessory",
+      "is_optional": true,
+      "sort_order": 5
+    }
+  ]
+}

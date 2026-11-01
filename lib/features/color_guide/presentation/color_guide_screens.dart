@@ -11,10 +11,6 @@ import '../../catalog/application/catalog_providers.dart';
 import '../../catalog/domain/catalog_models.dart';
 import '../../compose_from_item/application/from_item_controller.dart';
 
-final colorPairingRulesProvider = FutureProvider<List<ColorPairingRule>>(
-  (ref) => ref.watch(catalogRepositoryProvider).colorPairingRules(),
-);
-
 Widget _asyncBody<T>(
   BuildContext context,
   AsyncValue<T> value,
@@ -62,8 +58,8 @@ class ColorGuideScreen extends ConsumerWidget {
                   child: _GuideTile(
                     key: ValueKey('family-${family.slug}'),
                     title: family.name,
-                    subtitle: family.description,
-                    badge: family.isNeutral ? l10n.guideNeutralBadge : null,
+                    subtitle: l10n.guideFamilyCount(family.colorIds.length),
+                    badge: guide.isNeutralFamily(family) ? l10n.guideNeutralBadge : null,
                     swatches: [
                       for (final id in family.colorIds)
                         if (catalog?.color(id) case final c?) (color: c.color, name: c.name),
@@ -164,34 +160,29 @@ class _ColorFamilyScreenState extends ConsumerState<ColorFamilyScreen> {
     final colors = context.colors;
     final guide = ref.watch(colorGuideProvider).value;
     final lookup = ref.watch(catalogLookupProvider).value;
-    final rules = ref.watch(colorPairingRulesProvider).value;
     final family = guide?.families.where((f) => f.slug == widget.slug).firstOrNull;
+    final familyColors = family == null || lookup == null ? const <CatalogColor>[] : [for (final id in family.colorIds) ?lookup.color(id)];
 
-    if (family == null || lookup == null) {
+    if (guide == null || family == null || lookup == null || familyColors.isEmpty) {
       return Scaffold(
         appBar: AppBar(),
         body: const Padding(padding: AppSpacing.screenPadding, child: Skeleton(height: 320)),
       );
     }
-    final familyColors = [for (final id in family.colorIds) ?lookup.color(id)];
     final selected = lookup.color(_selectedId ?? familyColors.first.id) ?? familyColors.first;
-    final pairs = rules == null
-        ? const <(CatalogColor, ColorPairingRule)>[]
-        : ([
-            for (final r in rules)
-              if (r.colorAId == selected.id || r.colorBId == selected.id)
-                if (lookup.color(r.colorAId == selected.id ? r.colorBId : r.colorAId) case final other?) (other, r),
-          ]..sort((a, b) => b.$2.compatibilityScore.compareTo(a.$2.compatibilityScore)))
-            .take(6)
-            .toList();
+    final harmony = guide.harmonyFor(selected.id);
+    final groups = [
+      (HarmonyKind.harmonious, l10n.guideHarmonious),
+      (HarmonyKind.contrast, l10n.guideContrast),
+      (HarmonyKind.neutralPairing, l10n.guideNeutralPairing),
+      (HarmonyKind.caution, l10n.guideCaution),
+    ];
 
     return Scaffold(
       appBar: AppBar(title: Text(family.name)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(AppSpacing.screenHorizontal, 0, AppSpacing.screenHorizontal, AppSpacing.s8),
         children: [
-          Text(family.description, style: context.typo.body.copyWith(color: colors.textSecondary)),
-          const SizedBox(height: AppSpacing.s4),
           Wrap(
             spacing: AppSpacing.gridGutter,
             runSpacing: AppSpacing.gridGutter,
@@ -214,33 +205,37 @@ class _ColorFamilyScreenState extends ConsumerState<ColorFamilyScreen> {
             l10n.guideSuggestedPairs(selected.name.toLowerCase()),
             style: context.typo.title3.copyWith(color: colors.textPrimary),
           ),
-          const SizedBox(height: AppSpacing.titleToContent),
-          for (final (other, rule) in pairs)
+          if (harmony == null)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.s3),
-              child: Row(
-                children: [
-                  AppColorSwatch(color: selected.color, name: selected.name, size: SwatchSize.sm),
-                  const SizedBox(width: AppSpacing.s1),
-                  AppColorSwatch(color: other.color, name: other.name, size: SwatchSize.sm),
-                  const SizedBox(width: AppSpacing.s3),
-                  Expanded(child: Text(rule.explanation, style: context.typo.body.copyWith(color: colors.textPrimary))),
-                ],
+              padding: const EdgeInsets.only(top: AppSpacing.titleToContent),
+              child: Text(l10n.guideNoPairs, style: context.typo.body.copyWith(color: colors.textSecondary)),
+            ),
+          for (final (kind, label) in groups)
+            if (harmony?.of(kind) case final partners? when partners.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.s4),
+              Text(
+                label.toUpperCase(),
+                key: ValueKey('guide-group-${kind.name}'),
+                style: context.typo.overline.copyWith(color: colors.textTertiary),
               ),
-            ),
-          if (family.pairsWellWithColorIds.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.s4),
-            Text(l10n.guidePairsWell, style: context.typo.title3.copyWith(color: colors.textPrimary)),
-            const SizedBox(height: AppSpacing.titleToContent),
-            Wrap(
-              spacing: AppSpacing.gridGutter,
-              runSpacing: AppSpacing.gridGutter,
-              children: [
-                for (final id in family.pairsWellWithColorIds)
-                  if (lookup.color(id) case final c?) AppColorSwatch(color: c.color, name: c.name),
-              ],
-            ),
-          ],
+              const SizedBox(height: AppSpacing.s2),
+              for (final partner in partners)
+                if (lookup.color(partner.colorId) case final other?)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.s3),
+                    child: Row(
+                      children: [
+                        AppColorSwatch(color: selected.color, name: selected.name, size: SwatchSize.sm),
+                        const SizedBox(width: AppSpacing.s1),
+                        AppColorSwatch(color: other.color, name: other.name, size: SwatchSize.sm),
+                        const SizedBox(width: AppSpacing.s3),
+                        Expanded(
+                          child: Text(partner.explanation, style: context.typo.body.copyWith(color: colors.textPrimary)),
+                        ),
+                      ],
+                    ),
+                  ),
+            ],
           const SizedBox(height: AppSpacing.betweenSections),
           AppButton(
             key: const ValueKey('guide-compose'),
@@ -258,45 +253,37 @@ class _ColorFamilyScreenState extends ConsumerState<ColorFamilyScreen> {
   }
 }
 
-class PrinciplesScreen extends ConsumerWidget {
+class PrinciplesScreen extends StatelessWidget {
   const PrinciplesScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final colors = context.colors;
-    final lookup = ref.watch(catalogLookupProvider).value;
+    final principles = [
+      (l10n.principleNeutralTitle, l10n.principleNeutralBody),
+      (l10n.principleHarmonyTitle, l10n.principleHarmonyBody),
+      (l10n.principleContrastTitle, l10n.principleContrastBody),
+      (l10n.principleCautionTitle, l10n.principleCautionBody),
+    ];
     return Scaffold(
       appBar: AppBar(title: Text(l10n.guidePrinciples)),
-      body: _asyncBody(
-        context,
-        ref.watch(colorGuideProvider),
-        () => ref.invalidate(colorGuideProvider),
-        (guide) => ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.screenHorizontal, 0, AppSpacing.screenHorizontal, AppSpacing.s8),
-          children: [
-            for (final p in guide.principles)
-              Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.betweenSections),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(p.title, style: context.typo.title3.copyWith(color: colors.textPrimary)),
-                    const SizedBox(height: AppSpacing.s2),
-                    Text(p.body, style: context.typo.body.copyWith(color: colors.textSecondary)),
-                    const SizedBox(height: AppSpacing.s3),
-                    Wrap(
-                      spacing: AppSpacing.gridGutter,
-                      children: [
-                        for (final id in p.exampleColorIds)
-                          if (lookup?.color(id) case final c?) AppColorSwatch(color: c.color, name: c.name),
-                      ],
-                    ),
-                  ],
-                ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(AppSpacing.screenHorizontal, 0, AppSpacing.screenHorizontal, AppSpacing.s8),
+        children: [
+          for (final (title, body) in principles)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.betweenSections),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: context.typo.title3.copyWith(color: colors.textPrimary)),
+                  const SizedBox(height: AppSpacing.s2),
+                  Text(body, style: context.typo.body.copyWith(color: colors.textSecondary)),
+                ],
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

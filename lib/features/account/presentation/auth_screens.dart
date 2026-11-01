@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router.dart';
 import '../../../core/api/api_exception.dart';
-import '../../../core/api/api_providers.dart';
+import '../../../core/config/env.dart';
 import '../../../core/presentation/error_text.dart';
 import '../../../design_system/design_system.dart';
 import '../../../l10n/l10n.dart';
-import '../../../mock_backend/mock_api_client.dart';
+import '../../../mock_backend/mock_backend.dart';
 import '../application/account_providers.dart';
+import '../../../core/storage/storage_providers.dart';
+import '../application/preferences_controller.dart';
 import '../application/session_controller.dart';
 import '../domain/account_models.dart';
 
@@ -32,7 +36,11 @@ mixin _FormErrors<T extends ConsumerStatefulWidget> on ConsumerState<T> {
       if (!mounted) return;
       setState(() {
         fieldErrors = {for (final entry in e.fieldErrors.entries) entry.key: entry.value.first};
-        if (fieldErrors.isEmpty) globalError = errorText(e, context.l10n);
+        if (fieldErrors.isEmpty) {
+          globalError = e.code == ApiErrorCode.unauthenticated
+              ? context.l10n.authInvalidCredentials
+              : errorText(e, context.l10n);
+        }
       });
     } catch (e) {
       if (mounted) setState(() => globalError = errorText(e, context.l10n));
@@ -197,8 +205,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> with _FormError
             name: _name.text,
             email: _email.text,
             password: _password.text,
-            acceptsPrivacyPolicy: _accepts,
           );
+      await ref.read(appDatabaseProvider).writeValue(privacyConsentKey, DateTime.now().toUtc().toIso8601String());
       if (!mounted) return;
       showAppToast(context, message: context.l10n.authWelcome(user.name));
       context.go(AppRoutes.profile);
@@ -280,31 +288,45 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> with _FormErrors {
+  static const resendDelay = 60;
+
   final _email = TextEditingController();
   bool _sent = false;
-  String? _demoCode;
+  int _cooldown = 0;
+  Timer? _timer;
 
   @override
   void dispose() {
+    _timer?.cancel();
     _email.dispose();
     super.dispose();
   }
 
+  void _startCooldown(int seconds) {
+    _timer?.cancel();
+    setState(() => _cooldown = seconds);
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted || _cooldown <= 1) {
+        timer.cancel();
+        if (mounted) setState(() => _cooldown = 0);
+        return;
+      }
+      setState(() => _cooldown--);
+    });
+  }
+
   Future<void> _submit() async {
-    if (!validate({'email': emailError(_email.text)})) return;
+    if (_cooldown > 0 || !validate({'email': emailError(_email.text)})) return;
     await run(() async {
-      await ref.read(authRepositoryProvider).forgotPassword(_email.text.trim());
-      final client = ref.read(apiClientProvider);
-      String? code;
-      if (ref.read(showDevToolsProvider) && client is MockApiClient) {
-        code = (await client.backend).resetTokens[_email.text.trim().toLowerCase()];
+      try {
+        await ref.read(authRepositoryProvider).forgotPassword(_email.text.trim());
+      } on ApiException catch (e) {
+        if (e.code == ApiErrorCode.rateLimited) _startCooldown(e.retryAfter?.inSeconds ?? resendDelay);
+        rethrow;
       }
-      if (mounted) {
-        setState(() {
-          _sent = true;
-          _demoCode = code;
-        });
-      }
+      if (!mounted) return;
+      setState(() => _sent = true);
+      _startCooldown(resendDelay);
     });
   }
 
@@ -328,15 +350,22 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> wit
         const SizedBox(height: AppSpacing.s4),
         if (_sent) ...[
           Text(l10n.authForgotSent, key: const ValueKey('forgot-sent'), style: context.typo.body.copyWith(color: colors.success)),
-          if (_demoCode != null) ...[
+          if (Env.useMockApi && ref.read(showDevToolsProvider)) ...[
             const SizedBox(height: AppSpacing.s2),
-            AppBadge(label: l10n.authDemoCode(_demoCode!)),
+            AppBadge(label: l10n.authDemoCode(MockBackend.mockOtp)),
           ],
           const SizedBox(height: AppSpacing.s4),
           AppButton(
             key: const ValueKey('forgot-have-code'),
             label: l10n.authHaveCode,
             onPressed: () => context.go(AppRoutes.resetPassword, extra: _email.text.trim()),
+          ),
+          AppButton(
+            key: const ValueKey('forgot-resend'),
+            label: _cooldown > 0 ? l10n.authResendIn(_cooldown) : l10n.authResend,
+            variant: AppButtonVariant.ghost,
+            isLoading: busy,
+            onPressed: _cooldown > 0 ? null : _submit,
           ),
         ] else
           AppButton(key: const ValueKey('forgot-submit'), label: l10n.authForgotAction, isLoading: busy, onPressed: _submit),
@@ -370,7 +399,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> with 
   Future<void> _submit() async {
     if (!validate({
       'email': emailError(_email.text),
-      'token': _code.text.trim().isEmpty ? context.l10n.authRequired : null,
+      'otp': RegExp(r'^\d{6}$').hasMatch(_code.text.trim()) ? null : context.l10n.authOtpInvalid,
       'password': passwordError(_password.text),
     })) {
       return;
@@ -378,7 +407,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> with 
     await run(() async {
       await ref.read(authRepositoryProvider).resetPassword(ResetPasswordRequest(
             email: _email.text.trim(),
-            token: _code.text.trim(),
+            otp: _code.text.trim(),
             password: _password.text,
             passwordConfirmation: _password.text,
           ));
@@ -397,7 +426,26 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> with 
         globalErrorBanner(),
         AppTextField(label: l10n.authEmail, controller: _email, keyboardType: TextInputType.emailAddress, errorText: fieldErrors['email']),
         const SizedBox(height: AppSpacing.s4),
-        AppTextField(key: const ValueKey('reset-code'), label: l10n.authResetCode, controller: _code, errorText: fieldErrors['token']),
+        AppTextField(
+          key: const ValueKey('reset-code'),
+          label: l10n.authResetCode,
+          hint: l10n.authOtpHint,
+          controller: _code,
+          keyboardType: TextInputType.number,
+          autofillHints: const [AutofillHints.oneTimeCode],
+          errorText: fieldErrors['otp'],
+        ),
+        if (fieldErrors['otp'] != null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: AppButton(
+              key: const ValueKey('reset-resend'),
+              label: l10n.authResend,
+              variant: AppButtonVariant.ghost,
+              size: AppButtonSize.sm,
+              onPressed: () => context.go(AppRoutes.forgotPassword),
+            ),
+          ),
         const SizedBox(height: AppSpacing.s4),
         AppTextField(
           key: const ValueKey('reset-password'),

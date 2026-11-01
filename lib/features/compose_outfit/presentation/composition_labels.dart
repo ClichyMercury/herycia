@@ -5,6 +5,7 @@ String roleLabel(AppLocalizations l10n, CompositionRole role) => switch (role) {
       CompositionRole.top => l10n.composeRoleTop,
       CompositionRole.bottom => l10n.composeRoleBottom,
       CompositionRole.onePiece => l10n.composeRoleOnePiece,
+      CompositionRole.outerwear => l10n.composeRoleOuterwear,
       CompositionRole.shoes => l10n.composeRoleShoes,
       CompositionRole.accessory => l10n.composeRoleAccessories,
     };
